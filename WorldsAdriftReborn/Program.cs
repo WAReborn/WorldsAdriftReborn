@@ -9,6 +9,10 @@ namespace WorldsAdriftReborn
 {
     internal class Program
     {
+        internal static void ShowUsage()
+        {
+            Console.WriteLine("--dir <dir> - Directory of your Worlds Adrift installation\n--help - List the commands and their different functions");
+        }
         internal static bool ParseArgs(string[] args, ref string GameInstallationDirectory) 
         {
             GameInstallationDirectory = "";
@@ -20,6 +24,9 @@ namespace WorldsAdriftReborn
                 {
                     case "--dir":
                         GameInstallationDirectory = args[i + 1];
+                        break;
+                    case "--help":
+                        ShowUsage();
                         break;
                 }
             }
