@@ -13,9 +13,8 @@ namespace WorldsAdriftReborn
         {
             Console.WriteLine("--dir <dir> - Directory of your Worlds Adrift installation\n--help - List the commands and their different functions");
         }
-        internal static bool ParseArgs(string[] args, ref string GameInstallationDirectory) 
+        internal static bool ParseArgs(string[] args) 
         {
-            GameInstallationDirectory = "";
             for (int i = 0; i < args.Length; i++)
             {
                 string arg = args[i];
@@ -23,7 +22,7 @@ namespace WorldsAdriftReborn
                 switch(arg)
                 {
                     case "--dir":
-                        GameInstallationDirectory = args[i + 1];
+                        GlobalValues.GameDirectory = args[i + 1];
                         break;
                     case "--help":
                         ShowUsage();
@@ -32,9 +31,9 @@ namespace WorldsAdriftReborn
             }
 
             //Default
-            if (GameInstallationDirectory == "")
+            if (GlobalValues.GameDirectory == "")
             {
-                GameInstallationDirectory = Directory.GetCurrentDirectory();
+                GlobalValues.GameDirectory = Directory.GetCurrentDirectory();
             }
 
             return true;
@@ -42,11 +41,12 @@ namespace WorldsAdriftReborn
 
         public static void Main(string[] args)
         {
-            string GameInstallationDirectory = "";
-            ParseArgs(args, ref GameInstallationDirectory);
+            ParseArgs(args);
 
+            //
             IPatcher patcher = new DnlibPatcher();
             patcher.PatchAll();
+            //
 
             //Make sure console doesn't just close right away
             Console.ReadLine();
