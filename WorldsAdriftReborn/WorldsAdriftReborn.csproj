@@ -77,6 +77,10 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="TextMeshPro-5.6-1.0.56-Runtime, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Downloads\depot_322783\UnityClient@Windows_Data\Managed\TextMeshPro-5.6-1.0.56-Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\UnityEngine.Modules.5.6.4\lib\net35\UnityEngine.dll</HintPath>
     </Reference>
@@ -88,6 +92,7 @@
     <Compile Include="Patching\Dynamic\BypassSteam\SteamChecker_Patch.cs" />
     <Compile Include="Patching\Dynamic\BypassSteam\SteamManager_Patch.cs" />
     <Compile Include="Patching\Dynamic\ContinueBootstrap\ConnectToNeededServersState_Patch.cs" />
+    <Compile Include="Patching\Dynamic\InjectFallbackPatchnotes\ChangeLogLoader_Patch.cs" />
     <Compile Include="Patching\Dynamic\UnrecoverableErrorState_Patch.cs" />
     <Compile Include="WorldsAdriftReborn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

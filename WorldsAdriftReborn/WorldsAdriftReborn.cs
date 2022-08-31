@@ -26,10 +26,6 @@ namespace WorldsAdriftReborn
                 Harmony.CreateAndPatchAll(Assembly.GetExecutingAssembly(), "com.WAR.com");
 
                 Debug.Log("Patching completed successfully");
-
-                //string title = "test";
-                //string message = "hueue";
-                //DialogPopupFacade.ShowOkDialog(title, message, null, "NICE", true, null);
             }
             catch (Exception e)
             {

@@ -13,5 +13,14 @@ namespace WorldsAdriftReborn.Patching.Dynamic.BypassSteam
             __result = "TheCoolBranch";
             return false;
         }
+
+        // Travellers.UI.Login.SetLoginFormActive() calls this and disables login if we return true or crash because of other steam bypasses
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(SteamChecker), "IsSteamBranchPTS")]
+        public static bool IsSteamBranchPTS_Prefix(ref bool __result )
+        {
+            __result = false;
+            return false;
+        }
     }
 }
