@@ -7,4 +7,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="NetCoreServer" Version="6.5.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2-beta2" />
+  </ItemGroup>
+
 </Project>

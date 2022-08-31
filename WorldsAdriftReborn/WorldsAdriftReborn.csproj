@@ -92,6 +92,7 @@
     <Compile Include="Patching\Dynamic\BypassSteam\SteamChecker_Patch.cs" />
     <Compile Include="Patching\Dynamic\BypassSteam\SteamManager_Patch.cs" />
     <Compile Include="Patching\Dynamic\ContinueBootstrap\ConnectToNeededServersState_Patch.cs" />
+    <Compile Include="Patching\Dynamic\HookConfig\WAConfig_Patch.cs" />
     <Compile Include="Patching\Dynamic\InjectFallbackPatchnotes\ChangeLogLoader_Patch.cs" />
     <Compile Include="Patching\Dynamic\UnrecoverableErrorState_Patch.cs" />
     <Compile Include="WorldsAdriftReborn.cs" />
