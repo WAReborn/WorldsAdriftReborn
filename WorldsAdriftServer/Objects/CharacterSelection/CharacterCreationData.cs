@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Globalization;
 using Newtonsoft.Json;
 
 namespace WorldsAdriftServer.Objects.CharacterSelection
@@ -69,15 +70,37 @@ namespace WorldsAdriftServer.Objects.CharacterSelection
             this.b = b;
             this.a = a;
         }
+        public static int HexToInt(char hexValue )
+        {
+            return int.Parse(hexValue.ToString(), NumberStyles.HexNumber);
+        }
+        public static UnityColor FromHex(string color )
+        {
+            if(color.IndexOf("#") == 0)
+            {
+                color = color.Substring(1);
+            }
+            float r = ((float)HexToInt(color[1]) + (float)HexToInt(color[0]) * 16f) / 255f;
+            float g = ((float)HexToInt(color[3]) + (float)HexToInt(color[2]) * 16f) / 255f;
+            float b = ((float)HexToInt(color[5]) + (float)HexToInt(color[4]) * 16f) / 255f;
+            float a = (color.Length <= 6) ? 1f : (((float)HexToInt(color[7]) + (float)HexToInt(color[6]) * 16f) / 255f);
+            return new UnityColor
+            {
+                r = r,
+                g = g,
+                b = b,
+                a = a
+            };
+        }
     }
 
     public struct ColorProperties
     {
-        public ColorProperties( UnityColor primary, UnityColor secondary, UnityColor tertairy )
+        public ColorProperties( UnityColor primary, UnityColor secondary )
         {
             PrimaryColor = primary;
             SecondaryColor = secondary;
-            TertiaryColor = tertairy;
+            TertiaryColor = new UnityColor();
             SpecColor = new UnityColor(1f, 1f, 1f, 1f); // white
         }
 

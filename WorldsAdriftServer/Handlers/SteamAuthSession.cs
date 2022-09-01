@@ -63,13 +63,50 @@ namespace WorldsAdriftServer.Handlers
                 // sent when user clicks on the Play button
                 else if (request.Method == "GET" && request.Url.Contains("/characterList/") && request.Url.Contains("/steam/1234"))
                 {
-                    ItemData itemData = new ItemData("1", "prefab?", new ColorProperties(new UnityColor(0.5f, 0.5f, 0.5f, 0.5f), new UnityColor(0.5f, 0.5f, 0.5f, 0.5f), new UnityColor(0.5f, 0.5f, 0.5f, 0.5f)), 100f);
-                    Dictionary<CharacterSlotType, ItemData> dict = new Dictionary<CharacterSlotType, ItemData>();
+                    //ItemData itemData = new ItemData("1", "prefab?", new ColorProperties(new UnityColor(0.5f, 0.5f, 0.5f, 0.5f), new UnityColor(0.5f, 0.5f, 0.5f, 0.5f), new UnityColor(0.5f, 0.5f, 0.5f, 0.5f)), 100f);
+                    Dictionary<CharacterSlotType, ItemData> cosmetics = new Dictionary<CharacterSlotType, ItemData>();
                     CharacterUniversalColors colors = new CharacterUniversalColors();
 
-                    dict.Add(CharacterSlotType.Body, itemData);
+                    Random r = new Random();
+                    int num = r.Next(0, CustomisationSettings.skinColors.Length);
 
-                    CharacterCreationData characterData = new CharacterCreationData(1, "UID", "sp00ktober", "sp00ktober", "hmm", dict, colors, true, false, false);
+                    colors.SkinColor = CustomisationSettings.skinColors[num];
+                    colors.LipColor = CustomisationSettings.lipColors[num];
+                    colors.HairColor = CustomisationSettings.hairColors[r.Next(0, CustomisationSettings.hairColors.Length)];
+
+                    cosmetics.Add(CharacterSlotType.Head, new ItemData(
+                                                                        "1",
+                                                                        CustomisationSettings.starterHeadItems.Keys.ToList<string>()[r.Next(0, CustomisationSettings.starterHeadItems.Keys.Count)],
+                                                                        new ColorProperties(
+                                                                                            CustomisationSettings.clothingColors[r.Next(0, 7)],
+                                                                                            CustomisationSettings.clothingColors[r.Next(0, 7)]),
+                                                                        100f));
+                    cosmetics.Add(CharacterSlotType.Body, new ItemData(
+                                                                        "2",
+                                                                        CustomisationSettings.starterTorsoItems.Keys.ToList<string>()[r.Next(0, CustomisationSettings.starterTorsoItems.Keys.Count)],
+                                                                        new ColorProperties(
+                                                                                            CustomisationSettings.clothingColors[r.Next(0, 7)],
+                                                                                            CustomisationSettings.clothingColors[r.Next(0, 7)]),
+                                                                        100f));
+                    cosmetics.Add(CharacterSlotType.Feet, new ItemData(
+                                                                        "3",
+                                                                        CustomisationSettings.starterLegItems.Keys.ToList<string>()[r.Next(0, CustomisationSettings.starterLegItems.Keys.Count)],
+                                                                        new ColorProperties(
+                                                                                            CustomisationSettings.clothingColors[r.Next(0, 7)],
+                                                                                            CustomisationSettings.clothingColors[r.Next(0, 7)]),
+                                                                        100f));
+                    cosmetics.Add(CharacterSlotType.Face, new ItemData(
+                                                                        "4",
+                                                                        CustomisationSettings.starterFaceItems.Keys.ToList<string>()[r.Next(0, CustomisationSettings.starterFaceItems.Keys.Count)],
+                                                                        default(ColorProperties),
+                                                                        100f));
+                    cosmetics.Add(CharacterSlotType.FacialHair, new ItemData(
+                                                                        "5",
+                                                                        CustomisationSettings.starterFacialHairItems.Keys.ToList<string>()[r.Next(0, CustomisationSettings.starterFacialHairItems.Keys.Count)],
+                                                                        default(ColorProperties),
+                                                                        100f));
+
+                    CharacterCreationData characterData = new CharacterCreationData(1, "UID", "sp00ktober", "serverName?", "sp00ktober's_Server", cosmetics, colors, true, false, false);
                     List<CharacterCreationData> list = new List<CharacterCreationData>();
 
                     list.Add(characterData);
@@ -93,7 +130,7 @@ namespace WorldsAdriftServer.Handlers
                     Console.WriteLine("got deploymentStatus request.");
 
                     Dictionary<string, ServerStatusRecord> serverStatus = new Dictionary<string, ServerStatusRecord>();
-                    serverStatus.Add("notSureYetWhatComesHere", new ServerStatusRecord("sp00ktober", "hmm", ServerStatus.up, "1"));
+                    serverStatus.Add("sp00ktober's_Server", new ServerStatusRecord("reborn server", "sp00ktober's_Server", ServerStatus.up, "1"));
 
                     JObject respO = (JObject)JToken.FromObject(serverStatus);
                     if(respO != null)
