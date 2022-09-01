@@ -7,14 +7,17 @@
         public string bossaId { get; set; }
         public string screenName { get; set; }
         public string desc { get; set; }
+        public bool success { get; set; }
 
         public SteamAuthResponseToken(  string token,
                                         string playerId,
-                                        string bossaId )
+                                        string bossaId,
+                                        bool success)
         {
             this.token = token;
             this.playerId = playerId;
             this.bossaId = bossaId;
+            this.success = success;
             screenName = string.Empty;
             desc = string.Empty;
         }

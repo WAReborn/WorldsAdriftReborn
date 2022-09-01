@@ -29,6 +29,12 @@ namespace WorldsAdriftReborn.Patching.Dynamic.HookConfig
                 Debug.LogWarning("redirecting rest url to " + __result);
                 return false;
             }
+            else if(key == "BossaNet.DeploymentStatusUrl")
+            {
+                __result = "http://127.0.0.1:8080/deploymentStatus";
+                Debug.LogWarning("redirecting deploymentStatus to " + __result);
+                return false;
+            }
             Debug.LogWarning("not touching " + key);
 
             return true;
