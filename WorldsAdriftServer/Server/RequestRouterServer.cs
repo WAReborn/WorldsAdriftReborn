@@ -5,13 +5,13 @@ using WorldsAdriftServer.Handlers;
 
 namespace WorldsAdriftServer.Server
 {
-    internal class AuthServer : HttpServer
+    internal class RequestRouterServer : HttpServer
     {
-        public AuthServer( IPAddress address, int port ) : base(address, port) { }
+        public RequestRouterServer( IPAddress address, int port ) : base(address, port) { }
 
         protected override TcpSession CreateSession()
         {
-            return new SteamAuthSession(this);
+            return new RequestRouterHandler(this);
         }
 
         protected override void OnError( SocketError error )

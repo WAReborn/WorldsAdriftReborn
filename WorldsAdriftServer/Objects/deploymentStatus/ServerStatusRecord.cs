@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
 
-namespace WorldsAdriftServer.Objects.deploymentStatus
+namespace WorldsAdriftServer.Objects.DeploymentStatus
 {
     internal class ServerStatus
     {
-        public static readonly string up = "up";
-        public static readonly string down = "down";
-        public static readonly string maintenance = "maintenance";
+        public static readonly string UP = "up";
+        public static readonly string DOWN = "down";
+        public static readonly string MAINTENANCE = "maintenance";
     }
     internal class ServerStatusRecord
     {
