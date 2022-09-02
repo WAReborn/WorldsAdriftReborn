@@ -89,9 +89,11 @@
     <Compile Include="Patching\Dynamic\BypassEAC\ConnectToNeededServersState_Patch.cs" />
     <Compile Include="Patching\Dynamic\BypassSteam\BossaNetBootstrap_Patch.cs" />
     <Compile Include="Patching\Dynamic\BypassSteam\ConnectToNeededServersState_Patch.cs" />
+    <Compile Include="Patching\Dynamic\BypassSteam\LoginMetadata_Patch.cs" />
     <Compile Include="Patching\Dynamic\BypassSteam\SteamChecker_Patch.cs" />
     <Compile Include="Patching\Dynamic\BypassSteam\SteamManager_Patch.cs" />
     <Compile Include="Patching\Dynamic\ContinueBootstrap\ConnectToNeededServersState_Patch.cs" />
+    <Compile Include="Patching\Dynamic\ContinueBootstrap\WorkerConfiguration_Patch.cs" />
     <Compile Include="Patching\Dynamic\HookConfig\WAConfig_Patch.cs" />
     <Compile Include="Patching\Dynamic\InjectFallbackPatchnotes\ChangeLogLoader_Patch.cs" />
     <Compile Include="Patching\Dynamic\UnrecoverableErrorState_Patch.cs" />

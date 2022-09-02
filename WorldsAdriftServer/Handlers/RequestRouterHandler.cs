@@ -37,6 +37,14 @@ namespace WorldsAdriftServer.Handlers
                 {
                     DeploymentStatusHandler.HandleDeploymentStatusRequest(this, request, "awesome community server", "community_server", 0);
                 }
+                else if(request.Method == "GET" && request.Url == "/authorizeCharacter")
+                {
+                    CharacterAuthHandler.HandleCharacterAuth(this, request);
+                }
+                else if(request.Method == "POST" && request.Url.Contains("/character/") && request.Url.Contains("/steam/1234/"))
+                {
+                    CharacterSaveHandler.HandleCharacterSave(this, request);
+                }
             }
         }
 
