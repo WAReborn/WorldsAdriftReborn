@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.3.32804.467
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32802.440
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorldsAdriftReborn", "WorldsAdriftReborn\WorldsAdriftReborn.csproj", "{BA2522E9-744E-429A-8757-8283CBAD3CCF}"
 EndProject
@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorldsAdriftServer", "WorldsAdriftServer\WorldsAdriftServer.csproj", "{DD1EBDEE-AD6B-46FE-92F6-0853B2E058D1}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WorldsAdriftRebornCoreSdk", "WorldsAdriftRebornCoreSdk\WorldsAdriftRebornCoreSdk.vcxproj", "{835A10A8-D040-4707-BED5-197164C4F520}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,6 +64,22 @@ Global
 		{DD1EBDEE-AD6B-46FE-92F6-0853B2E058D1}.Release|x64.Build.0 = Release|Any CPU
 		{DD1EBDEE-AD6B-46FE-92F6-0853B2E058D1}.Release|x86.ActiveCfg = Release|Any CPU
 		{DD1EBDEE-AD6B-46FE-92F6-0853B2E058D1}.Release|x86.Build.0 = Release|Any CPU
+		{835A10A8-D040-4707-BED5-197164C4F520}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{835A10A8-D040-4707-BED5-197164C4F520}.Debug|x64.ActiveCfg = Debug|x64
+		{835A10A8-D040-4707-BED5-197164C4F520}.Debug|x64.Build.0 = Debug|x64
+		{835A10A8-D040-4707-BED5-197164C4F520}.Debug|x86.ActiveCfg = Debug|Win32
+		{835A10A8-D040-4707-BED5-197164C4F520}.Debug|x86.Build.0 = Debug|Win32
+		{835A10A8-D040-4707-BED5-197164C4F520}.Package|Any CPU.ActiveCfg = Debug|Win32
+		{835A10A8-D040-4707-BED5-197164C4F520}.Package|Any CPU.Build.0 = Debug|Win32
+		{835A10A8-D040-4707-BED5-197164C4F520}.Package|x64.ActiveCfg = Debug|x64
+		{835A10A8-D040-4707-BED5-197164C4F520}.Package|x64.Build.0 = Debug|x64
+		{835A10A8-D040-4707-BED5-197164C4F520}.Package|x86.ActiveCfg = Debug|Win32
+		{835A10A8-D040-4707-BED5-197164C4F520}.Package|x86.Build.0 = Debug|Win32
+		{835A10A8-D040-4707-BED5-197164C4F520}.Release|Any CPU.ActiveCfg = Release|x64
+		{835A10A8-D040-4707-BED5-197164C4F520}.Release|x64.ActiveCfg = Release|x64
+		{835A10A8-D040-4707-BED5-197164C4F520}.Release|x64.Build.0 = Release|x64
+		{835A10A8-D040-4707-BED5-197164C4F520}.Release|x86.ActiveCfg = Release|Win32
+		{835A10A8-D040-4707-BED5-197164C4F520}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
