@@ -1,4 +1,4 @@
-﻿namespace WorldsAdriftServer.Objects
+﻿namespace WorldsAdriftServer.Objects.SteamObjects
 {
     internal class SteamCredential
     {

@@ -1,6 +1,6 @@
 ﻿using NetCoreServer;
 using Newtonsoft.Json.Linq;
-using WorldsAdriftServer.Objects;
+using WorldsAdriftServer.Objects.SteamObjects;
 
 namespace WorldsAdriftServer.Handlers.Authentication
 {

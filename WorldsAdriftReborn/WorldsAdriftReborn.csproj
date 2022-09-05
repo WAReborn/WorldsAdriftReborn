@@ -49,6 +49,10 @@
     <Reference Include="BepInEx, Version=5.4.20.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\BepInEx.BaseLib.5.4.20\lib\net35\BepInEx.dll</HintPath>
     </Reference>
+    <Reference Include="Improbable.UnityDll, Version=10.4.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Downloads\depot_322783\UnityClient@Windows_Data\Managed\Improbable.UnityDll.dll</HintPath>
+    </Reference>
     <Reference Include="Mono.Cecil, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
       <HintPath>..\packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.dll</HintPath>
     </Reference>
@@ -92,6 +96,7 @@
     <Compile Include="Patching\Dynamic\BypassSteam\LoginMetadata_Patch.cs" />
     <Compile Include="Patching\Dynamic\BypassSteam\SteamChecker_Patch.cs" />
     <Compile Include="Patching\Dynamic\BypassSteam\SteamManager_Patch.cs" />
+    <Compile Include="Patching\Dynamic\ContinueBootstrap\Bootstrap_Patch.cs" />
     <Compile Include="Patching\Dynamic\ContinueBootstrap\ConnectToNeededServersState_Patch.cs" />
     <Compile Include="Patching\Dynamic\ContinueBootstrap\WorkerConfiguration_Patch.cs" />
     <Compile Include="Patching\Dynamic\HookConfig\WAConfig_Patch.cs" />

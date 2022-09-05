@@ -1,4 +1,4 @@
-﻿namespace WorldsAdriftServer.Objects
+﻿namespace WorldsAdriftServer.Objects.SteamObjects
 {
     internal class SteamAuthResponseToken
     {
@@ -9,10 +9,10 @@
         public string desc { get; set; }
         public bool success { get; set; }
 
-        public SteamAuthResponseToken(  string token,
+        public SteamAuthResponseToken( string token,
                                         string playerId,
                                         string bossaId,
-                                        bool success)
+                                        bool success )
         {
             this.token = token;
             this.playerId = playerId;

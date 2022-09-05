@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using Improbable.Unity.Configuration;
+using UnityEngine;
 
 namespace WorldsAdriftReborn.Patching.Dynamic.ContinueBootstrap
 {
@@ -22,6 +23,25 @@ namespace WorldsAdriftReborn.Patching.Dynamic.ContinueBootstrap
                 return false;
             }
 
+            return true;
+        }
+        /*
+         * LocatorHost is the server address of the gRPC server, so we overwrite the setter here to our self
+         */
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(WorkerConfiguration), "LocatorHost", MethodType.Setter)]
+        public static bool LocatorHost_Setter_Prefix(ref string value )
+        {
+            Debug.LogWarning("ORIGNIAL: " + value);
+            value = "proxyescape.ddns.net";
+            return true;
+        }
+        [HarmonyPrefix]
+        [HarmonyPatch(typeof(WorkerConfiguration), "Port", MethodType.Setter)]
+        public static bool LocatorHost_Setter_Prefix( ref ushort value )
+        {
+            Debug.LogWarning("ORIGNIAL PORT: " + value);
+            //value = 443;
             return true;
         }
     }
