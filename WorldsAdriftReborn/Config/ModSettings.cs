@@ -9,6 +9,8 @@ namespace WorldsAdriftReborn.Config
         public static ConfigEntry<string> steamUserId { get; set; }
         public static ConfigEntry<string> steamAppId { get; set; }
         public static ConfigEntry<string> steamBranchName { get; set; }
+        public static ConfigEntry<string> restServerUrl { get; set; }
+        public static ConfigEntry<string> restServerDeploymentUrl { get; set; }
 
         public static void InitConfig()
         {
@@ -26,6 +28,15 @@ namespace WorldsAdriftReborn.Config
                                                     "Steam_BranchName",
                                                     "WorldsAdriftRebornBranch",
                                                     "Sets the Steam Branch name that the game uses internally. Its not important for the functionality to set this to a specific value.");
+
+            restServerUrl = modConfig.Bind<string>("REST",
+                                                    "REST_ServerUrl",
+                                                    "http://127.0.0.1:8080",
+                                                    "Sets the URL for the REST server that the game queries once the main menu is reached.");
+            restServerDeploymentUrl = modConfig.Bind<string>("REST",
+                                                    "REST_ServerDeploymentUrl",
+                                                    "http://127.0.0.1:8080/deploymentStatus",
+                                                    "Sets the URL for the REST server that the game queries once the main menu is reached. It is the endpoint where server status informations are retrieved from.");
         }
     }
 }

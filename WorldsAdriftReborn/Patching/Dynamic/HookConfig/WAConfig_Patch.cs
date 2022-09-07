@@ -2,6 +2,7 @@
 using System.Reflection;
 using HarmonyLib;
 using UnityEngine;
+using WorldsAdriftReborn.Config;
 
 namespace WorldsAdriftReborn.Patching.Dynamic.HookConfig
 {
@@ -23,16 +24,16 @@ namespace WorldsAdriftReborn.Patching.Dynamic.HookConfig
         [HarmonyPrefix]
         public static bool Get_Prefix(ref string __result, string key )
         {
+            ModSettings.modConfig.Reload();
+
             if(key == "BossaNet.RestServerUrl")
             {
-                __result = "http://127.0.0.1:8080";
-                Debug.LogWarning("redirecting rest url to " + __result);
+                __result = ModSettings.restServerUrl.Value;
                 return false;
             }
             else if(key == "BossaNet.DeploymentStatusUrl")
             {
-                __result = "http://127.0.0.1:8080/deploymentStatus";
-                Debug.LogWarning("redirecting deploymentStatus to " + __result);
+                __result = ModSettings.restServerDeploymentUrl.Value;
                 return false;
             }
             Debug.LogWarning("not touching " + key);
