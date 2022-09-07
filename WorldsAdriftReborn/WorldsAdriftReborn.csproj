@@ -94,19 +94,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\ModSettings.cs" />
-    <Compile Include="Patching\Dynamic\BypassEAC\ConnectToNeededServersState_Patch.cs" />
-    <Compile Include="Patching\Dynamic\BypassSteam\BossaNetBootstrap_Patch.cs" />
-    <Compile Include="Patching\Dynamic\BypassSteam\ConnectToNeededServersState_Patch.cs" />
-    <Compile Include="Patching\Dynamic\BypassSteam\LoginMetadata_Patch.cs" />
-    <Compile Include="Patching\Dynamic\BypassSteam\SteamChecker_Patch.cs" />
-    <Compile Include="Patching\Dynamic\BypassSteam\SteamManager_Patch.cs" />
-    <Compile Include="Patching\Dynamic\ContinueBootstrap\Bootstrap_Patch.cs" />
-    <Compile Include="Patching\Dynamic\ContinueBootstrap\ConnectToNeededServersState_Patch.cs" />
-    <Compile Include="Patching\Dynamic\ContinueBootstrap\WorkerConfiguration_Patch.cs" />
-    <Compile Include="Patching\Dynamic\HookConfig\WAConfig_Patch.cs" />
-    <Compile Include="Patching\Dynamic\InjectFallbackPatchnotes\ChangeLogLoader_Patch.cs" />
-    <Compile Include="Patching\Dynamic\LandingScreen\LandingScreen_Patch.cs" />
-    <Compile Include="Patching\Dynamic\LandingScreen\Shop_Patch.cs" />
+    <Compile Include="Patching\BypassEAC\ConnectToNeededServersState_Patch.cs" />
+    <Compile Include="Patching\BypassSteam\BossaNetBootstrap_Patch.cs" />
+    <Compile Include="Patching\BypassSteam\ConnectToNeededServersState_Patch.cs" />
+    <Compile Include="Patching\BypassSteam\LoginMetadata_Patch.cs" />
+    <Compile Include="Patching\BypassSteam\SteamChecker_Patch.cs" />
+    <Compile Include="Patching\BypassSteam\SteamManager_Patch.cs" />
+    <Compile Include="Patching\ContinueBootstrap\Bootstrap_Patch.cs" />
+    <Compile Include="Patching\ContinueBootstrap\ConnectToNeededServersState_Patch.cs" />
+    <Compile Include="Patching\ContinueBootstrap\WorkerConfiguration_Patch.cs" />
+    <Compile Include="Patching\Ecs\EcsBootstrap_Patch.cs" />
+    <Compile Include="Patching\HookConfig\WAConfig_Patch.cs" />
+    <Compile Include="Patching\InjectFallbackPatchnotes\ChangeLogLoader_Patch.cs" />
+    <Compile Include="Patching\LandingScreen\LandingScreen_Patch.cs" />
+    <Compile Include="Patching\LandingScreen\Shop_Patch.cs" />
+    <Compile Include="Patching\SpatialOS\ConcurrentAssetPrecacher_Patch.cs" />
+    <Compile Include="Patching\SpatialOS\ConnectionLifecycle_Patch.cs" />
     <Compile Include="WorldsAdriftReborn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -36,6 +36,11 @@ namespace WorldsAdriftReborn.Patching.Dynamic.HookConfig
                 __result = ModSettings.restServerDeploymentUrl.Value;
                 return false;
             }
+            else if(key == "Bootstrap.NtpServer")
+            {
+                __result = "pool.ntp.org";
+                return false;
+            }
             Debug.LogWarning("not touching " + key);
 
             return true;
