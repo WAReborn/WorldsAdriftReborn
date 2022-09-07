@@ -2,8 +2,8 @@
 using BepInEx;
 using System.Reflection;
 using UnityEngine;
-using Travellers.UI.InfoPopups;
 using HarmonyLib;
+using WorldsAdriftReborn.Config;
 
 namespace WorldsAdriftReborn
 {
@@ -12,6 +12,7 @@ namespace WorldsAdriftReborn
     {
         private void Awake()
         {
+            ModSettings.InitConfig();
             InitPatches();
         }
 

@@ -1,5 +1,6 @@
 ﻿using Bossa.Travellers.Utils;
 using HarmonyLib;
+using WorldsAdriftReborn.Config;
 
 namespace WorldsAdriftReborn.Patching.Dynamic.BypassSteam
 {
@@ -10,12 +11,14 @@ namespace WorldsAdriftReborn.Patching.Dynamic.BypassSteam
         [HarmonyPatch(nameof(LoginMetadata.SteamMetadata))]
         public static bool SteamMetadata_Prefix(ref LoginMetadata __result )
         {
+            ModSettings.modConfig.Reload();
+
             __result = new LoginMetadata
             {
-                UserId = "123",
+                UserId = ModSettings.steamUserId.Value,
                 Credentials = "456",
                 Platform = "steam",
-                SteamAppId = "789"
+                SteamAppId = ModSettings.steamAppId.Value
             };
             return false;
         }

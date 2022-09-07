@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using Framework.Promise;
 using HarmonyLib;
 
 namespace WorldsAdriftReborn.Patching.Dynamic.BypassSteam

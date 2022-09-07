@@ -1,5 +1,6 @@
 ﻿using Bossa.Travellers.Utils;
 using HarmonyLib;
+using WorldsAdriftReborn.Config;
 
 namespace WorldsAdriftReborn.Patching.Dynamic.BypassSteam
 {
@@ -10,7 +11,9 @@ namespace WorldsAdriftReborn.Patching.Dynamic.BypassSteam
         [HarmonyPatch(nameof(SteamChecker.GetSteamBranch))]
         public static bool GetSteamBranch(ref string __result )
         {
-            __result = "TheCoolBranch";
+            ModSettings.modConfig.Reload();
+
+            __result = ModSettings.steamBranchName.Value;
             return false;
         }
 
