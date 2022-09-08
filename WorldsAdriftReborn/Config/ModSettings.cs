@@ -11,6 +11,7 @@ namespace WorldsAdriftReborn.Config
         public static ConfigEntry<string> steamBranchName { get; set; }
         public static ConfigEntry<string> restServerUrl { get; set; }
         public static ConfigEntry<string> restServerDeploymentUrl { get; set; }
+        public static ConfigEntry<string> NTPServerUrl { get; set; }
 
         public static void InitConfig()
         {
@@ -37,6 +38,11 @@ namespace WorldsAdriftReborn.Config
                                                     "REST_ServerDeploymentUrl",
                                                     "http://127.0.0.1:8080/deploymentStatus",
                                                     "Sets the URL for the REST server that the game queries once the main menu is reached. It is the endpoint where server status informations are retrieved from.");
+
+            NTPServerUrl = modConfig.Bind<string>("NTP",
+                                                    "NTP_ServerUrl",
+                                                    "pool.ntp.org",
+                                                    "Set the NTP server that should be used to synchronize time.");
         }
     }
 }

@@ -6,44 +6,78 @@ using WorldsAdriftReborn.Config;
 
 namespace WorldsAdriftReborn.Patching.Dynamic.HookConfig
 {
-    [HarmonyPatch]
     internal class WAConfig_Patch
     {
-        [HarmonyTargetMethod]
-        public static MethodBase GetTargetMethod()
+        [HarmonyPatch()]
+        class Get_String
         {
-            return AccessTools.Method(
-                                        AccessTools.TypeByName("WAConfig"),
-                                        "Get",
-                                        new Type[]
-                                        {
+            [HarmonyTargetMethod]
+            public static MethodBase GetTargetMethod()
+            {
+                return AccessTools.Method(
+                                            AccessTools.TypeByName("WAConfig"),
+                                            "Get",
+                                            new Type[]
+                                            {
                                             typeof(string)
-                                        }).MakeGenericMethod(typeof(string));
+                                            }).MakeGenericMethod(typeof(string));
+            }
+
+            [HarmonyPrefix]
+            public static bool Get_Prefix( ref string __result, string key )
+            {
+                ModSettings.modConfig.Reload();
+
+                if (key == "BossaNet.RestServerUrl")
+                {
+                    __result = ModSettings.restServerUrl.Value;
+                    return false;
+                }
+                else if (key == "BossaNet.DeploymentStatusUrl")
+                {
+                    __result = ModSettings.restServerDeploymentUrl.Value;
+                    return false;
+                }
+                else if (key == "Bootstrap.NtpServer")
+                {
+                    __result = ModSettings.NTPServerUrl.Value;
+                    return false;
+                }
+                Debug.LogWarning("not touching " + key);
+
+                return true;
+            }
         }
 
-        [HarmonyPrefix]
-        public static bool Get_Prefix(ref string __result, string key )
+        [HarmonyPatch()]
+        class Get_Bool
         {
-            ModSettings.modConfig.Reload();
+            [HarmonyTargetMethod]
+            public static MethodBase GetTargetMethod()
+            {
+                return AccessTools.Method(
+                                            AccessTools.TypeByName("WAConfig"),
+                                            "Get",
+                                            new Type[]
+                                            {
+                                            typeof(string)
+                                            }).MakeGenericMethod(typeof(bool));
+            }
 
-            if(key == "BossaNet.RestServerUrl")
+            [HarmonyPrefix]
+            public static bool Get_Prefix( ref bool __result, string key )
             {
-                __result = ModSettings.restServerUrl.Value;
-                return false;
-            }
-            else if(key == "BossaNet.DeploymentStatusUrl")
-            {
-                __result = ModSettings.restServerDeploymentUrl.Value;
-                return false;
-            }
-            else if(key == "Bootstrap.NtpServer")
-            {
-                __result = "pool.ntp.org";
-                return false;
-            }
-            Debug.LogWarning("not touching " + key);
+                ModSettings.modConfig.Reload();
 
-            return true;
+                if (key == "VOIP.Enabled")
+                {
+                    __result = false;
+                    return false;
+                }
+                Debug.LogWarning("not touching " + key);
+
+                return true;
+            }
         }
     }
 }

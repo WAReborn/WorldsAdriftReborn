@@ -1,11 +1,16 @@
 #include "Exports.h"
 #include <string>
 #include <iostream>
+#include <fstream>
 
 
 void hook(const std::string& method) {
     // TODO: Find a way to log this as STDOUT/STDERR don't seems to work when called from pinvoke (or whatever is causing this behavior)
     std::cerr << "Invoked " << method << std::endl;
+    std::ofstream output;
+    output.open("CoreSdk_OutputLog.txt", std::ios::app);
+    output << "Invoked " << method << std::endl;
+    output.close();
 }
 
 Dispatcher* __cdecl WorkerProtocol_Dispatcher_Create() {
@@ -38,7 +43,8 @@ void __cdecl WorkerProtocol_Dispatcher_RegisterAssetLoadRequestCallback(Dispatch
 }
 void __cdecl WorkerProtocol_Dispatcher_RegisterAddEntityCallback(Dispatcher* dispatcher, void* data, AddEntityCallback callback) {
     hook("WorkerProtocol_Dispatcher_RegisterAddEntityCallback");
-    // TODO: Add method RegisterAddEntityCallback to dispatcher and call it here
+    // data is the GCHandle passed by c# land which needs to be passed back to callbacks
+    dispatcher->RegisterAddEntityCallback(callback, data);
 }
 void __cdecl WorkerProtocol_Dispatcher_RegisterRemoveEntityCallback(Dispatcher* dispatcher, void* data, RemoveEntityCallback callback) {
     hook("WorkerProtocol_Dispatcher_RegisterRemoveEntityCallback");
@@ -86,7 +92,7 @@ void __cdecl WorkerProtocol_Dispatcher_RegisterCommandResponseCallback(Dispatche
 }
 void __cdecl WorkerProtocol_Dispatcher_Process(Dispatcher* dispatcher, OpList* op_list) {
     hook("WorkerProtocol_Dispatcher_Process");
-    // TODO: Add method Process to dispatcher and call it here
+    dispatcher->Process(op_list);
 }
 
 Locator* __cdecl WorkerProtocol_Locator_Create(char* hostname, LocatorParameters* parameters) {
@@ -200,8 +206,7 @@ void __cdecl WorkerProtocol_Connection_SetProtocolLoggingEnabled(Connection* con
 }
 OpList* __cdecl WorkerProtocol_Connection_GetOpList(Connection* connection, unsigned int timeout_millis) {
     hook("WorkerProtocol_Connection_GetOpList");
-    // TODO: Add method GetOpList to connection, call it here and return it's return value
-    return nullptr;
+    return connection->GetOpList();
 }
 void __cdecl WorkerProtocol_OpList_Destroy(OpList* op_list) {
     hook("WorkerProtocol_OpList_Destroy");

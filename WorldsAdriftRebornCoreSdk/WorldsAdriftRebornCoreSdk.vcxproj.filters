@@ -44,9 +44,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Exports.cpp">
-      <Filter>include</Filter>
-    </ClCompile>
     <ClCompile Include="Dispatcher.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -63,6 +60,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="Locator.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Exports.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

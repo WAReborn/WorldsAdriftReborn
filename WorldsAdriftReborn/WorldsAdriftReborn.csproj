@@ -52,9 +52,20 @@
     <Reference Include="BepInEx, Version=5.4.21.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\BepInEx.BaseLib.5.4.21\lib\net35\BepInEx.dll</HintPath>
     </Reference>
+    <Reference Include="Generated.Code">
+      <HintPath>..\..\..\..\Downloads\depot_322783\UnityClient@Windows_Data\Managed\Generated.Code.dll</HintPath>
+    </Reference>
     <Reference Include="Improbable.UnityDll, Version=10.4.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Downloads\depot_322783\UnityClient@Windows_Data\Managed\Improbable.UnityDll.dll</HintPath>
+    </Reference>
+    <Reference Include="Improbable.WorkerSdkCsharp, Version=10.4.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Downloads\depot_322783\UnityClient@Windows_Data\Managed\Improbable.WorkerSdkCsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Improbable.WorkerSdkCsharp.Framework, Version=10.4.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Downloads\depot_322783\UnityClient@Windows_Data\Managed\Improbable.WorkerSdkCsharp.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
       <HintPath>..\packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.dll</HintPath>
@@ -103,6 +114,7 @@
     <Compile Include="Patching\ContinueBootstrap\Bootstrap_Patch.cs" />
     <Compile Include="Patching\ContinueBootstrap\ConnectToNeededServersState_Patch.cs" />
     <Compile Include="Patching\ContinueBootstrap\WorkerConfiguration_Patch.cs" />
+    <Compile Include="Patching\CreateLocalPlayer\PrepareForGameState_Patch.cs" />
     <Compile Include="Patching\Ecs\EcsBootstrap_Patch.cs" />
     <Compile Include="Patching\HookConfig\WAConfig_Patch.cs" />
     <Compile Include="Patching\InjectFallbackPatchnotes\ChangeLogLoader_Patch.cs" />
