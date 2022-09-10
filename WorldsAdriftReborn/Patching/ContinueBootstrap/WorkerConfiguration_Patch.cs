@@ -6,6 +6,8 @@ namespace WorldsAdriftReborn.Patching.Dynamic.ContinueBootstrap
 {
     /*
      * after the intro the game fetches some steam auth metadata and then creates the WorkerConfiguration which needs to have the projectName to be set.
+     * 
+     * This can probably get removed as now we replace spatialos with our dll
      */
     [HarmonyPatch(typeof(WorkerConfiguration))]
     internal class WorkerConfiguration_Patch

@@ -5,6 +5,7 @@ using Improbable;
 
 namespace WorldsAdriftReborn.Patching.Dynamic.ContinueBootstrap
 {
+    // just testing if it gives more verbose output
     [HarmonyPatch(typeof(Bootstrap))]
     internal class Bootstrap_Patch
     {

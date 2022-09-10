@@ -12,6 +12,7 @@ namespace WorldsAdriftReborn.Config
         public static ConfigEntry<string> restServerUrl { get; set; }
         public static ConfigEntry<string> restServerDeploymentUrl { get; set; }
         public static ConfigEntry<string> NTPServerUrl { get; set; }
+        public static ConfigEntry<string> localAssetPath { get; set; }
 
         public static void InitConfig()
         {
@@ -43,6 +44,11 @@ namespace WorldsAdriftReborn.Config
                                                     "NTP_ServerUrl",
                                                     "pool.ntp.org",
                                                     "Set the NTP server that should be used to synchronize time.");
+
+            localAssetPath = modConfig.Bind<string>("AssetLoader",
+                                                    "AssetLoader_FilePath",
+                                                    "Assets\\",
+                                                    "The intermediate part of the Asset folder path. Gets 'unity\\' appended. In some cases the game fails to determine the intermediate path so you can set it here or leave it blank.");
         }
     }
 }

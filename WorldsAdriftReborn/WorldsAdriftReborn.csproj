@@ -114,7 +114,6 @@
     <Compile Include="Patching\ContinueBootstrap\Bootstrap_Patch.cs" />
     <Compile Include="Patching\ContinueBootstrap\ConnectToNeededServersState_Patch.cs" />
     <Compile Include="Patching\ContinueBootstrap\WorkerConfiguration_Patch.cs" />
-    <Compile Include="Patching\CreateLocalPlayer\PrepareForGameState_Patch.cs" />
     <Compile Include="Patching\Ecs\EcsBootstrap_Patch.cs" />
     <Compile Include="Patching\HookConfig\WAConfig_Patch.cs" />
     <Compile Include="Patching\InjectFallbackPatchnotes\ChangeLogLoader_Patch.cs" />
@@ -122,6 +121,8 @@
     <Compile Include="Patching\LandingScreen\Shop_Patch.cs" />
     <Compile Include="Patching\SpatialOS\ConcurrentAssetPrecacher_Patch.cs" />
     <Compile Include="Patching\SpatialOS\ConnectionLifecycle_Patch.cs" />
+    <Compile Include="Patching\SpatialOS\InitializeAssetLoader_Patch.cs" />
+    <Compile Include="Patching\SpatialOS\WorkerSpecificAssetDatabaseTemplateProvider_Patch.cs" />
     <Compile Include="WorldsAdriftReborn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
