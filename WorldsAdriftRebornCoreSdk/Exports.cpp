@@ -6,11 +6,11 @@
 
 void hook(const std::string& method) {
     // TODO: Find a way to log this as STDOUT/STDERR don't seems to work when called from pinvoke (or whatever is causing this behavior)
-    std::cerr << "Invoked " << method << std::endl;
-    std::ofstream output;
-    output.open("CoreSdk_OutputLog.txt", std::ios::app);
-    output << "Invoked " << method << std::endl;
-    output.close();
+    //std::cerr << "Invoked " << method << std::endl;
+    //std::ofstream output;
+    //output.open("CoreSdk_OutputLog.txt", std::ios::app);
+    //output << "Invoked " << method << std::endl;
+    //output.close();
 }
 
 Dispatcher* __cdecl WorkerProtocol_Dispatcher_Create() {

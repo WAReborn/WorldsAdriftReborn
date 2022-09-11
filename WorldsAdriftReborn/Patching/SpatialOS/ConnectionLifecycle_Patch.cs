@@ -23,7 +23,7 @@ namespace WorldsAdriftReborn.Patching.SpatialOS
             [HarmonyPrefix]
             public static bool PrecacheAssets_Prefix()
             {
-                return false;
+                return true;
             }
         }
     }
