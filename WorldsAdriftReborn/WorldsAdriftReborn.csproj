@@ -85,6 +85,10 @@
     <Reference Include="MonoMod.Utils, Version=21.12.13.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MonoMod.Utils.21.12.13.1\lib\net35\MonoMod.Utils.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Downloads\depot_322783\UnityClient@Windows_Data\Managed\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="RSG.Promise, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Downloads\depot_322783\UnityClient@Windows_Data\Managed\RSG.Promise.dll</HintPath>
@@ -120,6 +124,8 @@
     <Compile Include="Patching\InjectFallbackPatchnotes\ChangeLogLoader_Patch.cs" />
     <Compile Include="Patching\LandingScreen\LandingScreen_Patch.cs" />
     <Compile Include="Patching\LandingScreen\Shop_Patch.cs" />
+    <Compile Include="Patching\LoadInGame\CharacterCustomisationVisualizer_Patch.cs" />
+    <Compile Include="Patching\LoadInGame\CharacterSelectionScreen_Patch.cs" />
     <Compile Include="Patching\LoadInGame\PrepareForGameState_Patch.cs" />
     <Compile Include="Patching\SpatialOS\ConcurrentAssetPrecacher_Patch.cs" />
     <Compile Include="Patching\SpatialOS\ConnectionLifecycle_Patch.cs" />
