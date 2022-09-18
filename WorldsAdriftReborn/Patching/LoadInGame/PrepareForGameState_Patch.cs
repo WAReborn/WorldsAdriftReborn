@@ -64,7 +64,7 @@ namespace WorldsAdriftReborn.Patching.LoadInGame
                             if (go.name == "Traveller@Player_unityclient")
                             {
                                 Debug.Log("FOUND PLAYER!");
-                                GameObject go2 = GameObject.Instantiate(go);
+                                GameObject go2 = GameObject.Instantiate(go, new Vector3(0,0,0), new Quaternion(0,0,0,0));
                                 LocalPlayerInit init = go2.GetComponent<LocalPlayerInit>();
 
                                 if (init != null)
@@ -256,6 +256,7 @@ namespace WorldsAdriftReborn.Patching.LoadInGame
 
                                     Type tLpVisualizers = AccessTools.TypeByName("LocalPlayerVisualizers");
                                     Type tChatVisualizer = AccessTools.TypeByName("ChatVisualizer");
+                                    Type tPlayerLookingAt = AccessTools.TypeByName("PlayerLookingAt");
                                     object lpVisualisers = AccessTools.Field(typeof(LocalPlayer), "_visualizers").GetValue(LocalPlayer.Instance);
                                     PlayerNameVisualizer pNameVis = (PlayerNameVisualizer)AccessTools.Field(tLpVisualizers, "PlayerNameVisualiser").GetValue(lpVisualisers);
                                     InventoryVisualiser iVis = (InventoryVisualiser)AccessTools.Field(tLpVisualizers, "inventoryVisualiser").GetValue(lpVisualisers);
@@ -271,6 +272,8 @@ namespace WorldsAdriftReborn.Patching.LoadInGame
                                     InteractAgentObserver iObs = (InteractAgentObserver)AccessTools.Field(tLpVisualizers, "interactAgentObserver").GetValue(lpVisualisers);
                                     WorldStateVisualizer woVis = go2.GetComponent<WorldStateVisualizer>();
                                     object cVis = go2.GetComponent(tChatVisualizer);
+                                    object plBeh = go2.GetComponent(tPlayerLookingAt);
+                                    InteractAgentVisualiser iaVis = (InteractAgentVisualiser)AccessTools.Field(tPlayerLookingAt, "interactAgentVisualiser").GetValue(plBeh);
 
                                     // setting values in visualisers
 
@@ -312,6 +315,10 @@ namespace WorldsAdriftReborn.Patching.LoadInGame
                                     AccessTools.Field(tChatVisualizer, "_listener").SetValue(cVis, cImpl);
                                     AccessTools.Field(tChatVisualizer, "_newChatListener").SetValue(cVis, ncImpl);
 
+                                    AccessTools.Field(typeof(InteractAgentVisualiser), "clientState").SetValue(iaVis, iaImpl);
+                                    AccessTools.Field(typeof(InteractAgentVisualiser), "serverState").SetValue(iaVis, iasImpl);
+                                    AccessTools.Field(tPlayerLookingAt, "targettingPlayer").SetValue(plBeh, pNameVis);
+
                                     // setting visualizers back in LocalPlayerVisualisers
 
                                     AccessTools.Field(tLpVisualizers, "PlayerNameVisualiser").SetValue(lpVisualisers, pNameVis);
@@ -328,6 +335,8 @@ namespace WorldsAdriftReborn.Patching.LoadInGame
 
                                     AccessTools.Field(typeof(CharacterCustomisationVisualizer), "_properties").SetValue(charCusVis, psImpl);
                                     AccessTools.Field(typeof(CharacterCustomisationVisualizer), "_inventory").SetValue(charCusVis, iImpl);
+
+                                    AccessTools.Field(tPlayerLookingAt, "interactAgentVisualiser").SetValue(plBeh, iaVis);
 
                                     // initialize PlayerActivationVisualiser to pass PrepareForGameState.CanStart()
 
