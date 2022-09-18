@@ -56,6 +56,9 @@ namespace WorldsAdriftReborn.Patching.LoadInGame
                 {
                     if (!loaded)
                     {
+                        loaded = true;
+                        return;
+
                         Resources.LoadAll(""); // baaaaaad and takes a while, but then the object of the player gets loaded.
 
                         // player object does not get loaded into any valid scene so we need to deep search for it.

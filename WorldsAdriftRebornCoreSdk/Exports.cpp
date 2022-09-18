@@ -39,7 +39,7 @@ void __cdecl WorkerProtocol_Dispatcher_RegisterCriticalSectionCallback(Dispatche
 }
 void __cdecl WorkerProtocol_Dispatcher_RegisterAssetLoadRequestCallback(Dispatcher* dispatcher, void* data, AssetLoadRequestCallback callback) {
     hook("WorkerProtocol_Dispatcher_RegisterAssetLoadRequestCallback");
-    // TODO: Add method RegisterAssetLoadRequestCallback to dispatcher and call it here
+    dispatcher->RegisterAssetLoadRequestCallback(callback, data);
 }
 void __cdecl WorkerProtocol_Dispatcher_RegisterAddEntityCallback(Dispatcher* dispatcher, void* data, AddEntityCallback callback) {
     hook("WorkerProtocol_Dispatcher_RegisterAddEntityCallback");
