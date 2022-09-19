@@ -6,6 +6,7 @@ class Connection
 private:
     bool didSendAddEntityRequest = false;
     bool didLoadPlayer = false;
+    bool gameLoadedPlayer = false;
     bool didCreatePlayer = false;
 public:
     bool IsConnected();

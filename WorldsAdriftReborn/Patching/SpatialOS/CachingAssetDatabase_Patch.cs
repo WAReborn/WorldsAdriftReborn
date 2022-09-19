@@ -33,6 +33,9 @@ namespace WorldsAdriftReborn.Patching.SpatialOS
             {
                 Debug.LogWarning("IN CACHE: " + kvp.Key);
             }
+
+            object gameObjectLoader = AccessTools.Field(typeof(CachingAssetDatabase), "gameObjectLoader").GetValue(__instance);
+            Debug.LogWarning(gameObjectLoader);
         }
     }
 }

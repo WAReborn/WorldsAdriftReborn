@@ -198,7 +198,7 @@ void __cdecl WorkerProtocol_Connection_SendComponentInterest(Connection* connect
 }
 void __cdecl WorkerProtocol_Connection_SendAssetLoaded(Connection* connection, AssetLoaded* asset_loaded) {
     hook("WorkerProtocol_Connection_SendAssetLoaded");
-    // TODO: Add method SendAssetLoaded to connection and call it here
+    connection->SendAssetLoaded(asset_loaded);
 }
 void __cdecl WorkerProtocol_Connection_SetProtocolLoggingEnabled(Connection* connection, unsigned char enabled) {
     hook("WorkerProtocol_Connection_SetProtocolLoggingEnabled");

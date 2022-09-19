@@ -13,13 +13,14 @@ OpList* Connection::GetOpList() {
     if (!this->didLoadPlayer) {
         op_list->assetLoadRequestOp = new AssetLoadRequestOp();
 
+        // prefab name gets assembled by game to "Traveller@Player_unityclient"
         op_list->assetLoadRequestOp->AssetType = (char*)"OnlyForResponse?";
         op_list->assetLoadRequestOp->Name = (char*)"Traveller";
         op_list->assetLoadRequestOp->Context = (char*)"Player";
 
         this->didLoadPlayer = true;
     }
-    else if (!this->didCreatePlayer) {
+    else if (!this->didCreatePlayer && this->gameLoadedPlayer) {
         op_list->addEntityOp = new AddEntityOp();
 
         op_list->addEntityOp->EntityId = 1;
@@ -42,9 +43,13 @@ OpList* Connection::GetOpList() {
 }
 
 void Connection::SendAssetLoaded(AssetLoaded* asset_loaded) {
-    std::cout << "ASSET LOADED" << std::endl; // will most likely not be visible
+    std::cout << "ASSET LOADED: " << asset_loaded->Name << " " << asset_loaded->Context << std::endl; // will most likely not be visible
     std::ofstream output;
     output.open("CoreSdk_OutputLog.txt", std::ios::app);
-    output << "ASSET LOADED" << std::endl;
+    output << "ASSET LOADED: " << asset_loaded->Name << " " << asset_loaded->Context << std::endl;
     output.close();
+
+    if (strcmp(asset_loaded->Name, "Traveller") == 0 && strcmp(asset_loaded->Context, "Player") == 0) {
+        this->gameLoadedPlayer = true;
+    }
 }
