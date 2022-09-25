@@ -89,6 +89,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Downloads\depot_322783\UnityClient@Windows_Data\Managed\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="protobuf-net, Version=2.0.0.668, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Downloads\depot_322783\UnityClient@Windows_Data\Managed\protobuf-net.dll</HintPath>
+    </Reference>
     <Reference Include="RSG.Promise, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Downloads\depot_322783\UnityClient@Windows_Data\Managed\RSG.Promise.dll</HintPath>

@@ -25,6 +25,7 @@ public:
 
     // Internal API
     bool DeserializeComponent(unsigned int component_id, ClientObjectType objType, char* buffer, unsigned int length, ClientObject** obj);
+    bool SerializeComponent(unsigned int component_id, ClientObjectType objType, ClientObject* obj, char** buffer, unsigned int* length);
     void SendComponentInterest(long entity_id, InterestOverride* interest_override, unsigned int interest_override_count);
 };
 

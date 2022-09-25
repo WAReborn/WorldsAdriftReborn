@@ -1,6 +1,12 @@
 ﻿using Bossa.Travellers.UI;
 using HarmonyLib;
+using Improbable.Collections;
+using Improbable.Worker.Internal;
+using Improbable;
 using UnityEngine;
+using System;
+using Bossa.Travellers.Ecs;
+using Improbable.Worker;
 
 namespace WorldsAdriftReborn.Patching.Dynamic.InjectFallbackPatchnotes
 {
@@ -12,6 +18,26 @@ namespace WorldsAdriftReborn.Patching.Dynamic.InjectFallbackPatchnotes
         public static bool Start_Prefix(ChangeLogLoader __instance)
         {
             AccessTools.Method(typeof(ChangeLogLoader), "ParsePatchNotes").Invoke(__instance, new object[] { "someDummyShit" });
+
+            /*
+             * The following is used for serialization testing of the protobuf stuff, need to inject an object in there to serialize later
+             */
+            Debug.Log(ProtoBuf.Serializer.GetProto<Schema.Bossa.Travellers.Ecs.BlueprintData>());
+
+            BlueprintData blueprintData = new BlueprintData();
+            blueprintData.identifier = "asdf";
+
+            Type tConnectionHandle = AccessTools.TypeByName("ConnectionHandle");
+            Type tConnection = AccessTools.TypeByName("Connection");
+            Blueprint.Impl bImpl = new Blueprint.Impl((Connection)AccessTools.Constructor(tConnection, new Type[] { tConnectionHandle }).Invoke(new object[] { AccessTools.Constructor(tConnectionHandle).Invoke(new object[] { }) }), new EntityId(0), new Blueprint.Data(blueprintData));
+
+            Blueprint.Update update = new Blueprint.Update();
+            update.identifier = "asdf";
+
+            Map<ulong, object> map = (Map<ulong, object>)AccessTools.Field(typeof(ClientObjects), "inFlightUpdates").GetValue(ClientObjects.Instance);
+            map.Add(1, update); // need to access this through serializer to see its output so we know how to make it ourself
+            AccessTools.Field(typeof(ClientObjects), "inFlightUpdates").SetValue(ClientObjects.Instance, map);
+
             return false;
         }
 

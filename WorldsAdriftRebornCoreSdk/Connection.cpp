@@ -51,6 +51,7 @@ OpList* Connection::GetOpList() {
         this->didSendAddEntityRequest = true;
     }
     else if (!this->didSendAddComponentRequest) {
+        /*
         char* buffer = new char[6] {
             0x0a, 0x04, 0x61, 0x73, 0x64, 0x66
         };
@@ -62,6 +63,22 @@ OpList* Connection::GetOpList() {
         op_list->addComponentOp->EntityId = 2;
         op_list->addComponentOp->InitialComponent.ComponentId = 8065;
         op_list->addComponentOp->InitialComponent.Object = object;
+        */
+        char* buffer = new char[1000];
+        unsigned int length = 0;
+        ClientObject* object = new ClientObject();
+        object->Reference = 1; // injected by our mod, see ChangelogLoader_Patch.cs. Object is broken somehow, set breakpoint at ClientObjects.Dereference and set reference to 1 in debugger.
+
+        bool success = SerializeComponent(8065, ClientObjectType::Update, object, &buffer, &length);
+
+        if (success) {
+            Logger::Debug("IT WORKED!");
+            Logger::Debug("length: " + length);
+            Logger::Hexify(buffer, length);
+        }
+        else {
+            Logger::Debug("FML!");
+        }
 
         this->didSendAddComponentRequest = true;
     }
@@ -81,6 +98,10 @@ void Connection::SendAssetLoaded(AssetLoaded* asset_loaded) {
 
 bool Connection::DeserializeComponent(unsigned int component_id, ClientObjectType objType, char* buffer, unsigned int length, ClientObject** obj) {
     return this->vtable[component_id].Deserialize(component_id, objType, buffer, length, obj);
+}
+
+bool Connection::SerializeComponent(unsigned int component_id, ClientObjectType objType, ClientObject* obj, char** buffer, unsigned int* length) {
+    return this->vtable[component_id].Serialize(component_id, objType, obj, buffer, length);
 }
 
 void Connection::SendComponentInterest(long entity_id, InterestOverride* interest_override, unsigned int interest_override_count)
