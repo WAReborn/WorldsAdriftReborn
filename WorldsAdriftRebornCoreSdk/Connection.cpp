@@ -43,7 +43,7 @@ OpList* Connection::GetOpList() {
 }
 
 void Connection::SendAssetLoaded(AssetLoaded* asset_loaded) {
-    std::cout << "ASSET LOADED: " << asset_loaded->Name << " " << asset_loaded->Context << std::endl; // will most likely not be visible
+    std::cout << "ASSET LOADED: " << asset_loaded->Name << " " << asset_loaded->Context << std::endl;
     std::ofstream output;
     output.open("CoreSdk_OutputLog.txt", std::ios::app);
     output << "ASSET LOADED: " << asset_loaded->Name << " " << asset_loaded->Context << std::endl;

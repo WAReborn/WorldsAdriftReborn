@@ -6,11 +6,11 @@
 
 void hook(const std::string& method) {
     // TODO: Find a way to log this as STDOUT/STDERR don't seems to work when called from pinvoke (or whatever is causing this behavior)
-    //std::cerr << "Invoked " << method << std::endl;
-    //std::ofstream output;
-    //output.open("CoreSdk_OutputLog.txt", std::ios::app);
-    //output << "Invoked " << method << std::endl;
-    //output.close();
+    std::cerr << "Invoked " << method << std::endl;
+    std::ofstream output;
+    output.open("CoreSdk_OutputLog.txt", std::ios::app);
+    output << "Invoked " << method << std::endl;
+    output.close();
 }
 
 Dispatcher* __cdecl WorkerProtocol_Dispatcher_Create() {
@@ -194,6 +194,18 @@ void __cdecl WorkerProtocol_Connection_SendInterestedComponents(Connection* conn
 }
 void __cdecl WorkerProtocol_Connection_SendComponentInterest(Connection* connection, long entity_id, InterestOverride* interest_override, unsigned int interest_override_count) {
     hook("WorkerProtocol_Connection_SendComponentInterest");
+    // temp code
+    std::ofstream output;
+    output.open("CoreSdk_OutputLog.txt", std::ios::app);
+    output << "entity_id: " << entity_id << std::endl;
+    std::cout << "entity_id: " << entity_id << std::endl;
+    for (int i = 0; i < interest_override_count; i++) {
+        output << "----" << std::endl;
+        output << interest_override[i].ComponentId << " " << (interest_override[i].IsInterested ? "true" : "false") << std::endl;
+        std::cout << "----" << std::endl;
+        std::cout << interest_override[i].ComponentId << " " << (interest_override[i].IsInterested ? "true" : "false") << std::endl;
+    }
+    output.close();
     // TODO: Add method SendComponentInterest to connection and call it here
 }
 void __cdecl WorkerProtocol_Connection_SendAssetLoaded(Connection* connection, AssetLoaded* asset_loaded) {

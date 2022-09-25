@@ -35,7 +35,7 @@ namespace WorldsAdriftReborn.Patching.Dynamic.ContinueBootstrap
         public static bool LocatorHost_Setter_Prefix(ref string value )
         {
             Debug.LogWarning("ORIGNIAL: " + value);
-            value = "proxyescape.ddns.net";
+            value = "some.host.to.receive.this";
             return true;
         }
         [HarmonyPrefix]
