@@ -192,7 +192,7 @@ struct EntityQueryResponseOp {
     Entity* Result;
 };
 
-struct ''AddComponentOp{
+struct AddComponentOp{
     long EntityId;
     ComponentObject InitialComponent;
 };
