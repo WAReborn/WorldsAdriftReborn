@@ -26,8 +26,10 @@
     <ClInclude Include="Dispatcher.h" />
     <ClInclude Include="Exports.h" />
     <ClInclude Include="Locator.h" />
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="OpList.h" />
     <ClInclude Include="Structs.h" />
+    <ClInclude Include="VTable.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Connection.cpp" />
@@ -36,6 +38,7 @@
     <ClCompile Include="Dispatcher.cpp" />
     <ClCompile Include="Exports.cpp" />
     <ClCompile Include="Locator.cpp" />
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="OpList.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

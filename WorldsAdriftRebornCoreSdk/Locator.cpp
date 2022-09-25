@@ -12,5 +12,5 @@ DeploymentListFuture* Locator::GetDeploymentListAsync()
 
 ConnectionFuture* Locator::ConnectAsync(char* deployment_name, ConnectionParameters* parameters, void* data, QueueStatusCallback callback)
 {
-    return new ConnectionFuture();
+    return new ConnectionFuture(nullptr, 0, parameters);
 }

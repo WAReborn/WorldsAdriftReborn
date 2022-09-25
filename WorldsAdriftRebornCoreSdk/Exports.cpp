@@ -1,16 +1,18 @@
 #include "Exports.h"
+#include "Logger.h"
 #include <string>
 #include <iostream>
 #include <fstream>
 
-
 void hook(const std::string& method) {
-    // TODO: Find a way to log this as STDOUT/STDERR don't seems to work when called from pinvoke (or whatever is causing this behavior)
-    std::cerr << "Invoked " << method << std::endl;
-    std::ofstream output;
-    output.open("CoreSdk_OutputLog.txt", std::ios::app);
-    output << "Invoked " << method << std::endl;
-    output.close();
+    if (
+        method != "WorkerProtocol_Connection_IsConnected" && // The game checks periodically the connection
+        method != "WorkerProtocol_Connection_GetOpList" && // The game gets periodically an op list
+        method != "WorkerProtocol_Dispatcher_Process" && // The game process events periodically
+        method != "WorkerProtocol_OpList_Destroy" // The game disposes of the op list after processing events
+    ) {
+        Logger::Debug("Invoked " + method);
+    }
 }
 
 Dispatcher* __cdecl WorkerProtocol_Dispatcher_Create() {
@@ -68,7 +70,7 @@ void __cdecl WorkerProtocol_Dispatcher_RegisterEntityQueryResponseCallback(Dispa
 }
 void __cdecl WorkerProtocol_Dispatcher_RegisterAddComponentCallback(Dispatcher* dispatcher, void* data, AddComponentCallback callback) {
     hook("WorkerProtocol_Dispatcher_RegisterAddComponentCallback");
-    // TODO: Add method RegisterAddComponentCallback to dispatcher and call it here
+    dispatcher->RegisterAddComponentCallback(callback, data);
 }
 void __cdecl WorkerProtocol_Dispatcher_RegisterRemoveComponentCallback(Dispatcher* dispatcher, void* data, RemoveComponentCallback callback) {
     hook("WorkerProtocol_Dispatcher_RegisterRemoveComponentCallback");
@@ -114,7 +116,7 @@ ConnectionFuture* __cdecl WorkerProtocol_Locator_ConnectAsync(Locator* locator, 
 
 ConnectionFuture* __cdecl WorkerProtocol_ConnectAsync(char* hostname, unsigned short port, ConnectionParameters* parameters) {
     hook("WorkerProtocol_ConnectAsync");
-    return new ConnectionFuture();
+    return new ConnectionFuture(hostname, port, parameters);
 }
 
 void __cdecl WorkerProtocol_DeploymentListFuture_Destroy(DeploymentListFuture* future) {
@@ -195,18 +197,12 @@ void __cdecl WorkerProtocol_Connection_SendInterestedComponents(Connection* conn
 void __cdecl WorkerProtocol_Connection_SendComponentInterest(Connection* connection, long entity_id, InterestOverride* interest_override, unsigned int interest_override_count) {
     hook("WorkerProtocol_Connection_SendComponentInterest");
     // temp code
-    std::ofstream output;
-    output.open("CoreSdk_OutputLog.txt", std::ios::app);
-    output << "entity_id: " << entity_id << std::endl;
-    std::cout << "entity_id: " << entity_id << std::endl;
-    for (int i = 0; i < interest_override_count; i++) {
-        output << "----" << std::endl;
-        output << interest_override[i].ComponentId << " " << (interest_override[i].IsInterested ? "true" : "false") << std::endl;
-        std::cout << "----" << std::endl;
-        std::cout << interest_override[i].ComponentId << " " << (interest_override[i].IsInterested ? "true" : "false") << std::endl;
+    Logger::Debug("entity_id: " + std::to_string(entity_id));
+    for (unsigned int i = 0; i < interest_override_count; i++) {
+        Logger::Debug(std::to_string(interest_override[i].ComponentId) + " " + (interest_override[i].IsInterested ? "true" : "false"));
     }
-    output.close();
-    // TODO: Add method SendComponentInterest to connection and call it here
+    Logger::Debug("----");
+    connection->SendComponentInterest(entity_id, interest_override, interest_override_count);
 }
 void __cdecl WorkerProtocol_Connection_SendAssetLoaded(Connection* connection, AssetLoaded* asset_loaded) {
     hook("WorkerProtocol_Connection_SendAssetLoaded");

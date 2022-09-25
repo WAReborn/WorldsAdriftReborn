@@ -1,5 +1,7 @@
 #pragma once
 
+#include "VTable.h"
+
 struct EntityId {
     long Id;
 } typedef EntityId;
@@ -267,11 +269,11 @@ struct SdkParameters {
 struct ClientComponentVtable
 {
     unsigned int ComponentId;
-    void* BufferFree;
-    void* Free;
-    void* Copy;
-    void* Deserialize;
-    void* Serialize;
+    ClientBufferFree* BufferFree;
+    ClientFree* Free;
+    ClientCopy* Copy;
+    ClientDeserialize* Deserialize;
+    ClientSerialize* Serialize;
 };
 
 struct ConnectionParameters {
