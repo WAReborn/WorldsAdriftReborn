@@ -6,5 +6,6 @@ class OpList
 public:
     AddEntityOp* addEntityOp;
     AssetLoadRequestOp* assetLoadRequestOp;
+    AddComponentOp* addComponentOp;
 };
 

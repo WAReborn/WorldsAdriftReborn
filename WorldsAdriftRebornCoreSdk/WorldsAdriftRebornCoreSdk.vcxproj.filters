@@ -42,6 +42,12 @@
     <ClInclude Include="Callbacks.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="VTable.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dispatcher.cpp">
@@ -63,6 +69,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="Exports.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

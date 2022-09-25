@@ -2,6 +2,7 @@
 
 void Dispatcher::RegisterAddEntityCallback(AddEntityCallback callback, void* GCHandle) { this->addEntityCallback = callback; this->GCHandle = GCHandle; }
 void Dispatcher::RegisterAssetLoadRequestCallback(AssetLoadRequestCallback callback, void* GCHandle) { this->assetLoadRequestCallback = callback; this->GCHandle = GCHandle; }
+void Dispatcher::RegisterAddComponentCallback(AddComponentCallback callback, void* GCHandle) { this->addComponentCallback = callback; this->GCHandle = GCHandle; }
 
 void Dispatcher::Process(OpList* op_list) {
     if (op_list != nullptr && op_list->addEntityOp != nullptr) {
@@ -10,5 +11,8 @@ void Dispatcher::Process(OpList* op_list) {
     }
     if (op_list != nullptr && op_list->assetLoadRequestOp != nullptr) {
         this->assetLoadRequestCallback(this->GCHandle, op_list->assetLoadRequestOp);
+    }
+    if (op_list != nullptr && op_list->addComponentOp != nullptr) {
+        this->addComponentCallback(this->GCHandle, op_list->addComponentOp);
     }
 }
