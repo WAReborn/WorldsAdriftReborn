@@ -34,9 +34,11 @@ namespace WorldsAdriftReborn.Patching.Dynamic.InjectFallbackPatchnotes
             Blueprint.Update update = new Blueprint.Update();
             update.identifier = "asdf";
 
-            Map<ulong, object> map = (Map<ulong, object>)AccessTools.Field(typeof(ClientObjects), "inFlightUpdates").GetValue(ClientObjects.Instance);
-            map.Add(1, update); // need to access this through serializer to see its output so we know how to make it ourself
-            AccessTools.Field(typeof(ClientObjects), "inFlightUpdates").SetValue(ClientObjects.Instance, map);
+            Blueprint.Data bData = new Blueprint.Data(new BlueprintData("Player"));
+
+            //Map<ulong, object> map = (Map<ulong, object>)AccessTools.Field(typeof(ClientObjects), "inFlightUpdates").GetValue(ClientObjects.Instance);
+            //map.Add(1, bData); // need to access this through serializer to see its output so we know how to make it ourself
+            //AccessTools.Field(typeof(ClientObjects), "inFlightUpdates").SetValue(ClientObjects.Instance, map);
 
             return false;
         }

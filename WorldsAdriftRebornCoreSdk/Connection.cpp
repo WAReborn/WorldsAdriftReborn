@@ -51,25 +51,25 @@ OpList* Connection::GetOpList() {
         this->didSendAddEntityRequest = true;
     }
     else if (!this->didSendAddComponentRequest) {
-        /*
-        char* buffer = new char[6] {
-            0x0a, 0x04, 0x61, 0x73, 0x64, 0x66
+        char* buffer = new char[12] {
+            '\x8a', '\xf8', '\x03', '\x08', '\x0a', '\x06', '\x50', '\x6c', '\x61', '\x79', '\x65', '\x72' // identifier == Player
         };
         ClientObject* object;
-        bool success = DeserializeComponent(8065, ClientObjectType::Update, buffer, 6, &object);
+        bool success = DeserializeComponent(8065, ClientObjectType::Snapshot, buffer, 12, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
         op_list->addComponentOp = new AddComponentOp();
 
         op_list->addComponentOp->EntityId = 2;
         op_list->addComponentOp->InitialComponent.ComponentId = 8065;
         op_list->addComponentOp->InitialComponent.Object = object;
-        */
+        
+        /*
         char* buffer = new char[1000];
         unsigned int length = 0;
         ClientObject* object = new ClientObject();
         object->Reference = 1; // injected by our mod, see ChangelogLoader_Patch.cs. Object is broken somehow, set breakpoint at ClientObjects.Dereference and set reference to 1 in debugger.
 
-        bool success = SerializeComponent(8065, ClientObjectType::Update, object, &buffer, &length);
+        bool success = SerializeComponent(8065, ClientObjectType::Snapshot, object, &buffer, &length);
 
         if (success) {
             Logger::Debug("IT WORKED!");
@@ -79,11 +79,10 @@ OpList* Connection::GetOpList() {
         else {
             Logger::Debug("FML!");
         }
+        */
 
         this->didSendAddComponentRequest = true;
     }
-
-    
 
     return op_list;
 }
