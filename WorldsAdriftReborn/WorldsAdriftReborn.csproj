@@ -136,6 +136,7 @@
     <Compile Include="Patching\SpatialOS\ConnectionLifecycle_Patch.cs" />
     <Compile Include="Patching\SpatialOS\Debug_ComponentFactory\DispatchEventHandler_Patch.cs" />
     <Compile Include="Patching\SpatialOS\InitializeAssetLoader_Patch.cs" />
+    <Compile Include="Patching\SpatialOS\Prevent_Disconnect\HeartbeatVisualizer_Patch.cs" />
     <Compile Include="Patching\SpatialOS\WorkerSpecificAssetDatabaseTemplateProvider_Patch.cs" />
     <Compile Include="WorldsAdriftReborn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
