@@ -32,13 +32,13 @@ Which will download the correct game files. Copy the files over to the gameroot 
 
 Next download the latest [BepInEx Release](https://github.com/BepInEx/BepInEx/releases) and unzip those files into gameroot as well.
 
-Now open up the project sln with Visual Studio and add the [BepInEx](https://github.com/BepInEx/BepInEx source to the nuget package manager.
+Now open up the project sln with Visual Studio and add the BepInEx source to the nuget package manager.
 To do this goto Tools -> NuGet Package Manager -> Package Manager Settings -> Package Sources and add this url `https://nuget.bepinex.dev/v3/index.json`
 
 Next you will need to point Visual Studio at the game Dlls. The Dlls that need configuring will have a yellow warning sign next to them and are found under WorldsAdriftReborn -> Refrences
 To add a refrence right click on Refrences and then Add refrence. Find the Browse button and navigate to `gameroot\UnityClient@Windows_Data\Managed` here you will find the Dlls that Visual Studio is complaining about.
 
-After building  [WorldsAdriftRebornCoreSdk](https://github.com/sp00ktober/WorldsAdriftReborn/tree/main/WorldsAdriftRebornCoreSdk) and [WorldsAdriftReborn mod](https://github.com/sp00ktober/WorldsAdriftReborn/tree/main/WorldsAdriftReborn), copy over `CoreSdkDll.dll` to `gameroot\UnityClient@Windows_Data\Plugins\CoreSdkDll.dll`. Next make a new directory inside of `gameroot\BeplnEx\plugins` you can name this whatever you want.
+After building  [WorldsAdriftRebornCoreSdk](https://github.com/sp00ktober/WorldsAdriftReborn/tree/main/WorldsAdriftRebornCoreSdk) and [WorldsAdriftReborn mod](https://github.com/sp00ktober/WorldsAdriftReborn/tree/main/WorldsAdriftReborn), copy over `CoreSdkDll.dll` to `gameroot\UnityClient@Windows_Data\Plugins\CoreSdkDll.dll`. Finally make a new directory inside of `gameroot\BeplnEx\plugins` you can name this whatever you want.
 Copy the compiled mod files into this directory.
 
 # Contact us
