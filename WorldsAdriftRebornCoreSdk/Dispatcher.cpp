@@ -13,6 +13,15 @@ void Dispatcher::Process(OpList* op_list) {
         this->assetLoadRequestCallback(this->GCHandle, op_list->assetLoadRequestOp);
     }
     if (op_list != nullptr && op_list->addComponentOp != nullptr) {
-        this->addComponentCallback(this->GCHandle, op_list->addComponentOp);
+        for (int i = 0; i < op_list->addComponentLen; i++) {
+            // need to copy over here because the EntityId is garbage in c# land if not done.
+            AddComponentOp* op = new AddComponentOp();
+            op->EntityId = op_list->addComponentOp[i].EntityId;
+            op->InitialComponent = op_list->addComponentOp[i].InitialComponent;
+
+            this->addComponentCallback(this->GCHandle, op);
+
+            delete op;
+        }
     }
 }
