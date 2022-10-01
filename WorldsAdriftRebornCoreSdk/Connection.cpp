@@ -45,7 +45,7 @@ OpList* Connection::GetOpList() {
         op_list->addEntityOp = new AddEntityOp();
 
         op_list->addEntityOp->EntityId = 2;
-        op_list->addEntityOp->PrefabName = (char*)"1044497584@Island";
+        op_list->addEntityOp->PrefabName = (char*)"1230084434@Island";
         op_list->addEntityOp->PrefabContext = (char*)"defg";
 
         this->didSendAddEntityRequest = true;
@@ -59,48 +59,36 @@ OpList* Connection::GetOpList() {
         bool success = DeserializeComponent(8065, ClientObjectType::Snapshot, buffer, 12, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp = new AddComponentOp[37];
-        op_list->addComponentLen = 37;
+        op_list->addComponentOp = new AddComponentOp[41];
+        op_list->addComponentLen = 41;
 
         op_list->addComponentOp[0].EntityId = 1;
         op_list->addComponentOp[0].InitialComponent.ComponentId = 8065;
         op_list->addComponentOp[0].InitialComponent.Object = object;
 
         delete[] buffer;
-        buffer = new char[89] {
-            // Improbable.Corelibrary.Transforms.TransformState
-            '\xd2', '\x88', '\x5d', '\x55', '\x0a', '\x06', '\x0a', '\x04', '\x00', '\xc8', '\x01', '\x00', '\x12', '\x05', '\x0d', '\x01', '\x00', '\x00', '\x00', '\x22', '\x1b', '\x09', '\x00', '\x00', '\x00', '\x00', '\x00', '\x00', '\x00', '\x00', '\x11', '\x00', '\x00', '\x00', '\x00', '\x00', '\x00', '\x00', '\x00', '\x19', '\x00', '\x00', '\x00', '\x00', '\x00', '\x00', '\x00', '\x00', '\x2a', '\x0f', '\x0d', '\x00', '\x00', '\x00', '\x00', '\x15', '\x00', '\x00', '\x00', '\x00', '\x1d', '\x00', '\x00', '\x00', '\x00', '\x32', '\x0f', '\x0d', '\x00', '\x00', '\x00', '\x00', '\x15', '\x00', '\x00', '\x00', '\x00', '\x1d', '\x00', '\x00', '\x00', '\x00', '\x38', '\x00', '\x45', '\x00', '\x00', '\x00', '\x00'
+        buffer = new char[8] {
+            // Bossa.Travellers.Weather.RadialStormState
+            '\xaa', '\x4f', '\x05', '\x0d', '\x00', '\x00', '\x20', '\x41',
         };
-        success = DeserializeComponent(190602, ClientObjectType::Snapshot, buffer, 89, &object);
+        success = DeserializeComponent(1269, ClientObjectType::Snapshot, buffer, 8, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
         op_list->addComponentOp[1].EntityId = 1;
-        op_list->addComponentOp[1].InitialComponent.ComponentId = 190602;
+        op_list->addComponentOp[1].InitialComponent.ComponentId = 1269;
         op_list->addComponentOp[1].InitialComponent.Object = object;
 
         delete[] buffer;
-        buffer = new char[4] {
-            // new TransformHierarchyState.Data(new TransformHierarchyStateData(new List<Child> { }));
-            '\xca', '\x88', '\x5d', '\x00'
+        buffer = new char[25] {
+            // Bossa.Travellers.Weather.WeatherCellState
+            '\x9a', '\x47', '\x16', '\x15', '\x00', '\x00', '\x20', '\x41', '\x1a', '\x0f', '\x0d', '\x00', '\x00', '\x20', '\x41', '\x15', '\x00', '\x00', '\x20', '\x41', '\x1d', '\x00', '\x00', '\x20', '\x41'
         };
-        success = DeserializeComponent(190601, ClientObjectType::Snapshot, buffer, 4, &object);
+        success = DeserializeComponent(1139, ClientObjectType::Snapshot, buffer, 25, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
         op_list->addComponentOp[2].EntityId = 1;
-        op_list->addComponentOp[2].InitialComponent.ComponentId = 190601;
+        op_list->addComponentOp[2].InitialComponent.ComponentId = 1139;
         op_list->addComponentOp[2].InitialComponent.Object = object;
-
-        delete[] buffer;
-        buffer = new char[18] {
-            // Bossa.Travellers.Inventory.InventoryState
-            '\xca', '\x43', '\x0f', '\x08', '\x64', '\x12', '\x02', '\x7b', '\x7d', '\x28', '\xc8', '\x01', '\x30', '\x64', '\x40', '\x01', '\x48', '\x01'
-        };
-        success = DeserializeComponent(1081, ClientObjectType::Snapshot, buffer, 18, &object);
-        Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
-
-        op_list->addComponentOp[3].EntityId = 1;
-        op_list->addComponentOp[3].InitialComponent.ComponentId = 1081;
-        op_list->addComponentOp[3].InitialComponent.Object = object;
 
         delete[] buffer;
         buffer = new char[46] {
@@ -110,8 +98,20 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(1086, ClientObjectType::Snapshot, buffer, 46, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
+        op_list->addComponentOp[3].EntityId = 1;
+        op_list->addComponentOp[3].InitialComponent.ComponentId = 1086;
+        op_list->addComponentOp[3].InitialComponent.Object = object;
+
+        delete[] buffer;
+        buffer = new char[18] {
+            // Bossa.Travellers.Inventory.InventoryState
+            '\xca', '\x43', '\x0f', '\x08', '\x64', '\x12', '\x02', '\x7b', '\x7d', '\x28', '\xc8', '\x01', '\x30', '\x64', '\x40', '\x01', '\x48', '\x01'
+        };
+        success = DeserializeComponent(1081, ClientObjectType::Snapshot, buffer, 18, &object);
+        Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
+
         op_list->addComponentOp[4].EntityId = 1;
-        op_list->addComponentOp[4].InitialComponent.ComponentId = 1086;
+        op_list->addComponentOp[4].InitialComponent.ComponentId = 1081;
         op_list->addComponentOp[4].InitialComponent.Object = object;
 
         delete[] buffer;
@@ -182,9 +182,9 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(6924, ClientObjectType::Snapshot, buffer, 17, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp[9].EntityId = 1;
-        op_list->addComponentOp[9].InitialComponent.ComponentId = 6924;
-        op_list->addComponentOp[9].InitialComponent.Object = object;
+        op_list->addComponentOp[10].EntityId = 1;
+        op_list->addComponentOp[10].InitialComponent.ComponentId = 6924;
+        op_list->addComponentOp[10].InitialComponent.Object = object;
 
         delete[] buffer;
         buffer = new char[44] {
@@ -194,9 +194,9 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(6925, ClientObjectType::Snapshot, buffer, 44, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp[10].EntityId = 1;
-        op_list->addComponentOp[10].InitialComponent.ComponentId = 6925;
-        op_list->addComponentOp[10].InitialComponent.Object = object;
+        op_list->addComponentOp[11].EntityId = 1;
+        op_list->addComponentOp[11].InitialComponent.ComponentId = 6925;
+        op_list->addComponentOp[11].InitialComponent.Object = object;
 
         delete[] buffer;
         buffer = new char[3] {
@@ -206,9 +206,33 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(1082, ClientObjectType::Snapshot, buffer, 3, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp[11].EntityId = 1;
-        op_list->addComponentOp[11].InitialComponent.ComponentId = 1082;
-        op_list->addComponentOp[11].InitialComponent.Object = object;
+        op_list->addComponentOp[12].EntityId = 1;
+        op_list->addComponentOp[12].InitialComponent.ComponentId = 1082;
+        op_list->addComponentOp[12].InitialComponent.Object = object;
+
+        delete[] buffer;
+        buffer = new char[4] {
+            // new TransformHierarchyState.Data(new TransformHierarchyStateData(new List<Child> { }));
+            '\xca', '\x88', '\x5d', '\x00'
+        };
+        success = DeserializeComponent(190601, ClientObjectType::Snapshot, buffer, 4, &object);
+        Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
+
+        op_list->addComponentOp[13].EntityId = 1;
+        op_list->addComponentOp[13].InitialComponent.ComponentId = 190601;
+        op_list->addComponentOp[13].InitialComponent.Object = object;
+
+        delete[] buffer;
+        buffer = new char[89] {
+            // Improbable.Corelibrary.Transforms.TransformState
+            '\xd2', '\x88', '\x5d', '\x55', '\x0a', '\x06', '\x0a', '\x04', '\x00', '\xc8', '\x01', '\x00', '\x12', '\x05', '\x0d', '\x01', '\x00', '\x00', '\x00', '\x22', '\x1b', '\x09', '\x00', '\x00', '\x00', '\x00', '\x00', '\x00', '\x00', '\x00', '\x11', '\x00', '\x00', '\x00', '\x00', '\x00', '\x00', '\x00', '\x00', '\x19', '\x00', '\x00', '\x00', '\x00', '\x00', '\x00', '\x00', '\x00', '\x2a', '\x0f', '\x0d', '\x00', '\x00', '\x00', '\x00', '\x15', '\x00', '\x00', '\x00', '\x00', '\x1d', '\x00', '\x00', '\x00', '\x00', '\x32', '\x0f', '\x0d', '\x00', '\x00', '\x00', '\x00', '\x15', '\x00', '\x00', '\x00', '\x00', '\x1d', '\x00', '\x00', '\x00', '\x00', '\x38', '\x00', '\x45', '\x00', '\x00', '\x00', '\x00'
+        };
+        success = DeserializeComponent(190602, ClientObjectType::Snapshot, buffer, 89, &object);
+        Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
+
+        op_list->addComponentOp[14].EntityId = 1;
+        op_list->addComponentOp[14].InitialComponent.ComponentId = 190602;
+        op_list->addComponentOp[14].InitialComponent.Object = object;
 
         delete[] buffer;
         buffer = new char[4] {
@@ -218,9 +242,9 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(4444, ClientObjectType::Snapshot, buffer, 4, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp[12].EntityId = 1;
-        op_list->addComponentOp[12].InitialComponent.ComponentId = 4444;
-        op_list->addComponentOp[12].InitialComponent.Object = object;
+        op_list->addComponentOp[15].EntityId = 1;
+        op_list->addComponentOp[15].InitialComponent.ComponentId = 4444;
+        op_list->addComponentOp[15].InitialComponent.Object = object;
 
         delete[] buffer;
         buffer = new char[9] {
@@ -230,9 +254,9 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(1109, ClientObjectType::Snapshot, buffer, 9, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp[13].EntityId = 1;
-        op_list->addComponentOp[13].InitialComponent.ComponentId = 1109;
-        op_list->addComponentOp[13].InitialComponent.Object = object;
+        op_list->addComponentOp[16].EntityId = 1;
+        op_list->addComponentOp[16].InitialComponent.ComponentId = 1109;
+        op_list->addComponentOp[16].InitialComponent.Object = object;
 
         delete[] buffer;
         buffer = new char[5] {
@@ -242,9 +266,9 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(1071, ClientObjectType::Snapshot, buffer, 5, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp[14].EntityId = 1;
-        op_list->addComponentOp[14].InitialComponent.ComponentId = 1071;
-        op_list->addComponentOp[14].InitialComponent.Object = object;
+        op_list->addComponentOp[17].EntityId = 1;
+        op_list->addComponentOp[17].InitialComponent.ComponentId = 1071;
+        op_list->addComponentOp[17].InitialComponent.Object = object;
 
         delete[] buffer;
         buffer = new char[17] {
@@ -254,9 +278,9 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(1131, ClientObjectType::Snapshot, buffer, 17, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp[15].EntityId = 1;
-        op_list->addComponentOp[15].InitialComponent.ComponentId = 1131;
-        op_list->addComponentOp[15].InitialComponent.Object = object;
+        op_list->addComponentOp[18].EntityId = 1;
+        op_list->addComponentOp[18].InitialComponent.ComponentId = 1131;
+        op_list->addComponentOp[18].InitialComponent.Object = object;
 
         delete[] buffer;
         buffer = new char[10] {
@@ -266,9 +290,9 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(1098, ClientObjectType::Snapshot, buffer, 10, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp[16].EntityId = 1;
-        op_list->addComponentOp[16].InitialComponent.ComponentId = 1098;
-        op_list->addComponentOp[16].InitialComponent.Object = object;
+        op_list->addComponentOp[19].EntityId = 1;
+        op_list->addComponentOp[19].InitialComponent.ComponentId = 1098;
+        op_list->addComponentOp[19].InitialComponent.Object = object;
 
         delete[] buffer;
         buffer = new char[5] {
@@ -278,9 +302,9 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(1207, ClientObjectType::Snapshot, buffer, 5, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp[17].EntityId = 1;
-        op_list->addComponentOp[17].InitialComponent.ComponentId = 1207;
-        op_list->addComponentOp[17].InitialComponent.Object = object;
+        op_list->addComponentOp[20].EntityId = 1;
+        op_list->addComponentOp[20].InitialComponent.ComponentId = 1207;
+        op_list->addComponentOp[20].InitialComponent.Object = object;
 
         delete[] buffer;
         buffer = new char[59] {
@@ -290,9 +314,9 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(2001, ClientObjectType::Snapshot, buffer, 59, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp[18].EntityId = 1;
-        op_list->addComponentOp[18].InitialComponent.ComponentId = 2001;
-        op_list->addComponentOp[18].InitialComponent.Object = object;
+        op_list->addComponentOp[21].EntityId = 1;
+        op_list->addComponentOp[21].InitialComponent.ComponentId = 2001;
+        op_list->addComponentOp[21].InitialComponent.Object = object;
 
         delete[] buffer;
         buffer = new char[7] {
@@ -302,9 +326,9 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(1332, ClientObjectType::Snapshot, buffer, 7, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp[19].EntityId = 1;
-        op_list->addComponentOp[19].InitialComponent.ComponentId = 1332;
-        op_list->addComponentOp[19].InitialComponent.Object = object;
+        op_list->addComponentOp[22].EntityId = 1;
+        op_list->addComponentOp[22].InitialComponent.ComponentId = 1332;
+        op_list->addComponentOp[22].InitialComponent.Object = object;
 
         delete[] buffer;
         buffer = new char[11] {
@@ -314,9 +338,9 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(1079, ClientObjectType::Snapshot, buffer, 11, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp[20].EntityId = 1;
-        op_list->addComponentOp[20].InitialComponent.ComponentId = 1079;
-        op_list->addComponentOp[20].InitialComponent.Object = object;
+        op_list->addComponentOp[23].EntityId = 1;
+        op_list->addComponentOp[23].InitialComponent.ComponentId = 1079;
+        op_list->addComponentOp[23].InitialComponent.Object = object;
 
         delete[] buffer;
         buffer = new char[10] {
@@ -326,9 +350,9 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(190002, ClientObjectType::Snapshot, buffer, 10, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp[21].EntityId = 1;
-        op_list->addComponentOp[21].InitialComponent.ComponentId = 190002;
-        op_list->addComponentOp[21].InitialComponent.Object = object;
+        op_list->addComponentOp[24].EntityId = 1;
+        op_list->addComponentOp[24].InitialComponent.ComponentId = 190002;
+        op_list->addComponentOp[24].InitialComponent.Object = object;
 
         delete[] buffer;
         buffer = new char[16] {
@@ -338,9 +362,9 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(190000, ClientObjectType::Snapshot, buffer, 16, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp[22].EntityId = 1;
-        op_list->addComponentOp[22].InitialComponent.ComponentId = 190000;
-        op_list->addComponentOp[22].InitialComponent.Object = object;
+        op_list->addComponentOp[25].EntityId = 1;
+        op_list->addComponentOp[25].InitialComponent.ComponentId = 190000;
+        op_list->addComponentOp[25].InitialComponent.Object = object;
 
         delete[] buffer;
         buffer = new char[10] {
@@ -350,9 +374,9 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(1150, ClientObjectType::Snapshot, buffer, 10, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp[23].EntityId = 1;
-        op_list->addComponentOp[23].InitialComponent.ComponentId = 1150;
-        op_list->addComponentOp[23].InitialComponent.Object = object;
+        op_list->addComponentOp[26].EntityId = 1;
+        op_list->addComponentOp[26].InitialComponent.ComponentId = 1150;
+        op_list->addComponentOp[26].InitialComponent.Object = object;
 
         delete[] buffer;
         buffer = new char[14] {
@@ -362,9 +386,9 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(1219, ClientObjectType::Snapshot, buffer, 14, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp[24].EntityId = 1;
-        op_list->addComponentOp[24].InitialComponent.ComponentId = 1219;
-        op_list->addComponentOp[24].InitialComponent.Object = object;
+        op_list->addComponentOp[27].EntityId = 1;
+        op_list->addComponentOp[27].InitialComponent.ComponentId = 1219;
+        op_list->addComponentOp[27].InitialComponent.Object = object;
 
         delete[] buffer;
         buffer = new char[30] {
@@ -374,9 +398,9 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(1005, ClientObjectType::Snapshot, buffer, 30, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp[25].EntityId = 1;
-        op_list->addComponentOp[25].InitialComponent.ComponentId = 1005;
-        op_list->addComponentOp[25].InitialComponent.Object = object;
+        op_list->addComponentOp[28].EntityId = 1;
+        op_list->addComponentOp[28].InitialComponent.ComponentId = 1005;
+        op_list->addComponentOp[28].InitialComponent.Object = object;
 
         delete[] buffer;
         buffer = new char[6] {
@@ -386,9 +410,9 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(8055, ClientObjectType::Snapshot, buffer, 6, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp[26].EntityId = 1;
-        op_list->addComponentOp[26].InitialComponent.ComponentId = 8055;
-        op_list->addComponentOp[26].InitialComponent.Object = object;
+        op_list->addComponentOp[29].EntityId = 1;
+        op_list->addComponentOp[29].InitialComponent.ComponentId = 8055;
+        op_list->addComponentOp[29].InitialComponent.Object = object;
 
         delete[] buffer;
         buffer = new char[4] {
@@ -398,9 +422,9 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(4329, ClientObjectType::Snapshot, buffer, 4, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp[27].EntityId = 1;
-        op_list->addComponentOp[27].InitialComponent.ComponentId = 4329;
-        op_list->addComponentOp[27].InitialComponent.Object = object;
+        op_list->addComponentOp[30].EntityId = 1;
+        op_list->addComponentOp[30].InitialComponent.ComponentId = 4329;
+        op_list->addComponentOp[30].InitialComponent.Object = object;
 
         delete[] buffer;
         buffer = new char[4] {
@@ -410,9 +434,9 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(8060, ClientObjectType::Snapshot, buffer, 4, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp[28].EntityId = 1;
-        op_list->addComponentOp[28].InitialComponent.ComponentId = 8060;
-        op_list->addComponentOp[28].InitialComponent.Object = object;
+        op_list->addComponentOp[31].EntityId = 1;
+        op_list->addComponentOp[31].InitialComponent.ComponentId = 8060;
+        op_list->addComponentOp[31].InitialComponent.Object = object;
 
         delete[] buffer;
         buffer = new char[18] {
@@ -422,9 +446,9 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(1095, ClientObjectType::Snapshot, buffer, 18, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp[29].EntityId = 1;
-        op_list->addComponentOp[29].InitialComponent.ComponentId = 1095;
-        op_list->addComponentOp[29].InitialComponent.Object = object;
+        op_list->addComponentOp[32].EntityId = 1;
+        op_list->addComponentOp[32].InitialComponent.ComponentId = 1095;
+        op_list->addComponentOp[32].InitialComponent.Object = object;
 
         delete[] buffer;
         buffer = new char[9] {
@@ -434,9 +458,9 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(190300, ClientObjectType::Snapshot, buffer, 9, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp[30].EntityId = 1;
-        op_list->addComponentOp[30].InitialComponent.ComponentId = 190300;
-        op_list->addComponentOp[30].InitialComponent.Object = object;
+        op_list->addComponentOp[33].EntityId = 1;
+        op_list->addComponentOp[33].InitialComponent.ComponentId = 190300;
+        op_list->addComponentOp[33].InitialComponent.Object = object;
 
         delete[] buffer;
         buffer = new char[56] {
@@ -446,9 +470,9 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(1006, ClientObjectType::Snapshot, buffer, 56, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp[31].EntityId = 1;
-        op_list->addComponentOp[31].InitialComponent.ComponentId = 1006;
-        op_list->addComponentOp[31].InitialComponent.Object = object;
+        op_list->addComponentOp[34].EntityId = 1;
+        op_list->addComponentOp[34].InitialComponent.ComponentId = 1006;
+        op_list->addComponentOp[34].InitialComponent.Object = object;
 
         delete[] buffer;
         buffer = new char[30] {
@@ -458,9 +482,9 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(1008, ClientObjectType::Snapshot, buffer, 30, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp[32].EntityId = 1;
-        op_list->addComponentOp[32].InitialComponent.ComponentId = 1008;
-        op_list->addComponentOp[32].InitialComponent.Object = object;
+        op_list->addComponentOp[35].EntityId = 1;
+        op_list->addComponentOp[35].InitialComponent.ComponentId = 1008;
+        op_list->addComponentOp[35].InitialComponent.Object = object;
 
         delete[] buffer;
         buffer = new char[66] {
@@ -470,9 +494,9 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(1073, ClientObjectType::Snapshot, buffer, 66, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp[33].EntityId = 1;
-        op_list->addComponentOp[33].InitialComponent.ComponentId = 1073;
-        op_list->addComponentOp[33].InitialComponent.Object = object;
+        op_list->addComponentOp[36].EntityId = 1;
+        op_list->addComponentOp[36].InitialComponent.ComponentId = 1073;
+        op_list->addComponentOp[36].InitialComponent.Object = object;
 
         delete[] buffer;
         buffer = new char[14] {
@@ -482,9 +506,9 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(9005, ClientObjectType::Snapshot, buffer, 14, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp[34].EntityId = 1;
-        op_list->addComponentOp[34].InitialComponent.ComponentId = 9005;
-        op_list->addComponentOp[34].InitialComponent.Object = object;
+        op_list->addComponentOp[37].EntityId = 1;
+        op_list->addComponentOp[37].InitialComponent.ComponentId = 9005;
+        op_list->addComponentOp[37].InitialComponent.Object = object;
 
         delete[] buffer;
         buffer = new char[3] {
@@ -494,9 +518,9 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(1040, ClientObjectType::Snapshot, buffer, 3, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp[35].EntityId = 1;
-        op_list->addComponentOp[35].InitialComponent.ComponentId = 1040;
-        op_list->addComponentOp[35].InitialComponent.Object = object;
+        op_list->addComponentOp[38].EntityId = 1;
+        op_list->addComponentOp[38].InitialComponent.ComponentId = 1040;
+        op_list->addComponentOp[38].InitialComponent.Object = object;
 
         delete[] buffer;
         buffer = new char[4] {
@@ -506,9 +530,23 @@ OpList* Connection::GetOpList() {
         success = DeserializeComponent(6902, ClientObjectType::Snapshot, buffer, 4, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
 
-        op_list->addComponentOp[36].EntityId = 1;
-        op_list->addComponentOp[36].InitialComponent.ComponentId = 6902;
-        op_list->addComponentOp[36].InitialComponent.Object = object;
+        op_list->addComponentOp[39].EntityId = 1;
+        op_list->addComponentOp[39].InitialComponent.ComponentId = 6902;
+        op_list->addComponentOp[39].InitialComponent.Object = object;
+
+        //---
+
+        delete[] buffer;
+        buffer = new char[20] {
+            // Bossa.Travellers.Loot.IslandLightningTimerState
+            '\xb2', '\x4e', '\x11', '\x08', '\x32', '\x10', '\x64', '\x18', '\xd2', '\x09', '\x20', '\xa8', '\x12', '\x28', '\x01', '\x30', '\x01', '\x3a', '\x01', '\x01'
+        };
+        success = DeserializeComponent(1254, ClientObjectType::Snapshot, buffer, 25, &object);
+        Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
+
+        op_list->addComponentOp[40].EntityId = 2;
+        op_list->addComponentOp[40].InitialComponent.ComponentId = 1254;
+        op_list->addComponentOp[40].InitialComponent.Object = object;
         
         /*
         char* buffer = new char[1000];
@@ -516,7 +554,7 @@ OpList* Connection::GetOpList() {
         ClientObject* object = new ClientObject();
         object->Reference = 1; // injected by our mod, see ChangelogLoader_Patch.cs. Object is broken somehow, set breakpoint at ClientObjects.Dereference and set reference to 1 in debugger.
 
-        bool success = SerializeComponent(1073, ClientObjectType::Snapshot, object, &buffer, &length);
+        bool success = SerializeComponent(1254, ClientObjectType::Snapshot, object, &buffer, &length);
 
         if (success) {
             Logger::Debug("IT WORKED!");

@@ -29,6 +29,8 @@ using Improbable.Corelib.Metrics;
 using Bossa.Travellers.Devconsole;
 using Bossa.Travellers.Social;
 using Bossa.Travellers.Misc;
+using Bossa.Travellers.Weather;
+using Bossa.Travellers.Loot;
 
 namespace WorldsAdriftReborn.Patching.Dynamic.InjectFallbackPatchnotes
 {
@@ -194,8 +196,22 @@ namespace WorldsAdriftReborn.Patching.Dynamic.InjectFallbackPatchnotes
 
             GsimEventAuditState.Data gsData = new GsimEventAuditState.Data(new GsimEventAuditStateData(new Map<string, int> { }));
 
+            RadialStormState.Data rsData = new RadialStormState.Data(new RadialStormStateData(10f));
+
+            WeatherCellState.Data wcData = new WeatherCellState.Data(new WeatherCellStateData(10f, new Vector3f(10f, 10f, 10f)));
+
+            //---
+
+            IslandLightningTimerState.Data ilData = new IslandLightningTimerState.Data(new IslandLightningTimerStateData(   50,
+                                                                                                                            100,
+                                                                                                                            1234,
+                                                                                                                            2344,
+                                                                                                                            true,
+                                                                                                                            1,
+                                                                                                                            new List<EntityId> { new EntityId(1) }));
+
             //Map<ulong, object> map = (Map<ulong, object>)AccessTools.Field(typeof(ClientObjects), "inFlightUpdates").GetValue(ClientObjects.Instance);
-            //map.Add(1, capData); // need to access this through serializer to see its output so we know how to make it ourself
+            //map.Add(1, ilData); // need to access this through serializer to see its output so we know how to make it ourself
             //AccessTools.Field(typeof(ClientObjects), "inFlightUpdates").SetValue(ClientObjects.Instance, map);
 
             return false;
