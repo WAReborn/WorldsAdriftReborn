@@ -12,15 +12,19 @@ namespace WorldsAdriftServer.Handlers
 
         protected override void OnReceived( byte[] buffer, long offset, long size )
         {
-            Console.WriteLine("OnReceived");
-            base.OnReceived( buffer, offset, size );
+            // OnReceived isn't guaranteed to get entire request. Report what was received.
+            for (int ByteIndex=0; ByteIndex < size; ++ByteIndex)
+            {
+                Console.Write((char)buffer[ByteIndex]);
+            }
+            base.OnReceived(buffer, offset, size);
         }
 
+        // NOTE: OnReceivedRequest is only called once a complete request has been constructed inside HttpRequest's _cache.
         protected override void OnReceivedRequest( HttpRequest request )
         {
             if(request != null)
             {
-                Console.WriteLine(request);
                 if(request.Method == "POST" && request.Url == "/authenticate")
                 {
                     SteamAuthenticationHandler.HandleAuthRequest(this, request, "Jim Hawkins");
