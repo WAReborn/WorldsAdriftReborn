@@ -117,7 +117,7 @@ namespace WorldsAdriftReborn.Patching.Dynamic.InjectFallbackPatchnotes
 
             BuilderServerState.Data bsData = new BuilderServerState.Data(new BuilderServerStateData(new EntityId(0)));
 
-            WorldData.Data woData = new WorldData.Data(new WorldDataData(new EntityId(0), 40f, 1f, 1));
+            WorldData.Data woData = new WorldData.Data(new WorldDataData(new EntityId(0), 0.15f, 1f, 1));
 
             RopeControlPoints.Data rcData = new RopeControlPoints.Data(new RopeControlPointsData(new List<Coordinates> { }, new List<DynamicRopePoint> { }, false, 0f));
 
@@ -170,7 +170,7 @@ namespace WorldsAdriftReborn.Patching.Dynamic.InjectFallbackPatchnotes
 
             FeedbackListener.Data fbData = new FeedbackListener.Data();
 
-            FSimTimeState.Data fsData = new FSimTimeState.Data(new FSimTimeStateData(40f, "fsimId", 100));
+            FSimTimeState.Data fsData = new FSimTimeState.Data(new FSimTimeStateData(0.15f, "fsimId", 100));
 
             ClientPhysicsLatency.Data cpData = new ClientPhysicsLatency.Data(new ClientPhysicsLatencyData(250, 100));
 
@@ -196,9 +196,9 @@ namespace WorldsAdriftReborn.Patching.Dynamic.InjectFallbackPatchnotes
 
             GsimEventAuditState.Data gsData = new GsimEventAuditState.Data(new GsimEventAuditStateData(new Map<string, int> { }));
 
-            RadialStormState.Data rsData = new RadialStormState.Data(new RadialStormStateData(10f));
+            RadialStormState.Data rsData = new RadialStormState.Data(new RadialStormStateData(0f));
 
-            WeatherCellState.Data wcData = new WeatherCellState.Data(new WeatherCellStateData(10f, new Vector3f(10f, 10f, 10f)));
+            WeatherCellState.Data wcData = new WeatherCellState.Data(new WeatherCellStateData(200f, new Vector3f(10f, 10f, 10f)));
 
             //---
 
@@ -211,7 +211,7 @@ namespace WorldsAdriftReborn.Patching.Dynamic.InjectFallbackPatchnotes
                                                                                                                             new List<EntityId> { new EntityId(1) }));
 
             //Map<ulong, object> map = (Map<ulong, object>)AccessTools.Field(typeof(ClientObjects), "inFlightUpdates").GetValue(ClientObjects.Instance);
-            //map.Add(1, ilData); // need to access this through serializer to see its output so we know how to make it ourself
+            //map.Add(1, fsData); // need to access this through serializer to see its output so we know how to make it ourself
             //AccessTools.Field(typeof(ClientObjects), "inFlightUpdates").SetValue(ClientObjects.Instance, map);
 
             return false;

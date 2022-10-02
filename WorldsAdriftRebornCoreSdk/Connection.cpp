@@ -45,7 +45,7 @@ OpList* Connection::GetOpList() {
         op_list->addEntityOp = new AddEntityOp();
 
         op_list->addEntityOp->EntityId = 2;
-        op_list->addEntityOp->PrefabName = (char*)"1230084434@Island";
+        op_list->addEntityOp->PrefabName = (char*)"949069116@Island";
         op_list->addEntityOp->PrefabContext = (char*)"defg";
 
         this->didSendAddEntityRequest = true;
@@ -65,11 +65,16 @@ OpList* Connection::GetOpList() {
         op_list->addComponentOp[0].EntityId = 1;
         op_list->addComponentOp[0].InitialComponent.ComponentId = 8065;
         op_list->addComponentOp[0].InitialComponent.Object = object;
-
+        
         delete[] buffer;
         buffer = new char[8] {
             // Bossa.Travellers.Weather.RadialStormState
-            '\xaa', '\x4f', '\x05', '\x0d', '\x00', '\x00', '\x20', '\x41',
+            // weight 10
+            //'\xaa', '\x4f', '\x05', '\x0d', '\x00', '\x00', '\x20', '\x41',
+            // weight 1
+            //'\xaa', '\x4f', '\x05', '\x0d', '\x00', '\x00', '\x80', '\x3f',
+            // weight 0
+            '\xaa', '\x4f', '\x05', '\x0d', '\x00', '\x00', '\x00', '\x00',
         };
         success = DeserializeComponent(1269, ClientObjectType::Snapshot, buffer, 8, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
@@ -81,7 +86,12 @@ OpList* Connection::GetOpList() {
         delete[] buffer;
         buffer = new char[25] {
             // Bossa.Travellers.Weather.WeatherCellState
-            '\x9a', '\x47', '\x16', '\x15', '\x00', '\x00', '\x20', '\x41', '\x1a', '\x0f', '\x0d', '\x00', '\x00', '\x20', '\x41', '\x15', '\x00', '\x00', '\x20', '\x41', '\x1d', '\x00', '\x00', '\x20', '\x41'
+            // pressure 10
+            //'\x9a', '\x47', '\x16', '\x15', '\x00', '\x00', '\x20', '\x41', '\x1a', '\x0f', '\x0d', '\x00', '\x00', '\x20', '\x41', '\x15', '\x00', '\x00', '\x20', '\x41', '\x1d', '\x00', '\x00', '\x20', '\x41'
+            // pressure 200
+            //'\x9a', '\x47', '\x16', '\x15', '\x00', '\x00', '\x48', '\x43', '\x1a', '\x0f', '\x0d', '\x00', '\x00', '\x20', '\x41', '\x15', '\x00', '\x00', '\x20', '\x41', '\x1d', '\x00', '\x00', '\x20', '\x41'
+            // pressure 0
+            '\x9a', '\x47', '\x16', '\x15', '\x00', '\x00', '\x00', '\x00', '\x1a', '\x0f', '\x0d', '\x00', '\x00', '\x20', '\x41', '\x15', '\x00', '\x00', '\x20', '\x41', '\x1d', '\x00', '\x00', '\x20', '\x41'
         };
         success = DeserializeComponent(1139, ClientObjectType::Snapshot, buffer, 25, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
@@ -89,7 +99,7 @@ OpList* Connection::GetOpList() {
         op_list->addComponentOp[2].EntityId = 1;
         op_list->addComponentOp[2].InitialComponent.ComponentId = 1139;
         op_list->addComponentOp[2].InitialComponent.Object = object;
-
+        
         delete[] buffer;
         buffer = new char[46] {
             // Bossa.Travellers.Player.PlayerName
@@ -273,7 +283,7 @@ OpList* Connection::GetOpList() {
         delete[] buffer;
         buffer = new char[17] {
             // Bossa.Travellers.World.WorldData
-            '\xda', '\x46', '\x0e', '\x08', '\x00', '\x15', '\x00', '\x00', '\x20', '\x42', '\x1d', '\x00', '\x00', '\x80', '\x3f', '\x20', '\x01'
+            '\xda', '\x46', '\x0e', '\x08', '\x00', '\x15', '\x9a', '\x99', '\x19', '\x3e', '\x1d', '\x00', '\x00', '\x80', '\x3f', '\x20', '\x01'
         };
         success = DeserializeComponent(1131, ClientObjectType::Snapshot, buffer, 17, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
@@ -441,7 +451,10 @@ OpList* Connection::GetOpList() {
         delete[] buffer;
         buffer = new char[18] {
             // Bossa.Travellers.Clock.FSimTimeState
-            '\xba', '\x44', '\x0f', '\x0d', '\x00', '\x00', '\x20', '\x42', '\x12', '\x06', '\x66', '\x73', '\x69', '\x6d', '\x49', '\x64', '\x18', '\x64'
+            // time 40
+            //'\xba', '\x44', '\x0f', '\x0d', '\x00', '\x00', '\x20', '\x42', '\x12', '\x06', '\x66', '\x73', '\x69', '\x6d', '\x49', '\x64', '\x18', '\x64'
+            // time 0.15
+            '\xba', '\x44', '\x0f', '\x0d', '\x9a', '\x99', '\x19', '\x3e', '\x12', '\x06', '\x66', '\x73', '\x69', '\x6d', '\x49', '\x64', '\x18', '\x64'
         };
         success = DeserializeComponent(1095, ClientObjectType::Snapshot, buffer, 18, &object);
         Logger::Debug("refid = " + std::to_string(object->Reference) + " success = " + (success ? "true" : "false"));
@@ -554,7 +567,7 @@ OpList* Connection::GetOpList() {
         ClientObject* object = new ClientObject();
         object->Reference = 1; // injected by our mod, see ChangelogLoader_Patch.cs. Object is broken somehow, set breakpoint at ClientObjects.Dereference and set reference to 1 in debugger.
 
-        bool success = SerializeComponent(1254, ClientObjectType::Snapshot, object, &buffer, &length);
+        bool success = SerializeComponent(1095, ClientObjectType::Snapshot, object, &buffer, &length);
 
         if (success) {
             Logger::Debug("IT WORKED!");
