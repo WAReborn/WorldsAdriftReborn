@@ -24,7 +24,7 @@ This will compile into a .dll which you use to replace the original one.
 
 Our implementation offers the same methods as SpatialOs does. This means the game still thinks its talking to the SpatialOs dll while it is infact calling our own methods. This will allow us to implement our own networking.
 
-At the moment we can instruct the game to load and spawn entities this way, the next thing will be to add and update their components to get a similar result as the one you see in the last video found [here](https://www.youtube.com/watch?v=9qpqRZ9W9GE)
+At the moment we can instruct the game to load and spawn entities this way, the next thing will be to add and update their components to get a similar result as the one you see in the last video found [here](https://www.youtube.com/watch?v=IWKu2Olw0rc)
 
 ## Build Instructions
 First you will need the correct version of the game. Get a copy of [DepotDownloader](https://github.com/SteamRE/DepotDownloader) and run `DepotDownloader.exe -app 322780 -depot 322783 -manifest 4624240741051053915 -username <yourusername> -password <yourpassword>`
