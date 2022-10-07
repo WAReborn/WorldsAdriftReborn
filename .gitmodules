@@ -1,0 +1,3 @@
+[submodule "WorldsAdriftRebornCoreSdk/enet"]
+	path = WorldsAdriftRebornCoreSdk/enet
+	url = https://github.com/lsalzman/enet

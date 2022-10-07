@@ -24,10 +24,20 @@
     <ClInclude Include="ConnectionFuture.h" />
     <ClInclude Include="DeploymentListFuture.h" />
     <ClInclude Include="Dispatcher.h" />
+    <ClInclude Include="enet\include\enet\callbacks.h" />
+    <ClInclude Include="enet\include\enet\enet.h" />
+    <ClInclude Include="enet\include\enet\list.h" />
+    <ClInclude Include="enet\include\enet\protocol.h" />
+    <ClInclude Include="enet\include\enet\time.h" />
+    <ClInclude Include="enet\include\enet\types.h" />
+    <ClInclude Include="enet\include\enet\unix.h" />
+    <ClInclude Include="enet\include\enet\utility.h" />
+    <ClInclude Include="enet\include\enet\win32.h" />
     <ClInclude Include="Exports.h" />
     <ClInclude Include="Locator.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="OpList.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Structs.h" />
     <ClInclude Include="VTable.h" />
   </ItemGroup>
@@ -36,10 +46,21 @@
     <ClCompile Include="ConnectionFuture.cpp" />
     <ClCompile Include="DeploymentListFuture.cpp" />
     <ClCompile Include="Dispatcher.cpp" />
+    <ClCompile Include="enet\callbacks.c" />
+    <ClCompile Include="enet\compress.c" />
+    <ClCompile Include="enet\host.c" />
+    <ClCompile Include="enet\list.c" />
+    <ClCompile Include="enet\packet.c" />
+    <ClCompile Include="enet\peer.c" />
+    <ClCompile Include="enet\protocol.c" />
+    <ClCompile Include="enet\unix.c" />
+    <ClCompile Include="enet\win32.c" />
     <ClCompile Include="Exports.cpp" />
     <ClCompile Include="Locator.cpp" />
     <ClCompile Include="Logger.cpp" />
-    <ClCompile Include="OpList.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="WorldsAdriftRebornCoreSdk.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -102,6 +123,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <TargetName>CoreSdkDll</TargetName>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -151,6 +173,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)\\enet\\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

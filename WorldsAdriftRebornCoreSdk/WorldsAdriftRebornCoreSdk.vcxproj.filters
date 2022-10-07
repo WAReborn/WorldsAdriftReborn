@@ -13,66 +13,158 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
+    <Filter Include="include\structs">
+      <UniqueIdentifier>{df4e9dfa-adb9-4b18-a345-2ddac419536e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\routing">
+      <UniqueIdentifier>{5bf451e4-0c75-47f4-9435-44e33a9b765c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\processing">
+      <UniqueIdentifier>{81e3e30e-ed01-4b65-9bdd-1720cc4a7719}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\debug">
+      <UniqueIdentifier>{1463dc1f-eac7-46cd-9709-7e68a22a2fa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\networking">
+      <UniqueIdentifier>{0a2d28a8-fa9e-418c-8556-f2cd4f8417aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\processing">
+      <UniqueIdentifier>{771f61b6-0c5c-4f88-8edb-4da5d973f46b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\networking">
+      <UniqueIdentifier>{28d7062d-f4e1-42dd-805d-c72b2ac1b81b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\routing">
+      <UniqueIdentifier>{b6cde30e-051c-4034-97cf-5953281ac2c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\debug">
+      <UniqueIdentifier>{834f98f7-34c4-4008-ba1a-17b552b4afc1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\enet">
+      <UniqueIdentifier>{e1e33819-1e3d-4b88-a25c-94bb67675815}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\enet">
+      <UniqueIdentifier>{1a4923ae-471f-4588-9a2b-b42dbd2b6aa5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Exports.h">
-      <Filter>include</Filter>
+    <ClInclude Include="OpList.h">
+      <Filter>include\structs</Filter>
     </ClInclude>
     <ClInclude Include="Structs.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="Dispatcher.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="DeploymentListFuture.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="ConnectionFuture.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="Connection.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="OpList.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="Locator.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="Callbacks.h">
-      <Filter>include</Filter>
+      <Filter>include\structs</Filter>
     </ClInclude>
     <ClInclude Include="VTable.h">
-      <Filter>include</Filter>
+      <Filter>include\structs</Filter>
+    </ClInclude>
+    <ClInclude Include="Callbacks.h">
+      <Filter>include\routing</Filter>
+    </ClInclude>
+    <ClInclude Include="Exports.h">
+      <Filter>include\routing</Filter>
+    </ClInclude>
+    <ClInclude Include="DeploymentListFuture.h">
+      <Filter>include\routing</Filter>
+    </ClInclude>
+    <ClInclude Include="Locator.h">
+      <Filter>include\routing</Filter>
+    </ClInclude>
+    <ClInclude Include="Dispatcher.h">
+      <Filter>include\processing</Filter>
     </ClInclude>
     <ClInclude Include="Logger.h">
-      <Filter>include</Filter>
+      <Filter>include\debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Connection.h">
+      <Filter>include\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnectionFuture.h">
+      <Filter>include\networking</Filter>
+    </ClInclude>
+    <ClInclude Include="enet\include\enet\callbacks.h">
+      <Filter>include\enet</Filter>
+    </ClInclude>
+    <ClInclude Include="enet\include\enet\enet.h">
+      <Filter>include\enet</Filter>
+    </ClInclude>
+    <ClInclude Include="enet\include\enet\list.h">
+      <Filter>include\enet</Filter>
+    </ClInclude>
+    <ClInclude Include="enet\include\enet\protocol.h">
+      <Filter>include\enet</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>include\enet</Filter>
+    </ClInclude>
+    <ClInclude Include="enet\include\enet\time.h">
+      <Filter>include\enet</Filter>
+    </ClInclude>
+    <ClInclude Include="enet\include\enet\types.h">
+      <Filter>include\enet</Filter>
+    </ClInclude>
+    <ClInclude Include="enet\include\enet\unix.h">
+      <Filter>include\enet</Filter>
+    </ClInclude>
+    <ClInclude Include="enet\include\enet\utility.h">
+      <Filter>include\enet</Filter>
+    </ClInclude>
+    <ClInclude Include="enet\include\enet\win32.h">
+      <Filter>include\enet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dispatcher.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="DeploymentListFuture.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="ConnectionFuture.cpp">
-      <Filter>src</Filter>
+      <Filter>src\processing</Filter>
     </ClCompile>
     <ClCompile Include="Connection.cpp">
-      <Filter>src</Filter>
+      <Filter>src\networking</Filter>
     </ClCompile>
-    <ClCompile Include="OpList.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="Locator.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="ConnectionFuture.cpp">
+      <Filter>src\networking</Filter>
     </ClCompile>
     <ClCompile Include="Exports.cpp">
-      <Filter>src</Filter>
+      <Filter>src\routing</Filter>
+    </ClCompile>
+    <ClCompile Include="Locator.cpp">
+      <Filter>src\routing</Filter>
+    </ClCompile>
+    <ClCompile Include="DeploymentListFuture.cpp">
+      <Filter>src\routing</Filter>
     </ClCompile>
     <ClCompile Include="Logger.cpp">
-      <Filter>src</Filter>
+      <Filter>src\debug</Filter>
     </ClCompile>
+    <ClCompile Include="enet\callbacks.c">
+      <Filter>src\enet</Filter>
+    </ClCompile>
+    <ClCompile Include="enet\compress.c">
+      <Filter>src\enet</Filter>
+    </ClCompile>
+    <ClCompile Include="enet\host.c">
+      <Filter>src\enet</Filter>
+    </ClCompile>
+    <ClCompile Include="enet\list.c">
+      <Filter>src\enet</Filter>
+    </ClCompile>
+    <ClCompile Include="enet\packet.c">
+      <Filter>src\enet</Filter>
+    </ClCompile>
+    <ClCompile Include="enet\peer.c">
+      <Filter>src\enet</Filter>
+    </ClCompile>
+    <ClCompile Include="enet\protocol.c">
+      <Filter>src\enet</Filter>
+    </ClCompile>
+    <ClCompile Include="enet\unix.c">
+      <Filter>src\enet</Filter>
+    </ClCompile>
+    <ClCompile Include="enet\win32.c">
+      <Filter>src\enet</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="WorldsAdriftRebornCoreSdk.rc">
+      <Filter>resources</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-#pragma once
+##pragma once
 #include "Structs.h"
 
 class OpList
@@ -9,4 +9,3 @@ public:
     AddComponentOp* addComponentOp;
     int addComponentLen;
 };
-
