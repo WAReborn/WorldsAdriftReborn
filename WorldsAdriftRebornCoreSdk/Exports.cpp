@@ -116,7 +116,8 @@ ConnectionFuture* __cdecl WorkerProtocol_Locator_ConnectAsync(Locator* locator, 
 
 ConnectionFuture* __cdecl WorkerProtocol_ConnectAsync(char* hostname, unsigned short port, ConnectionParameters* parameters) {
     hook("WorkerProtocol_ConnectAsync");
-    return new ConnectionFuture(hostname, port, parameters);
+    // TODO: afaik connection is made through WorkerProtocol_Locator_ConnectAsync() but if this here is called too at some point we need to create the ENet connection here too.
+    return new ConnectionFuture(hostname, port, parameters, NULL);
 }
 
 void __cdecl WorkerProtocol_DeploymentListFuture_Destroy(DeploymentListFuture* future) {

@@ -4,6 +4,8 @@
 #include "Structs.h"
 #include "DeploymentListFuture.h"
 #include "ConnectionFuture.h"
+#include "Logger.h"
+#include "enetLayer.h"
 
 class Locator
 {

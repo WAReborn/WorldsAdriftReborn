@@ -1,5 +1,11 @@
 #pragma once
 #include "OpList.h"
+#include "Logger.h"
+#include "enet/enet.h"
+#include "enetLayer.h"
+#include <iostream>
+#include <fstream>
+#include <string>
 #include <unordered_map>
 
 class Connection
@@ -7,6 +13,9 @@ class Connection
 private:
     char* hostname;
     unsigned short port;
+
+    ENetHost* client = NULL;
+    ENetPeer* peer = NULL;
 
     std::unordered_map<unsigned int, ClientComponentVtable> vtable;
 
@@ -17,7 +26,8 @@ private:
     bool didSendAddComponentRequest = false;
 
 public:
-    Connection(char* hostname, unsigned short port, ConnectionParameters* parameters);
+    Connection(char* hostname, unsigned short port, ConnectionParameters* parameters, ENetHost* client);
+    ~Connection();
 
     bool IsConnected();
     OpList* GetOpList();

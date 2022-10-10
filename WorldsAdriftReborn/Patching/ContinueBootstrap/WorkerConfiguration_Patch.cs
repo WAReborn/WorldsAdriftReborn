@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using Improbable.Unity.Configuration;
 using UnityEngine;
+using WorldsAdriftReborn.Config;
 
 namespace WorldsAdriftReborn.Patching.Dynamic.ContinueBootstrap
 {
@@ -35,7 +36,8 @@ namespace WorldsAdriftReborn.Patching.Dynamic.ContinueBootstrap
         public static bool LocatorHost_Setter_Prefix(ref string value )
         {
             Debug.LogWarning("ORIGNIAL: " + value);
-            value = "some.host.to.receive.this";
+            ModSettings.modConfig.Reload();
+            value = ModSettings.gameServerHost.Value;
             return true;
         }
         [HarmonyPrefix]

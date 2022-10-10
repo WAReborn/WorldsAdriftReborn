@@ -13,6 +13,7 @@ namespace WorldsAdriftReborn.Config
         public static ConfigEntry<string> restServerDeploymentUrl { get; set; }
         public static ConfigEntry<string> NTPServerUrl { get; set; }
         public static ConfigEntry<string> localAssetPath { get; set; }
+        public static ConfigEntry<string> gameServerHost { get; set; }
 
         public static void InitConfig()
         {
@@ -49,6 +50,11 @@ namespace WorldsAdriftReborn.Config
                                                     "AssetLoader_FilePath",
                                                     "Assets\\",
                                                     "The intermediate part of the Asset folder path. Gets 'unity\\' appended. In some cases the game fails to determine the intermediate path so you can set it here or leave it blank.");
+
+            gameServerHost = modConfig.Bind<string>("GameServer",
+                                                    "GameServer_Host",
+                                                    "127.0.0.1",
+                                                    "The hostname or address of the game server.");
         }
     }
 }

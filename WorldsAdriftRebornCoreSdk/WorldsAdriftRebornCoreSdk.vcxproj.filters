@@ -48,9 +48,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="OpList.h">
-      <Filter>include\structs</Filter>
-    </ClInclude>
     <ClInclude Include="Structs.h">
       <Filter>include\structs</Filter>
     </ClInclude>
@@ -111,6 +108,12 @@
     <ClInclude Include="enet\include\enet\win32.h">
       <Filter>include\enet</Filter>
     </ClInclude>
+    <ClInclude Include="OpList.h">
+      <Filter>include\structs</Filter>
+    </ClInclude>
+    <ClInclude Include="enetLayer.h">
+      <Filter>include\networking</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dispatcher.cpp">
@@ -160,6 +163,9 @@
     </ClCompile>
     <ClCompile Include="enet\win32.c">
       <Filter>src\enet</Filter>
+    </ClCompile>
+    <ClCompile Include="enetLayer.cpp">
+      <Filter>src\networking</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

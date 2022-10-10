@@ -1,12 +1,13 @@
 #include "Connection.h"
-#include "Logger.h"
-#include <iostream>
-#include <fstream>
-#include <string>
 
-Connection::Connection(char* hostname, unsigned short port, ConnectionParameters* parameters) {
+Connection::Connection(char* hostname, unsigned short port, ConnectionParameters* parameters, ENetHost* client) {
     this->hostname = hostname;
     this->port = port;
+    this->client = client;
+
+    if (this->client != NULL && this->hostname != NULL && this->port != 0) {
+        this->peer = ENet_Connect(this->hostname, this->port, this->client, 1);
+    }
 
     for (unsigned int i = 0; i < parameters->ClientComponentVtableCount; ++i) {
         this->vtable[parameters->ClientComponentVtable[i].ComponentId] = parameters->ClientComponentVtable[i];
@@ -14,9 +15,19 @@ Connection::Connection(char* hostname, unsigned short port, ConnectionParameters
     }
 }
 
+Connection::~Connection() {
+    // assume when the connection is closed the game does not need ENet anymore
+    // if its needed again i hope it will create a new Locator so we re-init ENet again
+    ENet_Disconnect(this->peer, this->client);
+    ENet_Deinitialize(this->client);
+
+    this->peer = NULL;
+    this->client = NULL;
+}
+
 bool Connection::IsConnected()
 {
-    return false;
+    return this->peer != NULL;
 }
 
 OpList* Connection::GetOpList() {
