@@ -41,10 +41,10 @@
       <UniqueIdentifier>{834f98f7-34c4-4008-ba1a-17b552b4afc1}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\enet">
-      <UniqueIdentifier>{e1e33819-1e3d-4b88-a25c-94bb67675815}</UniqueIdentifier>
+      <UniqueIdentifier>{7ee81de8-cc9b-4de9-8976-09f8d9a20245}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\enet">
-      <UniqueIdentifier>{1a4923ae-471f-4588-9a2b-b42dbd2b6aa5}</UniqueIdentifier>
+      <UniqueIdentifier>{0075a3b5-3f8f-494c-b41b-835c4d04fe47}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -78,6 +78,12 @@
     <ClInclude Include="ConnectionFuture.h">
       <Filter>include\networking</Filter>
     </ClInclude>
+    <ClInclude Include="OpList.h">
+      <Filter>include\structs</Filter>
+    </ClInclude>
+    <ClInclude Include="enetLayer.h">
+      <Filter>include\networking</Filter>
+    </ClInclude>
     <ClInclude Include="enet\include\enet\callbacks.h">
       <Filter>include\enet</Filter>
     </ClInclude>
@@ -88,9 +94,6 @@
       <Filter>include\enet</Filter>
     </ClInclude>
     <ClInclude Include="enet\include\enet\protocol.h">
-      <Filter>include\enet</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h">
       <Filter>include\enet</Filter>
     </ClInclude>
     <ClInclude Include="enet\include\enet\time.h">
@@ -107,12 +110,6 @@
     </ClInclude>
     <ClInclude Include="enet\include\enet\win32.h">
       <Filter>include\enet</Filter>
-    </ClInclude>
-    <ClInclude Include="OpList.h">
-      <Filter>include\structs</Filter>
-    </ClInclude>
-    <ClInclude Include="enetLayer.h">
-      <Filter>include\networking</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +133,9 @@
     </ClCompile>
     <ClCompile Include="Logger.cpp">
       <Filter>src\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="enetLayer.cpp">
+      <Filter>src\networking</Filter>
     </ClCompile>
     <ClCompile Include="enet\callbacks.c">
       <Filter>src\enet</Filter>
@@ -163,9 +163,6 @@
     </ClCompile>
     <ClCompile Include="enet\win32.c">
       <Filter>src\enet</Filter>
-    </ClCompile>
-    <ClCompile Include="enetLayer.cpp">
-      <Filter>src\networking</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

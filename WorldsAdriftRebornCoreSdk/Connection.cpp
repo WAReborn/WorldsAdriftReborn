@@ -6,7 +6,14 @@ Connection::Connection(char* hostname, unsigned short port, ConnectionParameters
     this->client = client;
 
     if (this->client != NULL && this->hostname != NULL && this->port != 0) {
+        Logger::Debug("Trying to connect to game server at " + std::string(this->hostname));
         this->peer = ENet_Connect(this->hostname, this->port, this->client, 1);
+        if (this->peer != NULL) {
+            Logger::Debug("SUCCESS!");
+        }
+        else {
+            Logger::Debug("FAILED!");
+        }
     }
 
     for (unsigned int i = 0; i < parameters->ClientComponentVtableCount; ++i) {
@@ -31,6 +38,20 @@ bool Connection::IsConnected()
 }
 
 OpList* Connection::GetOpList() {
+    if (this->client != NULL) {
+        ENetPacket_Wrapper* packet = ENet_Poll(this->client, 0, NULL, NULL);
+
+        if (packet != NULL) {
+            // commented out to not spam the log file and fill your disk ;)
+            //Logger::Debug("received data from packet: " + std::string(reinterpret_cast<char const*>(packet->data), packet->dataLength));
+            ENet_Destroy_Packet(packet);
+        }
+        if (this->peer != NULL) {
+            
+            ENet_Send(this->peer, 0, "Hello from our very own SpatialOS!", strlen("Hello from our very own SpatialOS!") + 1, ENET_PACKET_FLAG_RELIABLE);
+        }
+    }
+
     OpList* op_list = new OpList();
 
     if (!this->didLoadPlayer) {

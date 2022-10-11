@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Connection.h"
-#include "enet/enet.h"
+#include "enetLayer.h"
 
 class ConnectionFuture
 {

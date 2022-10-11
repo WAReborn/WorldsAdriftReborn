@@ -1,7 +1,7 @@
 #pragma once
+
 #include "OpList.h"
 #include "Logger.h"
-#include "enet/enet.h"
 #include "enetLayer.h"
 #include <iostream>
 #include <fstream>

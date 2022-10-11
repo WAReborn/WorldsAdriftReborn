@@ -38,7 +38,6 @@
     <ClInclude Include="Locator.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="OpList.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="Structs.h" />
     <ClInclude Include="VTable.h" />
   </ItemGroup>
