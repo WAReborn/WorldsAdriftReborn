@@ -1,3 +1,5 @@
+
 [submodule "WorldsAdriftRebornCoreSdk/enet"]
 	path = WorldsAdriftRebornCoreSdk/enet
-	url = https://github.com/zpl-c/enet.git
+	url = https://github.com/sp00ktober/enet
+	branch = ignore_deprecated
