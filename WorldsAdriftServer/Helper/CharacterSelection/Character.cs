@@ -48,7 +48,8 @@ namespace WorldsAdriftServer.Helper.CharacterSelection
                                                                 default(ColorProperties),
                                                                 100f));
 
-            return new CharacterCreationData(1, "valid-UIDs-have-at-least-one-", characterName, "serverName?", serverIdentifier, cosmetics, colors, true, false, false);
+            //Guid.NewGuid().ToString() Is a temp fix will be fixed when adding charcter saving
+            return new CharacterCreationData(1, Guid.NewGuid().ToString(), characterName, "serverName?", serverIdentifier, cosmetics, colors, true, false, false);
         }
         /*
          * generates a character without cosmetics which reflects as an empty slot in the character select screen.
