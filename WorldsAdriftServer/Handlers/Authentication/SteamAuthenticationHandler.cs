@@ -1,34 +1,30 @@
 ﻿using NetCoreServer;
 using Newtonsoft.Json.Linq;
+using WorldsAdriftServer.Helper.Data;
 using WorldsAdriftServer.Objects.SteamObjects;
 
 namespace WorldsAdriftServer.Handlers.Authentication
 {
     internal static class SteamAuthenticationHandler
     {
-        internal static void HandleAuthRequest(HttpSession session, HttpRequest request, string playerName)
+        internal static bool HandleAuthRequest( HttpSession session, HttpRequest request, string playerName )
         {
-            JObject reqO = JObject.Parse(request.Body);
-            if (reqO != null)
+            SteamAuthRequestToken? steamAuthRequest = JObject.Parse(request.Body).ToObject<SteamAuthRequestToken>();
+
+            if (steamAuthRequest == null)
+            { return false; }
+
+            if (!DataManger.GlobleDataStore.PlayerDataDictionary.TryGetValue(steamAuthRequest.steamCredential.secret, out PlayerData? playerData))
             {
-                SteamAuthRequestToken reqToken = reqO.ToObject<SteamAuthRequestToken>();
-
-                if (reqToken != null)
-                {
-                    SteamAuthResponseToken respToken = new SteamAuthResponseToken("superCoolToken", "777", "999", true);
-                    respToken.screenName = playerName;
-
-                    JObject respO = (JObject)JToken.FromObject(respToken);
-                    if (respO != null)
-                    {
-                        HttpResponse resp = new HttpResponse();
-                        resp.SetBegin(200);
-                        resp.SetBody(respO.ToString());
-
-                        session.SendResponseAsync(resp);
-                    }
-                }
+                playerData = new PlayerData(steamAuthRequest.steamCredential.secret);
+                DataManger.GlobleDataStore.PlayerDataDictionary.Add(playerData.Token, playerData);
+                DataManger.WriteData(DataManger.GlobleDataStore);
             }
+
+            SteamAuthResponseToken respToken = new(playerData.Token, "777", "999", true);
+            respToken.screenName = playerName;
+
+            return SendData.SendJObject((JObject)JToken.FromObject(respToken), session);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using NetCoreServer;
 using Newtonsoft.Json.Linq;
 using WorldsAdriftServer.Helper.CharacterSelection;
+using WorldsAdriftServer.Helper.Data;
 using WorldsAdriftServer.Objects.CharacterSelection;
 
 namespace WorldsAdriftServer.Handlers.CharacterScreen
@@ -13,28 +14,24 @@ namespace WorldsAdriftServer.Handlers.CharacterScreen
          * once the user clicks on the play button the game requests a list of characters.
          * the response also decides whether there is an option to create a new character using the unlockedSlots field
          */
-        internal static void HandleCharacterListRequest(HttpSession session, HttpRequest request, string serverIdentifier )
+        internal static bool HandleCharacterListRequest( HttpSession session, HttpRequest request )
         {
-            List<CharacterCreationData> list = new List<CharacterCreationData>();
-
-            list.Add(Character.GenerateRandomCharacter(serverIdentifier, "Billy Bones"));
-            list.Add(Character.GenerateRandomCharacter(serverIdentifier, "Long John Silver"));
-            list.Add(Character.GenerateNewCharacter(serverIdentifier, "Jim Hawkins"));
-
-            CharacterListResponse characterList = new CharacterListResponse(list);
-            characterList.unlockedSlots = list.Count; // let the player create a new character below the list of existing characters (last provided character above must be a GenerateNewCharacter())
-            characterList.hasMainCharacter = true;
-            characterList.havenFinished = true;
-
-            JObject respO = (JObject)JToken.FromObject(characterList);
-            if (respO != null)
+            CharacterListResponse characterListResponse;
+            if (!DataManger.GlobleDataStore.PlayerDataDictionary.TryGetValue(request.Header(0).Item2, out PlayerData? playerData))
             {
-                HttpResponse resp = new HttpResponse();
-                resp.SetBegin(200);
-                resp.SetBody(respO.ToString());
-
-                session.SendResponseAsync(resp);
+                playerData = new PlayerData(request.Cookie(1).Item2);
+                DataManger.GlobleDataStore.PlayerDataDictionary.Add(playerData.Token, playerData);
             }
+            characterListResponse = playerData.CharacterListResponse;
+
+            if (characterListResponse.characterList.Count <= 5)
+            {
+                characterListResponse.unlockedSlots = characterListResponse.characterList.Count + 1;
+            }
+
+            DataManger.WriteData(DataManger.GlobleDataStore);
+
+            return SendData.SendJObject((JObject)JToken.FromObject(characterListResponse), session);
         }
     }
 }

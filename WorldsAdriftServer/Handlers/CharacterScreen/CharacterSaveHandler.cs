@@ -1,28 +1,42 @@
 ﻿using NetCoreServer;
 using Newtonsoft.Json.Linq;
+using WorldsAdriftServer.Helper.Data;
 using WorldsAdriftServer.Objects.CharacterSelection;
 
 namespace WorldsAdriftServer.Handlers.CharacterScreen
 {
     internal static class CharacterSaveHandler
     {
-        internal static void HandleCharacterSave(HttpSession session, HttpRequest request )
+        internal static bool HandleCharacterSave( HttpSession session, HttpRequest request )
         {
-            JObject reqO = JObject.Parse(request.Body);
-            if(reqO != null)
+            CharacterCreationData? requestCharacterData = JObject.Parse(request.Body).ToObject<CharacterCreationData>();
+
+            if (requestCharacterData != null && DataManger.GlobleDataStore.PlayerDataDictionary.TryGetValue(request.Header(0).Item2, out PlayerData? playerData))
             {
-                CharacterCreationData characterData = reqO.ToObject<CharacterCreationData>();
-                if(characterData != null)
+                bool wasCharacterDataSaved = false;
+                for (int i = 0; i < playerData.CharacterListResponse.characterList.Count; i++)
                 {
-                    // todo for future: store changes
-                    HttpResponse resp = new HttpResponse();
-
-                    resp.SetBegin(200);
-                    resp.SetBody("{}"); // the game does want to have a valid JObject. Its stored in CharacterSelectionHandler.LastReceivedCharacterList so maybe important to pass valid stuff here in the future
-
-                    session.SendResponseAsync(resp);
+                    CharacterCreationData playerCharacterData = playerData.CharacterListResponse.characterList[i];
+                    if (playerCharacterData.characterUid == requestCharacterData.characterUid)
+                    {
+                        playerData.CharacterListResponse.characterList[i] = requestCharacterData;
+                        playerData.CharacterListResponse.hasMainCharacter = true;
+                        wasCharacterDataSaved = true;
+                    }
                 }
+
+                if (!wasCharacterDataSaved)
+                { return false; }
+
+                if (playerData.CharacterListResponse.characterList.Count <= 5)
+                {
+                    playerData.CharacterListResponse.unlockedSlots = playerData.CharacterListResponse.characterList.Count + 1;
+                }
+
+                DataManger.WriteData(DataManger.GlobleDataStore);
+                return SendData.SendJObject((JObject)JToken.FromObject(playerData.CharacterListResponse), session);
             }
+            return false;
         }
     }
 }

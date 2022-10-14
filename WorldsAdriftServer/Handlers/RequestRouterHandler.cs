@@ -25,30 +25,33 @@ namespace WorldsAdriftServer.Handlers
         {
             if(request != null)
             {
-                if(request.Method == "POST" && request.Url == "/authenticate")
+                bool wasRequestHandled = request switch
                 {
-                    SteamAuthenticationHandler.HandleAuthRequest(this, request, "Jim Hawkins");
-                }
-                else if (request.Method == "GET" && request.Url.Contains("/characterList/") && request.Url.Contains("/steam/1234"))
-                {
-                    CharacterListHandler.HandleCharacterListRequest(this, request, "community_server");
-                }
-                else if (request.Method == "POST" && request.Url.Contains("/reserveCharacterSlot/") && request.Url.Contains("/steam/1234"))
-                {
-                    // no need to handle this as we provide the needed data in HandleCharacterListRequest()
-                }
-                else if(request.Method == "GET" && request.Url == "/deploymentStatus")
-                {
-                    DeploymentStatusHandler.HandleDeploymentStatusRequest(this, request, "awesome community server", "community_server", 0);
-                }
-                else if(request.Method == "GET" && request.Url == "/authorizeCharacter")
-                {
-                    CharacterAuthHandler.HandleCharacterAuth(this, request);
-                }
-                else if(request.Method == "POST" && request.Url.Contains("/character/") && request.Url.Contains("/steam/1234/"))
-                {
-                    CharacterSaveHandler.HandleCharacterSave(this, request);
-                }
+                    HttpRequest when request.Method == "POST" && request.Url == "/authenticate" =>
+                        SteamAuthenticationHandler.HandleAuthRequest(this, request, "Jim Hawkins"),
+                    HttpRequest when request.Method == "GET" && request.Url.Contains("/characterList/") =>
+                        CharacterListHandler.HandleCharacterListRequest(this, request),
+                    HttpRequest when request.Method == "POST" && request.Url.Contains("/reserveCharacterSlot/") =>
+                        ReserveCharacterSlotHandler.HandleReserveCharacterSlot(this, request, "community_server"),
+                    HttpRequest when request.Method == "GET" && request.Url == "/deploymentStatus" =>
+                        DeploymentStatusHandler.HandleDeploymentStatusRequest(this, request, "awesome community server", "community_server", 0),
+                    HttpRequest when request.Method == "GET" && request.Url == "/authorizeCharacter" =>
+                        CharacterAuthHandler.HandleCharacterAuth(this, request),
+                    HttpRequest when request.Method == "POST" && request.Url.Contains("/character/") =>
+                        CharacterSaveHandler.HandleCharacterSave(this, request),
+                    HttpRequest when request.Method == "GET" && request.Url.Contains("/memberships/character/") =>
+                        CharacterMembershipsHandler.HandleCharacterMemberships(this, request),
+                    HttpRequest when request.Method == "GET" && request.Url.Contains("/memberships/invites/character/") =>
+                        InvitesAndApplicationsForPlayerHandler.HandleInvitesAndApplicationsForPlayer(this, request),
+                    HttpRequest when request.Method == "GET" && request.Url.Contains("/alliances") =>
+                        ListAlliancesHandler.HandleListAlliances(this, request),
+                    HttpRequest when request.Method == "POST" && request.Url.Contains("/crews") =>
+                        CreateCrewHandler.HandleCreateCrew(this, request),
+                    HttpRequest when request.Method == "POST" && request.Url.Contains("/alliance") =>
+                        CreateAllianceHandler.HandleCreateAlliance(this, request),
+                    _ => false
+                };
+                Console.WriteLine($"\nWas request handled: {wasRequestHandled}\n");
             }
         }
 
