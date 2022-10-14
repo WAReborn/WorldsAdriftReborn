@@ -3,6 +3,7 @@ using NetCoreServer;
 using WorldsAdriftServer.Handlers.Authentication;
 using WorldsAdriftServer.Handlers.CharacterScreen;
 using WorldsAdriftServer.Handlers.ServerStatus;
+using WorldsAdriftServer.Handlers.SocialScreen;
 
 namespace WorldsAdriftServer.Handlers
 {
