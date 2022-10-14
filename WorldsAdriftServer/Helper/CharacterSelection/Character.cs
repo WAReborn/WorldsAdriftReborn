@@ -67,7 +67,7 @@ namespace WorldsAdriftServer.Helper.CharacterSelection
             colors.LipColor = CustomisationSettings.lipColors[num];
             colors.HairColor = CustomisationSettings.hairColors[r.Next(0, CustomisationSettings.hairColors.Length)];
 
-            return new CharacterCreationData(1, "UID", characterName, "serverName?", serverIdentifier, null, colors, true, false, false);
+            return new CharacterCreationData(1, Guid.NewGuid().ToString(), characterName, "serverName?", serverIdentifier, null, colors, true, false, false);
         }
     }
 }
