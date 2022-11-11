@@ -1,15 +1,40 @@
-﻿namespace WorldsAdriftServer.Objects.CharacterSelection
+﻿using Newtonsoft.Json;
+using WorldsAdriftServer.Helper.Data;
+using WorldsAdriftServer.Objects.DataObjects;
+
+namespace WorldsAdriftServer.Objects.CharacterSelection
 {
     internal class CharacterListResponse
     {
-        public List<CharacterCreationData> characterList { get; set; }
-        public int unlockedSlots { get; set; }
-        public bool hasMainCharacter { get; set; }
-        public bool havenFinished { get; set; }
-
-        public CharacterListResponse(List<CharacterCreationData> characterList )
+        public CharacterListResponse() { }
+        internal CharacterListResponse( PlayerData playerData )
         {
-            this.characterList = characterList;
+            foreach (string chracterGuid in playerData.CharacterGUIDs)
+            {
+                CharacterData characterData = DataStore.Instance.CharacterDataDictionary[chracterGuid];
+                CharacterList.Add(characterData.characterCreationData);
+
+                if (characterData.Name == playerData.Name)
+                { HasMainCharacter = true; }
+            }
+
+            UnlockedSlots = playerData.CharacterGUIDs.Count;
+            HavenFinished = playerData.HavenFinished;
+
+            if (UnlockedSlots < 6)
+            { UnlockedSlots++; }
         }
+
+        [JsonProperty("characterList")]
+        public List<CharacterCreationData> CharacterList { get; set; } = new List<CharacterCreationData>();
+
+        [JsonProperty("unlockedSlots")]
+        public int UnlockedSlots { get; set; } = 0;
+
+        [JsonProperty("hasMainCharacter")]
+        public bool HasMainCharacter { get; set; } = false;
+
+        [JsonProperty("havenFinished")]
+        public bool HavenFinished { get; set; } = false;
     }
 }

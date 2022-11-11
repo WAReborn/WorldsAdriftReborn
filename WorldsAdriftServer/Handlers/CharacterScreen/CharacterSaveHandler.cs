@@ -1,42 +1,43 @@
 ﻿using NetCoreServer;
 using Newtonsoft.Json.Linq;
 using WorldsAdriftServer.Helper.Data;
+using WorldsAdriftServer.Helper.Token;
+using WorldsAdriftServer.Helper;
 using WorldsAdriftServer.Objects.CharacterSelection;
+using WorldsAdriftServer.Objects.DataObjects;
+using WorldsAdriftServer.Objects.DeploymentStatus;
 
 namespace WorldsAdriftServer.Handlers.CharacterScreen
 {
-    internal static class CharacterSaveHandler
+    internal class CharacterSaveHandler : Handler
     {
-        internal static bool HandleCharacterSave( HttpSession session, HttpRequest request )
+        internal override string Method { get; } = "POST";
+        internal override string[] URLs { get; } = { $"/character/{Config.GameVersion}/steam/1234" };
+        internal override bool CheckSteamToken { get; } = true;
+        internal override bool CheckCharacterToken { get; } = false;
+        internal override bool Handle( HttpSession httpSession, HttpRequest httpRequest )
         {
-            CharacterCreationData? requestCharacterData = JObject.Parse(request.Body).ToObject<CharacterCreationData>();
+            CharacterCreationData? requestCharacterData = JObject.Parse(httpRequest.Body).ToObject<CharacterCreationData>();
+            if (requestCharacterData == null)
+            { return false; }
 
-            if (requestCharacterData != null && DataManger.GlobleDataStore.PlayerDataDictionary.TryGetValue(request.Header(0).Item2, out PlayerData? playerData))
+            if (!HttpParsers.HeaderByName("Security", httpRequest, out string steamToken) || !GetGuidFromAuthToken.Steam(steamToken, out string playerGuid))
+            { return false; }
+
+            ServerStatusRecord serverStatusRecord = Config.ServerStatusDictionary[requestCharacterData.serverIdentifier];
+            requestCharacterData.Server = serverStatusRecord.DisplayName;
+
+            CharacterData characterData = DataStore.Instance.CharacterDataDictionary[requestCharacterData.characterUid];
+            characterData.characterCreationData = requestCharacterData;
+            characterData.Name = requestCharacterData.Name;
+
+            if (!DataStore.Instance.PlayerCharacterNameData.ContainsKey(requestCharacterData.Name))
             {
-                bool wasCharacterDataSaved = false;
-                for (int i = 0; i < playerData.CharacterListResponse.characterList.Count; i++)
-                {
-                    CharacterCreationData playerCharacterData = playerData.CharacterListResponse.characterList[i];
-                    if (playerCharacterData.characterUid == requestCharacterData.characterUid)
-                    {
-                        playerData.CharacterListResponse.characterList[i] = requestCharacterData;
-                        playerData.CharacterListResponse.hasMainCharacter = true;
-                        wasCharacterDataSaved = true;
-                    }
-                }
-
-                if (!wasCharacterDataSaved)
-                { return false; }
-
-                if (playerData.CharacterListResponse.characterList.Count <= 5)
-                {
-                    playerData.CharacterListResponse.unlockedSlots = playerData.CharacterListResponse.characterList.Count + 1;
-                }
-
-                DataManger.WriteData(DataManger.GlobleDataStore);
-                return SendData.SendJObject((JObject)JToken.FromObject(playerData.CharacterListResponse), session);
+                NameData nameData = new(requestCharacterData.Name, requestCharacterData.characterUid, playerGuid);
+                DataStore.Instance.PlayerCharacterNameData.Add(nameData.Name, nameData);
             }
-            return false;
+
+            return new CharacterListHandler().Handle(httpSession, httpRequest);
         }
     }
 }

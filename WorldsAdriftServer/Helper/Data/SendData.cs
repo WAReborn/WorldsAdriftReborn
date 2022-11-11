@@ -5,16 +5,22 @@ namespace WorldsAdriftServer.Helper.Data
 {
     internal static class SendData
     {
-        public static bool SendJObject( JObject responceObject, HttpSession httpSession )
+        public static bool JObject( JObject jObject, HttpSession httpSession )
         {
-            if (responceObject != null)
+            if (jObject != null)
             {
-                HttpResponse httpResponse = new HttpResponse(200);
-                httpResponse.SetBody(responceObject.ToString());
+                HttpResponse httpResponse = new(200);
+                httpResponse.SetBody(jObject.ToString());
                 httpSession.SendResponseAsync(httpResponse);
                 return true;
             }
             return false;
+        }
+        public static void Error( HttpSession httpSession, HttpRequest httpRequest )
+        {
+            HttpResponse httpResponse = new(500);
+            httpSession.SendResponseAsync(httpResponse);
+            httpSession.Dispose();
         }
     }
 }

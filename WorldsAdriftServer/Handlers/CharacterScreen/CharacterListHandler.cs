@@ -1,12 +1,14 @@
 ﻿using NetCoreServer;
 using Newtonsoft.Json.Linq;
-using WorldsAdriftServer.Helper.CharacterSelection;
 using WorldsAdriftServer.Helper.Data;
+using WorldsAdriftServer.Helper.Token;
+using WorldsAdriftServer.Helper;
 using WorldsAdriftServer.Objects.CharacterSelection;
+using WorldsAdriftServer.Objects.DataObjects;
 
 namespace WorldsAdriftServer.Handlers.CharacterScreen
 {
-    internal static class CharacterListHandler
+    internal class CharacterListHandler : Handler
     {
         /*
          * URL: /characterList/{buildNumber}/steam/1234
@@ -14,24 +16,19 @@ namespace WorldsAdriftServer.Handlers.CharacterScreen
          * once the user clicks on the play button the game requests a list of characters.
          * the response also decides whether there is an option to create a new character using the unlockedSlots field
          */
-        internal static bool HandleCharacterListRequest( HttpSession session, HttpRequest request )
+        internal override string Method { get; } = "GET";
+        internal override string[] URLs { get; } = { $"/characterList/{Config.GameVersion}/steam/1234" };
+        internal override bool CheckSteamToken { get; } = true;
+        internal override bool CheckCharacterToken { get; } = false;
+        internal override bool Handle( HttpSession httpSession, HttpRequest httpRequest )
         {
-            CharacterListResponse characterListResponse;
-            if (!DataManger.GlobleDataStore.PlayerDataDictionary.TryGetValue(request.Header(0).Item2, out PlayerData? playerData))
-            {
-                playerData = new PlayerData(request.Cookie(1).Item2);
-                DataManger.GlobleDataStore.PlayerDataDictionary.Add(playerData.Token, playerData);
-            }
-            characterListResponse = playerData.CharacterListResponse;
+            if (!HttpParsers.HeaderByName("Security", httpRequest, out string steamToken) || !GetGuidFromAuthToken.Steam(steamToken, out string playerGuid))
+            { return false; }
 
-            if (characterListResponse.characterList.Count <= 5)
-            {
-                characterListResponse.unlockedSlots = characterListResponse.characterList.Count + 1;
-            }
+            PlayerData playerData = DataStore.Instance.PlayerDataDictionary[playerGuid];
+            CharacterListResponse characterListResponse = new(playerData);
 
-            DataManger.WriteData(DataManger.GlobleDataStore);
-
-            return SendData.SendJObject((JObject)JToken.FromObject(characterListResponse), session);
+            return SendData.JObject(JObject.FromObject(characterListResponse), httpSession);
         }
     }
 }

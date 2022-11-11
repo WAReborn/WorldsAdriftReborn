@@ -1,15 +1,21 @@
 ﻿using NetCoreServer;
 using Newtonsoft.Json.Linq;
-using WorldsAdriftServer.Helper.Data;
+using WorldsAdriftServer.Helpers;
 using WorldsAdriftServer.Objects.SocialObjects;
 
 namespace WorldsAdriftServer.Handlers.SocialScreen
 {
-    internal class InvitesAndApplicationsForPlayerHandler
+    internal class InvitesAndApplicationsForPlayerHandler : Handler
     {
-        internal static bool HandleInvitesAndApplicationsForPlayer( HttpSession session, HttpRequest request )
+        internal override string Method { get; } = "GET";
+        internal override string[] URLs { get; } = { "/memberships/invites/character/" };
+        internal override bool CheckSteamToken { get; } = false;
+        internal override bool CheckCharacterToken { get; } = true;
+        internal override bool Handle( HttpSession httpSession, HttpRequest httpRequest )
         {
-            return SendData.SendJObject((JObject)JToken.FromObject(new ResponseSchema(JArray.FromObject(new List<MembershipChangeRequestDataModel>()))), session);
+            //TODO return real data
+            JObject responce = JObject.FromObject(new ResponseSchema(JArray.FromObject(new List<MembershipChangeRequestDataModel>())));
+            return SendData.JObject(responce, httpSession );
         }
     }
 }

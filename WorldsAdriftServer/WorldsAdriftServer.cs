@@ -12,16 +12,14 @@ namespace WorldsAdriftServer
 
             RequestRouterServer restServer = new RequestRouterServer(IPAddress.Any, restPort);
 
+            DataStore dataStore = DataStore.ReadData();
+            DataStore.Instance = dataStore;
+
             //server.AddStaticContent() here to add some filesystem path to serve
             restServer.Start();
 
-            DataManger dataManger = new DataManger();
-
-            Console.WriteLine("enter something to stop");
-            Console.ReadKey();
-            //this will only save if they press a key to stop
-            //would like to find a way to triger this on console close
-            DataManger.WriteData(DataManger.GlobleDataStore);
+            Console.WriteLine("Press enter to stop");
+            Console.ReadLine();
 
             restServer.Stop();
         }
