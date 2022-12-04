@@ -113,6 +113,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\ModSettings.cs" />
+    <Compile Include="Config\WARConfiguration.cs" />
+    <Compile Include="HelperClasses\WARConstants.cs" />
     <Compile Include="Patching\BypassEAC\ConnectToNeededServersState_Patch.cs" />
     <Compile Include="Patching\BypassPlayerAnalytics\PlayerAnalytics_Patch.cs" />
     <Compile Include="Patching\BypassSteam\BossaNetBootstrap_Patch.cs" />
@@ -143,6 +145,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Config\WARConfig.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

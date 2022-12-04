@@ -1,0 +1,26 @@
+{
+  "WARConfig": {
+    "Steam": {
+      "Steam_UserId": "steamId",
+      "Steam_AppId": "123456789",
+      "Steam_BranchName": "WorldsAdriftRebornBranch"
+    },
+
+    "REST": {
+      "REST_ServerUrl": "http://127.0.0.1:8080",
+      "REST_ServerDeploymentUrl": "http://127.0.0.1:8080/deploymentStatus"
+    },
+
+    "NTP": {
+      "NTP_ServerUrl": "pool.ntp.org"
+    },
+
+    "AssetLoader": {
+      "AssetLoader_FilePath": "Assets\\"
+    },
+
+    "GameServer": {
+      "GameServer_Host": "127.0.0.1"
+    }
+  }
+}
