@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using WorldsAdriftReborn.HelperClasses;
 using UnityEngine;
+using System.Linq;
 
 namespace WorldsAdriftReborn.Config
 {
@@ -21,9 +22,23 @@ namespace WorldsAdriftReborn.Config
         public static ConfigEntry<string> localAssetPath { get; set; }
         public static ConfigEntry<string> gameServerHost { get; set; }
 
+        private static string GetCustomNamedFolder(string bepInExPluginDirectory)
+        {
+            //Because the folder under BepInEx\\plugins directory can be a custom name as per YT setup tutorial
+            var directories = Directory.GetDirectories(bepInExPluginDirectory);
+
+            if(directories !=null && directories.Count() == 0)
+            {
+                throw new Exception("BepInEx file structure not setup correctly, expected BepInEx\\plugins\\YOUR_MOD_FOLDER_HERE");
+            }
+
+            string modFolder = directories.First();
+            return modFolder;
+        }
+
         public static void InitConfig()
         {
-            string warConfigDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "\\Config\\WARConfig.json");
+            string warConfigDirectory = GetCustomNamedFolder($"{Directory.GetCurrentDirectory()}\\BepInEx\\plugins") + "\\Config\\WARConfig.json";
             JObject warJson;
 
             using (StreamReader file = File.OpenText(warConfigDirectory))
@@ -42,10 +57,12 @@ namespace WorldsAdriftReborn.Config
                                                     WARConstants.SteamUserId,
                                                     warConfig.SteamConfig.SteamUserId,
                                                     "Sets the Steam User ID that the game uses internally. Its not important for the functionality to set this to a specific value.");
+            
             steamAppId = modConfig.Bind(WARConstants.Steam,
                                                     WARConstants.SteamAppId,
                                                     warConfig.SteamConfig.SteamAppId,
                                                     "Sets the Steam App ID that the game uses internally. Its not important for the functionality to set this to a specific value.");
+            
             steamBranchName = modConfig.Bind(WARConstants.Steam,
                                                     WARConstants.SteamBranchName,
                                                     warConfig.SteamConfig.SteamBranchName,
@@ -55,6 +72,7 @@ namespace WorldsAdriftReborn.Config
                                                     WARConstants.RESTServerUrl,
                                                     warConfig.RESTConfig.ServerUrl,
                                                     "Sets the URL for the REST server that the game queries once the main menu is reached.");
+            
             restServerDeploymentUrl = modConfig.Bind(WARConstants.REST,
                                                     WARConstants.RESTServerDeploymentUrl,
                                                     warConfig.RESTConfig.ServerDeploymentUrl,
