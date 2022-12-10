@@ -12,7 +12,6 @@ namespace WorldsAdriftReborn.Patching.Dynamic.BypassSteam
         public static bool SteamMetadata_Prefix(ref LoginMetadata __result )
         {
             ModSettings.modConfig.Reload();
-
             __result = new LoginMetadata
             {
                 UserId = ModSettings.steamUserId.Value,

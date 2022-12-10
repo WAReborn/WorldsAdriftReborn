@@ -11,8 +11,15 @@ namespace WorldsAdriftRebornGameServer.Game
         public enum State
         {
             NEWLY_CONNECTED,
+            NEWLY_CONNECTED_PENDING,
+            PLAYER_ASSET_LOADED,
+            ISLAND_LOAD_PENDING,
+            ISLAND_LOADED,
+            ISLAND_SPAWN_PENDING,
             ISLAND_SPAWNED,
-            PLAYER_SPAWNED
+            PLAYER_SPAWN_PENDING,
+            PLAYER_SPAWNED,
+            DONE
         }
     }
 }

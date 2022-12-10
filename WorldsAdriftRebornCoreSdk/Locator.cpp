@@ -19,7 +19,7 @@ ConnectionFuture* Locator::ConnectAsync(char* deployment_name, ConnectionParamet
     }
     else {
         // port set to 0 means its a client and not a server
-        client = ENet_Create_Host(0, 1, 1, 0, 0);
+        client = ENet_Create_Host(0, 1, 3, 0, 0);
 
         if (client == NULL) {
             Logger::Debug("[ERROR] Could not create an ENet client, no networking possible.");

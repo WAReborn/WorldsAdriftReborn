@@ -13,7 +13,7 @@ class Logger
     void operator=(const Logger&) = delete;
 
     Logger() {
-        output.open("CoreSdk_OutputLog.txt", std::ios::app);
+        output.open("CoreSdk_OutputLog.txt", std::ios::out);
     }
 
     ~Logger() {

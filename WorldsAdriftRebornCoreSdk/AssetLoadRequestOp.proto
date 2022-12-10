@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package WorldsAdriftRebornCoreSdk;
+
+message AssetLoadRequestOp{
+    optional string AssetType = 1;
+    optional string Name = 2;
+    optional string Context = 3;
+    optional string Url = 4;
+}

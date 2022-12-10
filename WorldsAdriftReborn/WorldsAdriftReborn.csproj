@@ -126,14 +126,12 @@
     <Compile Include="Patching\Ecs\EcsBootstrap_Patch.cs" />
     <Compile Include="Patching\HookConfig\WAConfig_Patch.cs" />
     <Compile Include="Patching\InjectFallbackPatchnotes\ChangeLogLoader_Patch.cs" />
+    <Compile Include="Patching\LandingScreen\LandingScreenState_Patch.cs" />
     <Compile Include="Patching\LandingScreen\LandingScreen_Patch.cs" />
     <Compile Include="Patching\LandingScreen\Shop_Patch.cs" />
     <Compile Include="Patching\LoadInGame\CharacterCustomisationVisualizer_Patch.cs" />
     <Compile Include="Patching\LoadInGame\CharacterSelectionScreen_Patch.cs" />
-    <Compile Include="Patching\LoadInGame\PrepareForGameState_Patch.cs" />
-    <Compile Include="Patching\SpatialOS\CachingAssetDatabase_Patch.cs" />
     <Compile Include="Patching\SpatialOS\ConcurrentAssetPrecacher_Patch.cs" />
-    <Compile Include="Patching\SpatialOS\ConnectionLifecycle_Patch.cs" />
     <Compile Include="Patching\SpatialOS\Debug_ComponentFactory\DispatchEventHandler_Patch.cs" />
     <Compile Include="Patching\SpatialOS\InitializeAssetLoader_Patch.cs" />
     <Compile Include="Patching\SpatialOS\Prevent_Disconnect\HeartbeatVisualizer_Patch.cs" />
