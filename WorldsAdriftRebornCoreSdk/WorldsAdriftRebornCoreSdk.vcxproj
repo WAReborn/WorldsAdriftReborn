@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AddComponentOp.pb.h" />
+    <ClInclude Include="AddEntityOp.pb.h" />
+    <ClInclude Include="AssetLoadRequestOp.pb.h" />
     <ClInclude Include="Callbacks.h" />
     <ClInclude Include="Connection.h" />
     <ClInclude Include="ConnectionFuture.h" />
@@ -38,10 +41,14 @@
     <ClInclude Include="Locator.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="OpList.h" />
+    <ClInclude Include="SendComponentInterest.pb.h" />
     <ClInclude Include="Structs.h" />
     <ClInclude Include="VTable.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AddComponentOp.pb.cc" />
+    <ClCompile Include="AddEntityOp.pb.cc" />
+    <ClCompile Include="AssetLoadRequestOp.pb.cc" />
     <ClCompile Include="Connection.cpp" />
     <ClCompile Include="ConnectionFuture.cpp" />
     <ClCompile Include="DeploymentListFuture.cpp" />
@@ -59,9 +66,16 @@
     <ClCompile Include="Exports.cpp" />
     <ClCompile Include="Locator.cpp" />
     <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="SendComponentInterest.pb.cc" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WorldsAdriftRebornCoreSdk.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AddComponentOp.proto" />
+    <None Include="AddEntityOp.proto" />
+    <None Include="AssetLoadRequestOp.proto" />
+    <None Include="SendComponentInterest.proto" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -197,6 +211,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir)\enet\include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

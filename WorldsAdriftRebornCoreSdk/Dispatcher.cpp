@@ -1,4 +1,5 @@
 #include "Dispatcher.h"
+#include <corecrt_malloc.h>
 
 void Dispatcher::RegisterAddEntityCallback(AddEntityCallback callback, void* GCHandle) { this->addEntityCallback = callback; this->GCHandle = GCHandle; }
 void Dispatcher::RegisterAssetLoadRequestCallback(AssetLoadRequestCallback callback, void* GCHandle) { this->assetLoadRequestCallback = callback; this->GCHandle = GCHandle; }
@@ -11,6 +12,12 @@ void Dispatcher::Process(OpList* op_list) {
     }
     if (op_list != nullptr && op_list->assetLoadRequestOp != nullptr) {
         this->assetLoadRequestCallback(this->GCHandle, op_list->assetLoadRequestOp);
+
+        //free(op_list->assetLoadRequestOp->AssetType);
+        //free(op_list->assetLoadRequestOp->Name);
+        //free(op_list->assetLoadRequestOp->Context);
+
+        //delete op_list->assetLoadRequestOp;
     }
     if (op_list != nullptr && op_list->addComponentOp != nullptr) {
         for (int i = 0; i < op_list->addComponentLen; i++) {

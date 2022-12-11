@@ -160,6 +160,10 @@ struct AddEntityOp {
     char* PrefabName;
     char* PrefabContext;
 };
+struct stripped_AddEntityOp {
+    char* PrefabName;
+    char* PrefabContext;
+};
 
 struct RemoveEntityOp {
     long EntityId;
@@ -192,6 +196,12 @@ struct EntityQueryResponseOp {
     char* Message;
     unsigned int ResultCount;
     Entity* Result;
+};
+
+struct PB_AddComponentOp {
+    unsigned int ComponentId;
+    char* ComponentData;
+    int DataLength;
 };
 
 struct AddComponentOp{

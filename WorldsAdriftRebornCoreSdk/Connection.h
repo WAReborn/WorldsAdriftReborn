@@ -19,12 +19,6 @@ private:
 
     std::unordered_map<unsigned int, ClientComponentVtable> vtable;
 
-    bool didSendAddEntityRequest = false;
-    bool didLoadPlayer = false;
-    bool gameLoadedPlayer = false;
-    bool didCreatePlayer = false;
-    bool didSendAddComponentRequest = false;
-
 public:
     Connection(char* hostname, unsigned short port, ConnectionParameters* parameters, ENetHost* client);
     ~Connection();

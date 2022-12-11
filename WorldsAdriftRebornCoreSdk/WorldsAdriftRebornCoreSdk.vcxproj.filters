@@ -46,6 +46,21 @@
     <Filter Include="src\enet">
       <UniqueIdentifier>{0075a3b5-3f8f-494c-b41b-835c4d04fe47}</UniqueIdentifier>
     </Filter>
+    <Filter Include="protobuf">
+      <UniqueIdentifier>{860faf9b-1431-4991-b1b0-ae9564a402c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="protobuf\proto">
+      <UniqueIdentifier>{83302478-cb79-4598-aa64-c6b2337b6063}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="protobuf\compiled">
+      <UniqueIdentifier>{0be5639f-412c-4254-8262-e5a9adab9022}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="protobuf\compiled\header">
+      <UniqueIdentifier>{abc9b9e8-71fa-4a67-a5c2-22845be40985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="protobuf\compiled\impl">
+      <UniqueIdentifier>{c001e08c-0505-4c6a-a83d-654fea21e078}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Structs.h">
@@ -111,6 +126,18 @@
     <ClInclude Include="enet\include\enet\win32.h">
       <Filter>include\enet</Filter>
     </ClInclude>
+    <ClInclude Include="AssetLoadRequestOp.pb.h">
+      <Filter>protobuf\compiled\header</Filter>
+    </ClInclude>
+    <ClInclude Include="AddEntityOp.pb.h">
+      <Filter>protobuf\compiled\header</Filter>
+    </ClInclude>
+    <ClInclude Include="SendComponentInterest.pb.h">
+      <Filter>protobuf\compiled\header</Filter>
+    </ClInclude>
+    <ClInclude Include="AddComponentOp.pb.h">
+      <Filter>protobuf\compiled\header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dispatcher.cpp">
@@ -164,10 +191,36 @@
     <ClCompile Include="enet\win32.c">
       <Filter>src\enet</Filter>
     </ClCompile>
+    <ClCompile Include="AssetLoadRequestOp.pb.cc">
+      <Filter>protobuf\compiled\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="AddEntityOp.pb.cc">
+      <Filter>protobuf\compiled\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="SendComponentInterest.pb.cc">
+      <Filter>protobuf\compiled\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="AddComponentOp.pb.cc">
+      <Filter>protobuf\compiled\impl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WorldsAdriftRebornCoreSdk.rc">
       <Filter>resources</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="AssetLoadRequestOp.proto">
+      <Filter>protobuf\proto</Filter>
+    </None>
+    <None Include="AddEntityOp.proto">
+      <Filter>protobuf\proto</Filter>
+    </None>
+    <None Include="SendComponentInterest.proto">
+      <Filter>protobuf\proto</Filter>
+    </None>
+    <None Include="AddComponentOp.proto">
+      <Filter>protobuf\proto</Filter>
+    </None>
   </ItemGroup>
 </Project>
