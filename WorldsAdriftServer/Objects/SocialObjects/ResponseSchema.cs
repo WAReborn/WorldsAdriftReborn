@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace WorldsAdriftServer.Objects.SocialObjects
@@ -6,21 +7,38 @@ namespace WorldsAdriftServer.Objects.SocialObjects
     [Serializable]
     public class ResponseSchema
     {
-        public ResponseSchema( JArray data ) => this.data = JToken.FromObject(new ItemArray(data));
-        public ResponseSchema( JToken data ) => this.data = data;
+        public ResponseSchema() { }
+        internal ResponseSchema( JArray data ) => Data = JObject.FromObject(new ItemArray(data));
+        internal ResponseSchema( JToken data ) => Data = data;
 
-        public bool success { get; set; } = true;
-        public string message { get; set; } = string.Empty;
-        public string[] messages { get; set; } = new string[0];
-        public int statusCode { get; set; } = 200;
-        public string errorCode { get; set; } = string.Empty;
-        public JToken data { get; set; }
-        public JToken originalResponseData { get; set; } = string.Empty;
+        [JsonProperty("success")]
+        public bool Success { get; set; } = true;
+
+        [JsonProperty("message")]
+        public string Message { get; set; } = string.Empty;
+
+        [JsonProperty("messages")]
+        public string[] Messages { get; set; } = new string[0];
+
+        [JsonProperty("statusCode")]
+        public int StatusCode { get; set; } = 200;
+
+        [JsonProperty("errorCode")]
+        public string ErrorCode { get; set; } = string.Empty;
+
+        [JsonProperty("data")]
+        public JToken Data { get; set; } = new JObject();
+
+        [JsonProperty("originalResponseData")]
+        public JToken OriginalResponseData { get; set; } = string.Empty;
     }
     [Serializable]
     public class ItemArray
     {
-        public ItemArray( JArray items ) => this.items = items;
-        public JArray items { get; set; }
+        public ItemArray() { }
+        internal ItemArray( JArray items ) => Items = items;
+
+        [JsonProperty("items")]
+        public JArray Items { get; set; } = new JArray();
     }
 }

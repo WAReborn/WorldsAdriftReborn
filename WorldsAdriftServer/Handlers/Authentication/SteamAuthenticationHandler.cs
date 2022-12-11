@@ -1,30 +1,41 @@
 ﻿using NetCoreServer;
 using Newtonsoft.Json.Linq;
 using WorldsAdriftServer.Helper.Data;
+using WorldsAdriftServer.Helper.Token;
+using WorldsAdriftServer.Objects.DataObjects;
 using WorldsAdriftServer.Objects.SteamObjects;
 
 namespace WorldsAdriftServer.Handlers.Authentication
 {
-    internal static class SteamAuthenticationHandler
+    internal class SteamAuthenticationHandler : Handler
     {
-        internal static bool HandleAuthRequest( HttpSession session, HttpRequest request, string playerName )
+        internal override string Method { get; } = "POST";
+        internal override string[] URLs { get; } = { "/authenticate" };
+        internal override bool CheckSteamToken { get; } = false;
+        internal override bool CheckCharacterToken { get; } = false;
+        internal override bool Handle( HttpSession httpSession, HttpRequest httpRequest )
         {
-            SteamAuthRequestToken? steamAuthRequest = JObject.Parse(request.Body).ToObject<SteamAuthRequestToken>();
+            SteamAuthRequestToken? steamAuthRequest = JObject.Parse(httpRequest.Body).ToObject<SteamAuthRequestToken>();
 
-            if (steamAuthRequest == null)
-            { return false; }
-
-            if (!DataManger.GlobleDataStore.PlayerDataDictionary.TryGetValue(steamAuthRequest.steamCredential.secret, out PlayerData? playerData))
+            if (steamAuthRequest == null || string.IsNullOrEmpty(steamAuthRequest.BossaCredential.UserKey))
             {
-                playerData = new PlayerData(steamAuthRequest.steamCredential.secret);
-                DataManger.GlobleDataStore.PlayerDataDictionary.Add(playerData.Token, playerData);
-                DataManger.WriteData(DataManger.GlobleDataStore);
+                SendData.JObject((JObject)JToken.FromObject(new SteamAuthResponseToken()), httpSession);
+                return true;
             }
 
-            SteamAuthResponseToken respToken = new(playerData.Token, "777", "999", true);
-            respToken.screenName = playerName;
+            if (!DataStore.Instance.PlayerCharacterNameData.TryGetValue(steamAuthRequest.BossaCredential.UserKey, out NameData? nameData))
+            {
+                PlayerData playerData = new(steamAuthRequest.BossaCredential.UserKey);
+                nameData = new(steamAuthRequest.BossaCredential.UserKey, string.Empty, playerData.Guid);
 
-            return SendData.SendJObject((JObject)JToken.FromObject(respToken), session);
+                DataStore.Instance.PlayerDataDictionary.Add(playerData.Guid, playerData);
+                DataStore.Instance.PlayerCharacterNameData.Add(nameData.Name, nameData);
+            }
+
+            if (!GenerateAuthToken.Steam(steamAuthRequest, nameData.PlayerGuid, out SteamAuthResponseToken responseToken))
+            { return false; }
+
+            return SendData.JObject((JObject)JToken.FromObject(responseToken), httpSession);
         }
     }
 }

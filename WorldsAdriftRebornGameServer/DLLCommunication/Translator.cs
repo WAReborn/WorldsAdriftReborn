@@ -5,26 +5,23 @@ namespace WorldsAdriftRebornGameServer.DLLCommunication
 {
     internal class Translator
     {
-        public unsafe static string FromUtf8Cstr(byte* buffer )
+        public static int Utf8CstrLen( string s )
         {
-            if(buffer == null)
+            return 1 + ((s == null) ? 0 : Encoding.UTF8.GetByteCount(s));
+        }
+        public static void ToUtf8Cstr(string s, byte[] buffer, int bufferIndex )
+        {
+            if(s != null)
             {
-                return "";
+                Encoding.UTF8.GetBytes(s, 0, s.Length, buffer, bufferIndex);
             }
-
-            int len = 0;
-            while (buffer[len] != 0)
-            {
-                len++;
-            }
-
-            byte[] array = new byte[len];
-            for(int i = 0; i < len; i++)
-            {
-                array[i] = buffer[i];
-            }
-
-            return Encoding.UTF8.GetString(array);
+            buffer[bufferIndex + Utf8CstrLen(s) - 1] = 0;
+        }
+        public static byte[] ToUtf8Cstr(string s )
+        {
+            byte[] array = new byte[Utf8CstrLen(s)];
+            ToUtf8Cstr(s, array, 0);
+            return array;
         }
         public unsafe static string FromUtf8Cstr( byte* buffer, long len )
         {

@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package WorldsAdriftRebornCoreSdk;
+
+message SendComponentInterest{
+    optional int64 EntityId = 1;
+    repeated InterestOverride Components = 2;
+}
+
+message InterestOverride{
+    optional uint32 ComponentId = 1;
+    optional bool IsInterested = 2;
+}

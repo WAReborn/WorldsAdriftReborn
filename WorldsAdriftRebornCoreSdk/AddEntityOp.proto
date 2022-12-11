@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package WorldsAdriftRebornCoreSdk;
+
+message AddEntityOp{
+    optional int64 EntityId = 1;
+    optional string PrefabName = 2;
+    optional string PrefabContext = 3;
+}

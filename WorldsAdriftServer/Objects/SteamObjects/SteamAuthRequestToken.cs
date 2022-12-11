@@ -1,14 +1,27 @@
-﻿namespace WorldsAdriftServer.Objects.SteamObjects
+﻿using Newtonsoft.Json;
+
+namespace WorldsAdriftServer.Objects.SteamObjects
 {
-    internal class SteamCredential
+    internal class Credential
     {
-        public string platformId { get; set; }
-        public string secret { get; set; }
-        public string userKey { get; set; }
+        [JsonProperty("platformId")]
+        public string PlatformId { get; set; } = string.Empty;
+
+        [JsonProperty("secret")]
+        public string Secret { get; set; } = string.Empty;
+
+        [JsonProperty("userKey")]
+        public string UserKey { get; set; } = string.Empty;
     }
     internal class SteamAuthRequestToken
     {
-        public string appId { get; set; }
-        public SteamCredential steamCredential { get; set; }
+        [JsonProperty("appId")]
+        public string AppId { get; set; } = string.Empty;
+
+        [JsonProperty("steamCredential")]
+        public Credential SteamCredential { get; set; } = new Credential();
+
+        [JsonProperty("bossaCredential")]
+        public Credential BossaCredential { get; set; } = new Credential();
     }
 }

@@ -5,8 +5,9 @@ namespace WorldsAdriftServer.Objects.UnityObjects
 {
     internal class ColorConverter : JsonConverter
     {
-        public override void WriteJson( JsonWriter writer, object value, JsonSerializer serializer )
+        public override void WriteJson( JsonWriter writer, object? value, JsonSerializer serializer )
         {
+            if ( value == null ) { return; }
             UnityColor color = (UnityColor)value;
             writer.WriteStartObject();
             writer.WritePropertyName("r");
@@ -20,7 +21,7 @@ namespace WorldsAdriftServer.Objects.UnityObjects
             writer.WriteEndObject();
         }
 
-        public override object ReadJson( JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer )
+        public override object ReadJson( JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer )
         {
             throw new NotImplementedException("Unnecessary because CanRead is false. The type will skip the converter.");
         }
@@ -62,10 +63,10 @@ namespace WorldsAdriftServer.Objects.UnityObjects
             {
                 color = color.Substring(1);
             }
-            float r = ((float)HexToInt(color[1]) + (float)HexToInt(color[0]) * 16f) / 255f;
-            float g = ((float)HexToInt(color[3]) + (float)HexToInt(color[2]) * 16f) / 255f;
-            float b = ((float)HexToInt(color[5]) + (float)HexToInt(color[4]) * 16f) / 255f;
-            float a = (color.Length <= 6) ? 1f : (((float)HexToInt(color[7]) + (float)HexToInt(color[6]) * 16f) / 255f);
+            float r = (HexToInt(color[1]) + HexToInt(color[0]) * 16f) / 255f;
+            float g = (HexToInt(color[3]) + HexToInt(color[2]) * 16f) / 255f;
+            float b = (HexToInt(color[5]) + HexToInt(color[4]) * 16f) / 255f;
+            float a = (color.Length <= 6) ? 1f : ((HexToInt(color[7]) + HexToInt(color[6]) * 16f) / 255f);
             return new UnityColor
             {
                 r = r,

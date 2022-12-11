@@ -24,6 +24,21 @@ void __cdecl ENet_EXP_Destroy_Packet(ENetPacket_Wrapper* packet) {
 void __cdecl ENet_EXP_Send(ENetPeer* peer, int channel, const void* data, long len, int flag) {
     ENet_Send(peer, channel, data, len, flag);
 }
+void __cdecl ENet_EXP_Flush(ENetHost* client) {
+    ENet_Flush(client);
+}
+void* __cdecl PB_EXP_AssetLoadRequestOp_Serialize(AssetLoadRequestOp* op, int* len) {
+    return PB_AssetLoadRequestOp_Serialize(op, len);
+}
+void* __cdecl PB_EXP_AddEntityOp_Serialize(stripped_AddEntityOp* op, int* len, long entityId) {
+    return PB_AddEntityOp_Serialize(op, len, entityId);
+}
+bool __cdecl PB_EXP_SendComponentInterest_Deserialize(const void* data, int len, long* entityId, InterestOverride** interest_override, unsigned int* interest_override_count) {
+    return PB_SendComponentInterest_Deserialize(data, len, entityId, interest_override, interest_override_count);
+}
+void* __cdecl PB_EXP_AddComponentOp_Serialize(long entityId, PB_AddComponentOp* addComponentOp, unsigned int addComponentOp_count, int* len) {
+    return PB_AddComponentOp_Serialize(entityId, addComponentOp, addComponentOp_count, len);
+}
 
 int ENet_Initialize() {
     return enet_initialize();
@@ -130,7 +145,7 @@ ENetPacket_Wrapper* ENet_Poll(ENetHost* client, int waitTime, OnNewClientConnect
     case ENET_EVENT_TYPE_RECEIVE:
         packet = new ENetPacket_Wrapper();
 
-        packet->data = reinterpret_cast<char const*>(event.packet->data);
+        packet->data = (void*)(event.packet->data);
         packet->dataLength = event.packet->dataLength;
         packet->identifier = reinterpret_cast<char const*>(event.packet->userData);
         packet->channel = event.channelID;
@@ -164,4 +179,296 @@ void ENet_Send(ENetPeer* peer, int channel, const void* data, long len, int flag
 
     ENetPacket* packet = enet_packet_create(data, len, flag);
     enet_peer_send(peer, channel, packet);
+}
+
+void ENet_Flush(ENetHost* client) {
+    if (client == NULL) {
+        return;
+    }
+
+    enet_host_flush(client);
+}
+
+void* PB_AssetLoadRequestOp_Serialize(AssetLoadRequestOp* op, int* len) {
+    if (op == NULL || len == NULL) {
+        if (len != NULL) {
+            *len = 0;
+        }
+        return NULL;
+    }
+
+    WorldsAdriftRebornCoreSdk::AssetLoadRequestOp* pb_op = new WorldsAdriftRebornCoreSdk::AssetLoadRequestOp();
+
+    if (op->AssetType != NULL) {
+        pb_op->set_assettype(op->AssetType);
+    }
+    if (op->Name != NULL) {
+        pb_op->set_name(op->Name);
+    }
+    if (op->Context != NULL) {
+        pb_op->set_context(op->Context);
+    }
+    if (op->Url != NULL) {
+        pb_op->set_url(op->Url);
+    }
+    
+    std::string* serialized = new std::string();
+
+    if (!pb_op->SerializeToString(serialized)) {
+        delete serialized;
+        delete pb_op;
+
+        *len = 0;
+        return NULL;
+    }
+
+    delete pb_op;
+    *len = serialized->size();
+
+    return (void*)serialized->data();
+}
+
+bool PB_AssetLoadRequestOp_Deserialize(const void* data, int len, AssetLoadRequestOp* op) {
+    if (data == NULL || op == NULL) {
+        return false;
+    }
+
+    WorldsAdriftRebornCoreSdk::AssetLoadRequestOp* pb_op = new WorldsAdriftRebornCoreSdk::AssetLoadRequestOp();
+    // todo: maybe find a way to avoid the internal copy of std::string here.
+    std::string* str = new std::string(reinterpret_cast<char const*>(data), len);
+    
+    if (!pb_op->ParseFromString(*str)) {
+        delete pb_op;
+
+        return false;
+    }
+
+    if (pb_op->has_assettype()) {
+        std::size_t len = pb_op->assettype().size();
+        op->AssetType = new char[len];
+        memcpy(op->AssetType, pb_op->assettype().data(), len);
+        op->AssetType[len] = '\0';
+    }
+    if (pb_op->has_name()) {
+        std::size_t len = pb_op->name().size();
+        op->Name = new char[len];
+        memcpy(op->Name, pb_op->name().data(), len);
+        op->Name[len] = '\0';
+    }
+    if (pb_op->has_context()) {
+        std::size_t len = pb_op->context().size();
+        op->Context = new char[len];
+        memcpy(op->Context, pb_op->context().data(), len);
+        op->Context[len] = '\0';
+    }
+    if (pb_op->has_url()) {
+        std::size_t len = pb_op->url().size();
+        op->Url = new char[len];
+        memcpy(op->Url, pb_op->url().data(), len);
+        op->Url[len] = '\0';
+    }
+
+    delete pb_op;
+
+    return true;
+}
+
+void* PB_AddEntityOp_Serialize(stripped_AddEntityOp* op, int* len, long entityId) {
+    if (op == NULL || len == NULL) {
+        if (len != NULL) {
+            *len = 0;
+        }
+        return NULL;
+    }
+
+    WorldsAdriftRebornCoreSdk::AddEntityOp* pb_op = new WorldsAdriftRebornCoreSdk::AddEntityOp();
+
+    pb_op->set_entityid(entityId);
+    if (op->PrefabContext != NULL) {
+        pb_op->set_prefabcontext(op->PrefabContext);
+    }
+    if (op->PrefabName != NULL) {
+        pb_op->set_prefabname(op->PrefabName);
+    }
+
+    std::string* serialized = new std::string();
+
+    if (!pb_op->SerializeToString(serialized)) {
+        delete serialized;
+        delete pb_op;
+
+        *len = 0;
+        return NULL;
+    }
+
+    delete pb_op;
+    *len = serialized->size();
+
+    return (void*)serialized->data();
+}
+
+bool PB_AddEntityOp_Deserialize(const void* data, int len, AddEntityOp* op) {
+    if (data == NULL || op == NULL) {
+        return false;
+    }
+
+    WorldsAdriftRebornCoreSdk::AddEntityOp* pb_op = new WorldsAdriftRebornCoreSdk::AddEntityOp();
+    std::string* str = new std::string(reinterpret_cast<char const*>(data), len);
+
+    if (!pb_op->ParseFromString(*str)) {
+        delete pb_op;
+
+        return false;
+    }
+
+    if (pb_op->has_entityid()) {
+        op->EntityId = pb_op->entityid();
+    }
+    if (pb_op->has_prefabcontext()) {
+        std::size_t len = pb_op->prefabcontext().size();
+        op->PrefabContext = new char[len];
+        memcpy(op->PrefabContext, pb_op->prefabcontext().data(), len);
+        op->PrefabContext[len] = '\0';
+    }
+    if (pb_op->has_prefabname()) {
+        std::size_t len = pb_op->prefabname().size();
+        op->PrefabName = new char[len];
+        memcpy(op->PrefabName, pb_op->prefabname().data(), len);
+        op->PrefabName[len] = '\0';
+    }
+
+    delete pb_op;
+
+    return true;
+}
+
+void* PB_SendComponentInterest_Serialize(long entityId, InterestOverride* interest_override, unsigned int interest_override_count, int* len) {
+    if (interest_override == NULL || len == NULL) {
+        if (len != NULL) {
+            *len = 0;
+        }
+        return NULL;
+    }
+
+    WorldsAdriftRebornCoreSdk::SendComponentInterest* pb_op = new WorldsAdriftRebornCoreSdk::SendComponentInterest();
+
+    pb_op->set_entityid(entityId);
+    for (int i = 0; i < interest_override_count; i++) {
+        WorldsAdriftRebornCoreSdk::InterestOverride* io = pb_op->add_components();
+        io->set_componentid(interest_override[i].ComponentId);
+        io->set_isinterested(interest_override[i].IsInterested);
+    }
+
+    std::string* serialized = new std::string();
+
+    if (!pb_op->SerializeToString(serialized)) {
+        delete serialized;
+        delete pb_op;
+
+        *len = 0;
+        return NULL;
+    }
+
+    delete pb_op;
+    *len = serialized->size();
+
+    return (void*)serialized->data();
+}
+
+bool PB_SendComponentInterest_Deserialize(const void* data, int len, long* entityId, InterestOverride** interest_override, unsigned int* interest_override_count) {
+    if (data == NULL || entityId == NULL || interest_override_count == NULL) {
+        return false;
+    }
+
+    WorldsAdriftRebornCoreSdk::SendComponentInterest* pb_op = new WorldsAdriftRebornCoreSdk::SendComponentInterest();
+    std::string* str = new std::string(reinterpret_cast<char const*>(data), len);
+
+    if (!pb_op->ParseFromString(*str)) {
+        delete pb_op;
+        *interest_override_count = 0;
+
+        return false;
+    }
+
+    if (pb_op->has_entityid()) {
+        *entityId = pb_op->entityid();
+    }
+    *interest_override_count = pb_op->components_size();
+    *interest_override = new InterestOverride[pb_op->components_size()];
+    for (int i = 0; i < pb_op->components_size(); i++) {
+        (*interest_override)[i].ComponentId = pb_op->components(i).componentid();
+        (*interest_override)[i].IsInterested = pb_op->components(i).isinterested();
+    }
+
+    delete pb_op;
+    delete str;
+
+    return true;
+}
+
+void* PB_AddComponentOp_Serialize(long entityId, PB_AddComponentOp* addComponentOp, unsigned int addComponentOp_count, int* len) {
+    if (addComponentOp == NULL || len == NULL) {
+        if (len != NULL) {
+            *len = 0;
+        }
+        return NULL;
+    }
+
+    WorldsAdriftRebornCoreSdk::AddComponentOp* pb_op = new WorldsAdriftRebornCoreSdk::AddComponentOp();
+
+    pb_op->set_entityid(entityId);
+    for (int i = 0; i < addComponentOp_count; i++) {
+        WorldsAdriftRebornCoreSdk::ComponentData* data = pb_op->add_components();
+        data->set_componentid(addComponentOp[i].ComponentId);
+        data->set_data(std::string(addComponentOp[i].ComponentData, addComponentOp[i].DataLength));
+        data->set_datalength(addComponentOp[i].DataLength);
+    }
+
+    std::string* serialized = new std::string();
+
+    if (!pb_op->SerializeToString(serialized)) {
+        delete serialized;
+        delete pb_op;
+
+        *len = 0;
+        return NULL;
+    }
+
+    delete pb_op;
+    *len = serialized->size();
+
+    return (void*)serialized->data();
+}
+
+bool PB_AddComponentOp_Deserialze(const void* data, int len, long* entityId, PB_AddComponentOp** addComponentOp, unsigned int* addComponentOp_count) {
+    if (data == NULL || entityId == NULL || addComponentOp_count == NULL) {
+        return false;
+    }
+
+    WorldsAdriftRebornCoreSdk::AddComponentOp* pb_op = new WorldsAdriftRebornCoreSdk::AddComponentOp();
+    std::string* str = new std::string(reinterpret_cast<char const*>(data), len);
+
+    if (!pb_op->ParseFromString(*str)) {
+        delete pb_op;
+        *addComponentOp_count = 0;
+
+        return false;
+    }
+
+    if (pb_op->has_entityid()) {
+        *entityId = pb_op->entityid();
+    }
+    *addComponentOp_count = pb_op->components_size();
+    *addComponentOp = new PB_AddComponentOp[*addComponentOp_count];
+    for (int i = 0; i < *addComponentOp_count; i++) {
+        (*addComponentOp)[i].ComponentId = pb_op->components(i).componentid();
+        (*addComponentOp)[i].DataLength = pb_op->components(i).datalength();
+        (*addComponentOp)[i].ComponentData = new char[(*addComponentOp)[i].DataLength];
+        memcpy((*addComponentOp)[i].ComponentData, pb_op->components(i).data().data(), (*addComponentOp)[i].DataLength);
+    }
+
+    delete pb_op;
+    delete str;
+
+    return true;
 }
