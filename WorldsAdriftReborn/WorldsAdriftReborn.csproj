@@ -44,28 +44,28 @@
       <HintPath>..\packages\HarmonyX.2.7.0\lib\net35\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\Downloads\depot_322783\UnityClient@Windows_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>$(WorldsAdriftGameDir)\UnityClient@Windows_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>..\..\..\..\Downloads\depot_322783\UnityClient@Windows_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+      <HintPath>$(WorldsAdriftGameDir)\UnityClient@Windows_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx, Version=5.4.21.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\BepInEx.BaseLib.5.4.21\lib\net35\BepInEx.dll</HintPath>
     </Reference>
     <Reference Include="Generated.Code">
-      <HintPath>..\..\..\..\Downloads\depot_322783\UnityClient@Windows_Data\Managed\Generated.Code.dll</HintPath>
+      <HintPath>$(WorldsAdriftGameDir)\UnityClient@Windows_Data\Managed\Generated.Code.dll</HintPath>
     </Reference>
     <Reference Include="Improbable.UnityDll, Version=10.4.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\depot_322783\UnityClient@Windows_Data\Managed\Improbable.UnityDll.dll</HintPath>
+      <HintPath>$(WorldsAdriftGameDir)\UnityClient@Windows_Data\Managed\Improbable.UnityDll.dll</HintPath>
     </Reference>
     <Reference Include="Improbable.WorkerSdkCsharp, Version=10.4.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\depot_322783\UnityClient@Windows_Data\Managed\Improbable.WorkerSdkCsharp.dll</HintPath>
+      <HintPath>$(WorldsAdriftGameDir)\UnityClient@Windows_Data\Managed\Improbable.WorkerSdkCsharp.dll</HintPath>
     </Reference>
     <Reference Include="Improbable.WorkerSdkCsharp.Framework, Version=10.4.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\depot_322783\UnityClient@Windows_Data\Managed\Improbable.WorkerSdkCsharp.Framework.dll</HintPath>
+      <HintPath>$(WorldsAdriftGameDir)\UnityClient@Windows_Data\Managed\Improbable.WorkerSdkCsharp.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil, Version=0.10.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
       <HintPath>..\packages\Mono.Cecil.0.10.4\lib\net35\Mono.Cecil.dll</HintPath>
@@ -87,15 +87,15 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\depot_322783\UnityClient@Windows_Data\Managed\Newtonsoft.Json.dll</HintPath>
+      <HintPath>$(WorldsAdriftGameDir)\UnityClient@Windows_Data\Managed\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="protobuf-net, Version=2.0.0.668, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\depot_322783\UnityClient@Windows_Data\Managed\protobuf-net.dll</HintPath>
+      <HintPath>$(WorldsAdriftGameDir)\UnityClient@Windows_Data\Managed\protobuf-net.dll</HintPath>
     </Reference>
     <Reference Include="RSG.Promise, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\depot_322783\UnityClient@Windows_Data\Managed\RSG.Promise.dll</HintPath>
+      <HintPath>$(WorldsAdriftGameDir)\UnityClient@Windows_Data\Managed\RSG.Promise.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -105,7 +105,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="TextMeshPro-5.6-1.0.56-Runtime, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\depot_322783\UnityClient@Windows_Data\Managed\TextMeshPro-5.6-1.0.56-Runtime.dll</HintPath>
+      <HintPath>$(WorldsAdriftGameDir)\UnityClient@Windows_Data\Managed\TextMeshPro-5.6-1.0.56-Runtime.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\UnityEngine.Modules.5.6.4\lib\net35\UnityEngine.dll</HintPath>
