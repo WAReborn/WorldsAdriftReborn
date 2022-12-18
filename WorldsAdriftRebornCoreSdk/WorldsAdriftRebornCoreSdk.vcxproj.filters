@@ -222,5 +222,6 @@
     <None Include="AddComponentOp.proto">
       <Filter>protobuf\proto</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

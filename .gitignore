@@ -352,3 +352,4 @@ MigrationBackup/
 
 ## Worlds Adrift Reborn-specific files
 DevEnv.targets
+!LocalPackages/*.nupkg

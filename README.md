@@ -42,5 +42,12 @@ You can change the path to your game installation location, save and reopen the 
 After building [WorldsAdriftRebornCoreSdk](https://github.com/sp00ktober/WorldsAdriftReborn/tree/main/WorldsAdriftRebornCoreSdk) and [WorldsAdriftReborn mod](https://github.com/sp00ktober/WorldsAdriftReborn/tree/main/WorldsAdriftReborn), copy over `CoreSdkDll.dll` to `gameroot\UnityClient@Windows_Data\Plugins\CoreSdkDll.dll`. Finally make a new directory inside of `gameroot\BeplnEx\plugins` you can name this whatever you want.
 Copy the compiled mod files into this directory.
 
+## Updating protobuf
+At the moment the WorldsAdriftRebornCoreSdk is dependant on protobuf, in order to keep the project portable and not require and external package managers (vcpkg) we opted to include a local nuget package.
+This local nuget package was exported by vcpkg using the `vcpkg export protobuf:x64-windows --nuget` option of vcpkg ( see https://devblogs.microsoft.com/cppblog/vcpkg-introducing-export-command/ for more info).
+The package can be updated by going to your locally installed vcpkg installation folder, removing any installed version of protobuf `vcpkg remove protobuf:x64-windows` and running the export command again.
+This will generate a new package for you, which you then have to place in the LocalPackages folder of this repository.
+Subsequently you have to go to the WorldsAdriftRebornCoreSdk Project and ManageNugetPackages to install the new version (you might want to remove the old version as well).
+
 # Contact us
 Any support is welcome! You can find us on [Discord](https://discord.gg/pSrfna7NDx)
