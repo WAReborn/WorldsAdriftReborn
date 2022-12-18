@@ -30,6 +30,9 @@ At the moment we can instruct the game to load and spawn entities this way, the 
 First you will need the correct version of the game. Get a copy of [DepotDownloader](https://github.com/SteamRE/DepotDownloader) and run `DepotDownloader.exe -app 322780 -depot 322783 -manifest 4624240741051053915 -username <yourusername> -password <yourpassword>`
 Which will download the correct game files. Copy the files over to the gameroot folder.
 
+Clone the repository including submodules using `git clone --recurse-submodules <repository>`
+Or (if you already cloned the repositiory normally) cd to your repository and run `git submodule update --init --recursive`
+
 Next download the latest [BepInEx Release](https://github.com/BepInEx/BepInEx/releases) and unzip those files into gameroot as well.
 
 Now open up the project sln with Visual Studio.
