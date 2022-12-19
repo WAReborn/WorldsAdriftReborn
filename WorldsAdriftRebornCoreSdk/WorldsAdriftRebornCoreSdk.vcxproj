@@ -73,11 +73,23 @@
     <ResourceCompile Include="WorldsAdriftRebornCoreSdk.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="AddComponentOp.proto" />
-    <None Include="AddEntityOp.proto" />
-    <None Include="AssetLoadRequestOp.proto" />
+    <None Include="proto.targets" />
+    <Proto Include="AddComponentOp.proto">
+      <FileType>Document</FileType>
+    </Proto>
+    <Proto Include="AddEntityOp.proto">
+      <FileType>Document</FileType>
+    </Proto>
+    <Proto Include="AssetLoadRequestOp.proto">
+      <FileType>Document</FileType>
+    </Proto>
     <None Include="packages.config" />
-    <None Include="SendComponentInterest.proto" />
+    <Proto Include="SendComponentInterest.proto">
+      <FileType>Document</FileType>
+    </Proto>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="proto.xml" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -227,6 +239,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\vcpkg-export-20221218-223847.1.0.0\build\native\vcpkg-export-20221218-223847.targets" Condition="Exists('..\packages\vcpkg-export-20221218-223847.1.0.0\build\native\vcpkg-export-20221218-223847.targets')" />
+    <Import Project="proto.targets" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

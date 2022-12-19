@@ -210,18 +210,24 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="AssetLoadRequestOp.proto">
-      <Filter>protobuf\proto</Filter>
-    </None>
-    <None Include="AddEntityOp.proto">
-      <Filter>protobuf\proto</Filter>
-    </None>
-    <None Include="SendComponentInterest.proto">
-      <Filter>protobuf\proto</Filter>
-    </None>
-    <None Include="AddComponentOp.proto">
-      <Filter>protobuf\proto</Filter>
-    </None>
     <None Include="packages.config" />
+    <None Include="proto.targets" />
+  </ItemGroup>
+  <ItemGroup>
+    <Proto Include="AddComponentOp.proto">
+      <Filter>protobuf\proto</Filter>
+    </Proto>
+    <Proto Include="AddEntityOp.proto">
+      <Filter>protobuf\proto</Filter>
+    </Proto>
+    <Proto Include="AssetLoadRequestOp.proto">
+      <Filter>protobuf\proto</Filter>
+    </Proto>
+    <Proto Include="SendComponentInterest.proto">
+      <Filter>protobuf\proto</Filter>
+    </Proto>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="proto.xml" />
   </ItemGroup>
 </Project>
