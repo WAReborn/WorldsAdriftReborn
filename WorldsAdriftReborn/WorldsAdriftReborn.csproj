@@ -116,9 +116,6 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="BepInEx.BaseLib">
-      <Version>5.4.21</Version>
-    </PackageReference>
     <PackageReference Include="BepInEx.Core">
       <Version>5.4.21</Version>
       <PrivateAssets>all</PrivateAssets>
