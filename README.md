@@ -44,10 +44,16 @@ Copy the compiled mod files into this directory.
 
 ## Updating protobuf
 At the moment the WorldsAdriftRebornCoreSdk is dependant on protobuf, in order to keep the project portable and not require and external package managers (vcpkg) we opted to include a local nuget package.
-This local nuget package was exported by vcpkg using the `vcpkg export protobuf:x64-windows --nuget` option of vcpkg ( see https://devblogs.microsoft.com/cppblog/vcpkg-introducing-export-command/ for more info).
-The package can be updated by going to your locally installed vcpkg installation folder, removing any installed version of protobuf `vcpkg remove protobuf:x64-windows` and running the export command again.
+This local nuget package was exported by vcpkg using the `vcpkg export protobuf:x64-windows-static protobuf:x64-windows-static-md --nuget --nuget-id=protobuf-x64-static-and-protobuf-x64-static-md` option of vcpkg ( see https://devblogs.microsoft.com/cppblog/vcpkg-introducing-export-command/ for more info).
+The package can be updated by going to your locally installed vcpkg installation folder, removing any installed version of protobuf using the `vcpkg remove protobuf:x64-windows protobuf:x64-windows-static protobuf:x64-windows-static-md` command,
+reinstall them using the `vcpkg install protobuf:x64-windows protobuf:x64-windows-static protobuf:x64-windows-static-md` and subsequently running the aforementioned the export command again.
 This will generate a new package for you, which you then have to place in the LocalPackages folder of this repository.
 Subsequently you have to go to the WorldsAdriftRebornCoreSdk Project and ManageNugetPackages to install the new version (you might want to remove the old version as well).
+
+You can switch linking modes by going to the WorldsAdriftRebornCoreSdk project properties and switching various settings:
+- vcpkg > Use static libraries > No / C/C++ > Code Generation > Runtime Library: MDd (default): This will dynamic link everything, wich will also result in seperate protobuf DLLS in the output
+- vcpkg > Use static libraries > Yes / vcpkg > Use Use Dynamic CRT > No / C/C++ > Code Generation > Runtime Library: MTd: This will static link everything, resulting in a single output DLL.
+- (Current default) vcpkg > Use static libraries > Yes / vcpkg > Use Use Dynamic CRT > Yes / C/C++ > Code Generation > Runtime Library: MDd (default): This will static link everything, resulting in a single output DLL.
 
 # Contact us
 Any support is welcome! You can find us on [Discord](https://discord.gg/pSrfna7NDx)

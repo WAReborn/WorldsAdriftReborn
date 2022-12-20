@@ -210,8 +210,8 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="proto.targets" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Proto Include="AddComponentOp.proto">

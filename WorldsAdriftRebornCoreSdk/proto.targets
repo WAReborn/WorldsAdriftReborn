@@ -27,7 +27,7 @@ https://stackoverflow.com/a/13030790-->
     <ItemGroup>
       <Proto>
         <Message>%(Filename)%(Extension)</Message>
-        <Command>$(ProjectDir)..\packages\vcpkg-export-20221218-223847.1.0.0\installed\x64-windows\tools\protobuf\protoc.exe --proto_path=$(ProjectDir) --cpp_out=$(ProjectDir) %(FullPath)</Command>
+        <Command>$(ProjectDir)..\packages\protobuf-x64-static-and-protobuf-x64-static-md.1.0.0\installed\x64-windows\tools\protobuf\protoc.exe --proto_path=$(ProjectDir) --cpp_out=$(ProjectDir) %(FullPath)</Command>
         <Outputs>$(ProjectDir)%(Filename).pb.h;$(ProjectDir)%(Filename).pb.cc</Outputs>
       </Proto>
     </ItemGroup>
