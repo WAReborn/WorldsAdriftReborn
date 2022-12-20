@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\protobuf-x64-static-and-protobuf-x64-static-md.1.0.0\build\native\protobuf-x64-static-and-protobuf-x64-static-md.props" Condition="Exists('..\packages\protobuf-x64-static-and-protobuf-x64-static-md.1.0.0\build\native\protobuf-x64-static-and-protobuf-x64-static-md.props')" />
+  <Import Project="..\packages\WorldsAdriftReborn-protobuf-x64-windows-static-md.1.0.0\build\native\WorldsAdriftReborn-protobuf-x64-windows-static-md.props" Condition="Exists('..\packages\WorldsAdriftReborn-protobuf-x64-windows-static-md.1.0.0\build\native\WorldsAdriftReborn-protobuf-x64-windows-static-md.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -243,13 +243,13 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="proto.targets" />
-    <Import Project="..\packages\protobuf-x64-static-and-protobuf-x64-static-md.1.0.0\build\native\protobuf-x64-static-and-protobuf-x64-static-md.targets" Condition="Exists('..\packages\protobuf-x64-static-and-protobuf-x64-static-md.1.0.0\build\native\protobuf-x64-static-and-protobuf-x64-static-md.targets')" />
+    <Import Project="..\packages\WorldsAdriftReborn-protobuf-x64-windows-static-md.1.0.0\build\native\WorldsAdriftReborn-protobuf-x64-windows-static-md.targets" Condition="Exists('..\packages\WorldsAdriftReborn-protobuf-x64-windows-static-md.1.0.0\build\native\WorldsAdriftReborn-protobuf-x64-windows-static-md.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\protobuf-x64-static-and-protobuf-x64-static-md.1.0.0\build\native\protobuf-x64-static-and-protobuf-x64-static-md.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\protobuf-x64-static-and-protobuf-x64-static-md.1.0.0\build\native\protobuf-x64-static-and-protobuf-x64-static-md.props'))" />
-    <Error Condition="!Exists('..\packages\protobuf-x64-static-and-protobuf-x64-static-md.1.0.0\build\native\protobuf-x64-static-and-protobuf-x64-static-md.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\protobuf-x64-static-and-protobuf-x64-static-md.1.0.0\build\native\protobuf-x64-static-and-protobuf-x64-static-md.targets'))" />
+    <Error Condition="!Exists('..\packages\WorldsAdriftReborn-protobuf-x64-windows-static-md.1.0.0\build\native\WorldsAdriftReborn-protobuf-x64-windows-static-md.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\WorldsAdriftReborn-protobuf-x64-windows-static-md.1.0.0\build\native\WorldsAdriftReborn-protobuf-x64-windows-static-md.props'))" />
+    <Error Condition="!Exists('..\packages\WorldsAdriftReborn-protobuf-x64-windows-static-md.1.0.0\build\native\WorldsAdriftReborn-protobuf-x64-windows-static-md.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\WorldsAdriftReborn-protobuf-x64-windows-static-md.1.0.0\build\native\WorldsAdriftReborn-protobuf-x64-windows-static-md.targets'))" />
   </Target>
 </Project>
