@@ -12,6 +12,30 @@ namespace WorldsAdriftReborn
     {
         private void Awake()
         {
+            // Adapted from: https://github.com/ManlyMarco/KK_GamepadSupport/blob/master/Core_GamepadSupport/GamepadSupportPlugin.cs
+            try
+            {
+                // NEED to load the native dll BEFORE any class with DllImport is touched or the dll won't be found
+                DependencyLoader.LoadDependencies();
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("WorldsAdriftReborn plugin failed to load: " + ex.Message);
+                // TODO: We probably do not want to return here, but give some clearly defined error (perhaps even in the game itself if possible)
+                return;
+
+                //if (System.Windows.Forms.Application.MessageLoop)
+                //{
+                //    // WinForms app
+                //    System.Windows.Forms.Application.Exit();
+                //}
+                //else
+                //{
+                //    // Console app
+                //    System.Environment.Exit(1);
+                //}
+            }
+
             ModSettings.InitConfig();
             InitPatches();
         }
