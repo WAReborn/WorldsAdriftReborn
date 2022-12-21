@@ -5,6 +5,7 @@ root = true
 
 [*]
 indent_style = space
+end_of_line = lf
 
 # Microsoft .NET properties
 csharp_new_line_before_members_in_object_initializers = false
@@ -12,7 +13,6 @@ csharp_new_line_before_members_in_object_initializers = false
 [*.{proj, csproj, targets}]
 indent_size = 2
 insert_final_newline = true
-end_of_line=lf
 
 [App.config]
 indent_size = 4
