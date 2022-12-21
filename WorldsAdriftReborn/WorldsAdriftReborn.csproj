@@ -115,11 +115,6 @@
     <Compile Include="Config\ModSettings.cs" />
     <Compile Include="Patching\BypassEAC\ConnectToNeededServersState_Patch.cs" />
     <Compile Include="Patching\BypassPlayerAnalytics\PlayerAnalytics_Patch.cs" />
-    <Compile Include="Patching\BypassSteam\BossaNetBootstrap_Patch.cs" />
-    <Compile Include="Patching\BypassSteam\ConnectToNeededServersState_Patch.cs" />
-    <Compile Include="Patching\BypassSteam\LoginMetadata_Patch.cs" />
-    <Compile Include="Patching\BypassSteam\SteamChecker_Patch.cs" />
-    <Compile Include="Patching\BypassSteam\SteamManager_Patch.cs" />
     <Compile Include="Patching\ContinueBootstrap\Bootstrap_Patch.cs" />
     <Compile Include="Patching\ContinueBootstrap\ConnectToNeededServersState_Patch.cs" />
     <Compile Include="Patching\ContinueBootstrap\WorkerConfiguration_Patch.cs" />
