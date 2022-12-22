@@ -59,6 +59,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="TextMeshPro-5.6-1.0.56-Runtime, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>$(WorldsAdriftGameDir)\UnityClient@Windows_Data\Managed\TextMeshPro-5.6-1.0.56-Runtime.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>

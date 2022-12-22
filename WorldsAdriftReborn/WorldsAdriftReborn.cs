@@ -4,6 +4,7 @@ using System.Reflection;
 using UnityEngine;
 using HarmonyLib;
 using WorldsAdriftReborn.Config;
+using System.Windows.Forms;
 
 namespace WorldsAdriftReborn
 {
@@ -20,20 +21,18 @@ namespace WorldsAdriftReborn
             }
             catch (Exception ex)
             {
-                Debug.LogError("WorldsAdriftReborn plugin failed to load: " + ex.Message);
-                // TODO: We probably do not want to return here, but give some clearly defined error (perhaps even in the game itself if possible)
-                return;
+                string errorMsg = $"WorldsAdriftReborn plugin failed to load:\n{ex.Message}";
 
-                //if (System.Windows.Forms.Application.MessageLoop)
-                //{
-                //    // WinForms app
-                //    System.Windows.Forms.Application.Exit();
-                //}
-                //else
-                //{
-                //    // Console app
-                //    System.Environment.Exit(1);
-                //}
+                Debug.LogError(errorMsg);
+
+                MessageBox.Show(
+                    errorMsg, 
+                    "WorldsAdriftReborn Error",
+                    MessageBoxButtons.OK, 
+                    MessageBoxIcon.Error
+                );
+                System.Diagnostics.Process.GetCurrentProcess().Kill();
+                return;
             }
 
             ModSettings.InitConfig();
