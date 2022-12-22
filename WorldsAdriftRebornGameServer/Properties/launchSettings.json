@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "WorldsAdriftRebornGameServer": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
