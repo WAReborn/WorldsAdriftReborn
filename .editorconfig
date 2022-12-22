@@ -10,7 +10,7 @@ end_of_line = lf
 # Microsoft .NET properties
 csharp_new_line_before_members_in_object_initializers = false
 
-[*.{proj, csproj, targets, props}]
+[*.{proj, csproj, vcxproj, targets, props}]
 indent_size = 2
 insert_final_newline = true
 end_of_line = lf
