@@ -77,4 +77,13 @@
   <ItemGroup>
     <Compile Remove="GlobalValues.cs" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\WorldsAdriftRebornCoreSdk\WorldsAdriftRebornCoreSdk.vcxproj">
+      <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
+      <OutputItemType>Content</OutputItemType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  
 </Project>
