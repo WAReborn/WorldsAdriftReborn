@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--Setup adapted from the following sources:
+https://www.reedbeta.com/blog/custom-toolchain-with-msbuild/
+https://www.gamedev.net/blogs/entry/2266894-fully-featured-custom-build-targets-in-visual-c/
+https://stackoverflow.com/a/13030790-->
+
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <!-- Include definitions from proto.xml, which defines the Proto item. -->
+    <PropertyPageSchema Include="$(MSBuildThisFileDirectory)proto.xml" />
+    <!-- Hook up Proto items to be built by the Protoc target. -->
+    <AvailableItemName Include="Proto">
+      <Targets>Protoc</Targets>
+    </AvailableItemName>
+  </ItemGroup>
+
+  <Target
+    Name="Protoc"
+    Condition="'@(Proto)' != ''"
+    BeforeTargets="ClCompile">
+
+    <Message Importance="High" Text="Building protos!!!" />
+
+    <!-- Setup metadata for custom build tool -->
+    <ItemGroup>
+      <Proto>
+        <Message>%(Filename)%(Extension)</Message>
+        <Command>$(ProjectDir)..\packages\WorldsAdriftReborn-protobuf-x64-windows-static-md.1.0.0\installed\x64-windows\tools\protobuf\protoc.exe --proto_path=$(ProjectDir) --cpp_out=$(ProjectDir) %(FullPath)</Command>
+        <Outputs>$(ProjectDir)%(Filename).pb.h;$(ProjectDir)%(Filename).pb.cc</Outputs>
+      </Proto>
+    </ItemGroup>
+
+    <!-- Compile by forwarding to the Custom Build Tool infrastructure,
+    so it will take care of .tlogs and error/warning parsing -->
+    <CustomBuild
+      Sources="@(Proto)"
+      MinimalRebuildFromTracking="true"
+      TrackerLogDirectory="$(TLogLocation)" />
+
+  </Target>
+</Project>

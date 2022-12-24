@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+         InitialTargets="TestWorldsAdriftGameFolder">
+
+  <Target Name="MaybeCopyDevEnv"
+        Inputs="$(MSBuildAllProjects)"
+        Outputs="$(DevEnvLoc)"
+        Condition="!Exists('$(DevEnvLoc)')">
+
+    <Copy SourceFiles="$(DevEnvLoc).example"
+          DestinationFiles="$(DevEnvLoc)"
+          SkipUnchangedFiles="true" />
+    <Error Text="It appears your Worlds Adrift installation is not in the default Steam directory. Please set the path correctly in '$(DevEnvLoc)' (it has been created for you)." />
+  </Target>
+
+  <Target Name="DevEnvInvalid"
+          Condition="Exists('$(DevEnvLoc)')">
+    <!-- If the default path is overriden in DevEnv, and it doesn't exist -->
+    <Error Text="Your Worlds Adrift installation folder has not been found at the path defined in '$(DevEnvLoc)'. Please set it correctly." />
+  </Target>
+
+  <!-- Using DependsOnTarget with Conditional targets as an if else structure... -->
+  <!-- Note that this is the first target, called by InitialTargets -->
+  <Target Name="TestWorldsAdriftGameFolder"
+          DependsOnTargets="MaybeCopyDevEnv;DevEnvInvalid"
+          Condition="!Exists('$(WorldsAdriftGameDir)') And !Exists('$(PropSheetPath).remoteBuild')" />
+
+</Project>

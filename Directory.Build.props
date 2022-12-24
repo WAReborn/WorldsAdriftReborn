@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <DevEnvLoc>$(MSBuildThisFileDirectory)DevEnv.targets</DevEnvLoc>
+  </PropertyGroup>
+
+  <!-- This sets $(WorldsAdriftGameDir) -->
+  <Import Project="$(DevEnvLoc)" Condition="Exists('$(DevEnvLoc)')" />
+
+  <PropertyGroup Label="Game Install Properties">
+    <WorldsAdriftGameDir Condition="!Exists('$(DevEnvLoc)')">C:\Program Files (x86)\Steam\steamapps\common\WorldsAdrift\</WorldsAdriftGameDir>
+    <WorldsAdriftGameDir>$([MSBuild]::EnsureTrailingSlash('$(WorldsAdriftGameDir)'))</WorldsAdriftGameDir>
+    <PluginOutputDirectory>$(WorldsAdriftGameDir)BepInEx\plugins\WorldsAdriftReborn\</PluginOutputDirectory>
+    <PropSheetPath>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)'))</PropSheetPath>
+    <PluginOutputDirectory Condition="Exists('$(PropSheetPath).remoteBuild')">$(PropSheetPath)dist\release\WorldsAdriftReborn\</PluginOutputDirectory>
+  </PropertyGroup>
+
+</Project>
