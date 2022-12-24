@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -6,17 +6,26 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Platforms>AnyCPU;x64;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\WorldsAdriftRebornCoreSdk\WorldsAdriftRebornCoreSdk.vcxproj">
+      <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
+      <OutputItemType>Content</OutputItemType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Generated.Code">
-      <HintPath>..\..\..\..\Downloads\depot_322783\UnityClient@Windows_Data\Managed\Generated.Code.dll</HintPath>
+      <HintPath>$(WorldsAdriftGameDir)\UnityClient@Windows_Data\Managed\Generated.Code.dll</HintPath>
     </Reference>
     <Reference Include="Improbable.WorkerSdkCsharp">
-      <HintPath>..\..\..\..\Downloads\depot_322783\UnityClient@Windows_Data\Managed\Improbable.WorkerSdkCsharp.dll</HintPath>
+      <HintPath>$(WorldsAdriftGameDir)\UnityClient@Windows_Data\Managed\Improbable.WorkerSdkCsharp.dll</HintPath>
     </Reference>
     <Reference Include="protobuf-net">
-      <HintPath>..\..\..\..\Downloads\depot_322783\UnityClient@Windows_Data\Managed\protobuf-net.dll</HintPath>
+      <HintPath>$(WorldsAdriftGameDir)\UnityClient@Windows_Data\Managed\protobuf-net.dll</HintPath>
     </Reference>
   </ItemGroup>
 

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <!--Replace the path to your Worlds Adrift Program installation folder-->
+    <WorldsAdriftGameDir>C:\Program Files (x86)\Steam\steamapps\common\WorldsAdrift\</WorldsAdriftGameDir>
+  </PropertyGroup>
+</Project>

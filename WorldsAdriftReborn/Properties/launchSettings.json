@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "Launch Worlds Adrift": {
+      "commandName": "Executable",
+      "executablePath": "$(WorldsAdriftGameDir)UnityClient@Windows.exe",
+      "nativeDebugging": true
+    }
+  }
+}

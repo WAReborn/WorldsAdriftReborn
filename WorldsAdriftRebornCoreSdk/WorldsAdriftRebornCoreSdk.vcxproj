@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\WorldsAdriftReborn-protobuf-x64-windows-static-md.1.0.0\build\native\WorldsAdriftReborn-protobuf-x64-windows-static-md.props" Condition="Exists('..\packages\WorldsAdriftReborn-protobuf-x64-windows-static-md.1.0.0\build\native\WorldsAdriftReborn-protobuf-x64-windows-static-md.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -72,10 +73,23 @@
     <ResourceCompile Include="WorldsAdriftRebornCoreSdk.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="AddComponentOp.proto" />
-    <None Include="AddEntityOp.proto" />
-    <None Include="AssetLoadRequestOp.proto" />
-    <None Include="SendComponentInterest.proto" />
+    <None Include="packages.config" />
+    <None Include="proto.targets" />
+    <Proto Include="AddComponentOp.proto">
+      <FileType>Document</FileType>
+    </Proto>
+    <Proto Include="AddEntityOp.proto">
+      <FileType>Document</FileType>
+    </Proto>
+    <Proto Include="AssetLoadRequestOp.proto">
+      <FileType>Document</FileType>
+    </Proto>
+    <Proto Include="SendComponentInterest.proto">
+      <FileType>Document</FileType>
+    </Proto>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="proto.xml" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -87,7 +101,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
+    <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -131,19 +145,35 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <TargetName>CoreSdkDll</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <TargetName>CoreSdkDll</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <TargetName>CoreSdkDll</TargetName>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <TargetName>CoreSdkDll</TargetName>
-    <OutDir>$(ProjectDir)$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <VcpkgUseStatic>true</VcpkgUseStatic>
+    <VcpkgUseMD>true</VcpkgUseMD>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <VcpkgUseStatic>true</VcpkgUseStatic>
+    <VcpkgUseMD>true</VcpkgUseMD>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <VcpkgUseStatic>true</VcpkgUseStatic>
+    <VcpkgUseMD>true</VcpkgUseMD>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <VcpkgUseStatic>true</VcpkgUseStatic>
+    <VcpkgUseMD>true</VcpkgUseMD>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -173,6 +203,8 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>$(ProjectDir)\enet\include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -180,6 +212,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);Ws2_32.lib;winmm.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -224,5 +257,14 @@
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="proto.targets" />
+    <Import Project="..\packages\WorldsAdriftReborn-protobuf-x64-windows-static-md.1.0.0\build\native\WorldsAdriftReborn-protobuf-x64-windows-static-md.targets" Condition="Exists('..\packages\WorldsAdriftReborn-protobuf-x64-windows-static-md.1.0.0\build\native\WorldsAdriftReborn-protobuf-x64-windows-static-md.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\WorldsAdriftReborn-protobuf-x64-windows-static-md.1.0.0\build\native\WorldsAdriftReborn-protobuf-x64-windows-static-md.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\WorldsAdriftReborn-protobuf-x64-windows-static-md.1.0.0\build\native\WorldsAdriftReborn-protobuf-x64-windows-static-md.props'))" />
+    <Error Condition="!Exists('..\packages\WorldsAdriftReborn-protobuf-x64-windows-static-md.1.0.0\build\native\WorldsAdriftReborn-protobuf-x64-windows-static-md.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\WorldsAdriftReborn-protobuf-x64-windows-static-md.1.0.0\build\native\WorldsAdriftReborn-protobuf-x64-windows-static-md.targets'))" />
+  </Target>
 </Project>
