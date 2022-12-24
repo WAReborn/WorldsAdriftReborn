@@ -32,24 +32,45 @@ using Improbable.Worker;
 using Improbable.Worker.Internal;
 using ProtoBuf;
 using Schema.Improbable;
+using WorldsAdriftRebornGameServer.DLLCommunication;
 using WorldsAdriftRebornGameServer.Networking.Singleton;
 
 namespace WorldsAdriftRebornGameServer.Game.Components
 {
     internal class ComponentsSerializer
     {
-        public unsafe static void InitAndSerialize(uint componentId, byte** buffer, uint* length)
+        public unsafe static void InitAndSerialize(ENetPeerHandle peer, uint componentId, long entityId, byte** buffer, uint* length)
         {
-            for(int i = 0; i < ComponentsManager.Instance.ClientComponentVtables.Length; i++)
+            for (int i = 0; i < ComponentsManager.Instance.ClientComponentVtables.Length; i++)
             {
                 if (ComponentsManager.Instance.ClientComponentVtables[i].ComponentId == componentId)
                 {
+                    if (PeerManager.Instance.playerInitializedComponents.ContainsKey(peer) && PeerManager.Instance.playerInitializedComponents[peer] != null)
+                    {
+                        foreach(KeyValuePair<long, System.Collections.Generic.List<uint>> keyValuePair in PeerManager.Instance.playerInitializedComponents[peer])
+                        {
+                            if(keyValuePair.Key == entityId && keyValuePair.Value.Contains(componentId))
+                            {
+                                Console.WriteLine("[debug] skipping component " + componentId + " on entity " + entityId + " because it was already initialized and sent.");
+                                continue;
+                            }
+                        }
+                    }
+
                     ulong refId = 0;
                     object obj = null;
 
                     if(componentId == 8065)
                     {
-                        Blueprint.Data bData = new Blueprint.Data(new BlueprintData("Player"));
+                        Blueprint.Data bData = null;
+                        if(entityId == 1)
+                        {
+                            bData = new Blueprint.Data(new BlueprintData("Player"));
+                        }
+                        else
+                        {
+                            bData = new Blueprint.Data(new BlueprintData("Island"));
+                        }
                         obj = bData;
                     }
                     else if(componentId == 190602)
@@ -380,9 +401,9 @@ namespace WorldsAdriftRebornGameServer.Game.Components
                         IslandFabricState.Data data = new IslandFabricState.Data(new IslandFabricStateData(5,
                                                                                                            0,
                                                                                                            0,
-                                                                                                           new Improbable.Collections.List<EntityId> { new EntityId(0) },
-                                                                                                           new Option<EntityId>(new EntityId(0)),
-                                                                                                           new Option<string>(""),
+                                                                                                           new Improbable.Collections.List<EntityId> { },
+                                                                                                           new Option<EntityId>(),
+                                                                                                           new Option<string>(),
                                                                                                            Bossa.Travellers.Biomes.BiomeType.Biome1,
                                                                                                            false,
                                                                                                            new Option<Coordinates>(new Coordinates(0,0,0)),

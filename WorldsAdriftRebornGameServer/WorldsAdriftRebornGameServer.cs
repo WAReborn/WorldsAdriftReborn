@@ -102,7 +102,7 @@ namespace WorldsAdriftRebornGameServer
                                 {
                                     uint len = 0;
                                     byte* buffer;
-                                    ComponentsSerializer.InitAndSerialize(interests[i].ComponentId, &buffer, &len);
+                                    ComponentsSerializer.InitAndSerialize(keyValuePair.Key, interests[i].ComponentId, entityId, &buffer, &len);
 
                                     if(len > 0)
                                     {
@@ -114,6 +114,19 @@ namespace WorldsAdriftRebornGameServer
                                         component.DataLength = (int)len;
 
                                         serializedComponents.Add(component);
+
+                                        if (!PeerManager.Instance.playerInitializedComponents.ContainsKey(keyValuePair.Key))
+                                        {
+                                            PeerManager.Instance.playerInitializedComponents.Add(keyValuePair.Key, new Dictionary<long, List<uint>>
+                                            {
+                                                { entityId, new List<uint>() }
+                                            });
+                                        }
+                                        if (!PeerManager.Instance.playerInitializedComponents[keyValuePair.Key].ContainsKey(entityId))
+                                        {
+                                            PeerManager.Instance.playerInitializedComponents[keyValuePair.Key].Add(entityId, new List<uint>());
+                                        }
+                                        PeerManager.Instance.playerInitializedComponents[keyValuePair.Key][entityId].Add(interests[i].ComponentId);
                                     }
                                 }
 
