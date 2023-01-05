@@ -4,6 +4,9 @@ using WorldsAdriftServer.Handlers.Authentication;
 using WorldsAdriftServer.Handlers.CharacterScreen;
 using WorldsAdriftServer.Handlers.ServerStatus;
 using WorldsAdriftServer.Handlers.SocialScreen;
+using WorldsAdriftServer.Handlers.SocialScreen.Alliance;
+using WorldsAdriftServer.Handlers.SocialScreen.Alliance.Rank;
+using WorldsAdriftServer.Handlers.SocialScreen.Crew;
 using WorldsAdriftServer.Helper.Data;
 
 namespace WorldsAdriftServer.Handlers

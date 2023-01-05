@@ -1,4 +1,4 @@
-﻿using WorldsAdriftServer.Helpers;
+﻿using WorldsAdriftServer.Helper.Data;
 
 namespace WorldsAdriftServer.Objects.DataObjects
 {

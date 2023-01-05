@@ -1,5 +1,4 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using WorldsAdriftServer.Helper.Data;
 using WorldsAdriftServer.Objects.DataObjects;
 

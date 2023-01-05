@@ -1,6 +1,6 @@
 ﻿using NetCoreServer;
 using Newtonsoft.Json.Linq;
-using WorldsAdriftServer.Helpers;
+using WorldsAdriftServer.Helper.Data;
 using WorldsAdriftServer.Objects.SocialObjects;
 
 namespace WorldsAdriftServer.Handlers.SocialScreen
@@ -14,8 +14,8 @@ namespace WorldsAdriftServer.Handlers.SocialScreen
         internal override bool Handle( HttpSession httpSession, HttpRequest httpRequest )
         {
             //TODO return real data
-            JObject responce = JObject.FromObject(new ResponseSchema(JArray.FromObject(new List<MembershipChangeRequestDataModel>())));
-            return SendData.JObject(responce, httpSession );
+            JObject response = JObject.FromObject(new ResponseSchema(JArray.FromObject(new List<MembershipChangeRequestDataModel>())));
+            return SendData.JObject(response, httpSession );
         }
     }
 }

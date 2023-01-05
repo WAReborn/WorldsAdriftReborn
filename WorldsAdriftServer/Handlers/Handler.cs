@@ -1,6 +1,6 @@
 ﻿using NetCoreServer;
 using WorldsAdriftServer.Helper.Data;
-using WorldsAdriftServer.Helpers.Token;
+using WorldsAdriftServer.Helper.Token;
 
 namespace WorldsAdriftServer.Handlers
 {

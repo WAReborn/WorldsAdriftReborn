@@ -1,6 +1,7 @@
 ﻿using NetCoreServer;
 using Newtonsoft.Json.Linq;
-using WorldsAdriftServer.Helpers;
+using WorldsAdriftServer.Helper;
+using WorldsAdriftServer.Helper.Data;
 using WorldsAdriftServer.Objects.DataObjects;
 using WorldsAdriftServer.Objects.SocialObjects;
 
@@ -20,8 +21,8 @@ namespace WorldsAdriftServer.Handlers.SocialScreen
             CharacterData characterData = DataStore.Instance.CharacterDataDictionary[guids[0]];
             PlayerMembershipModel playerMembershipModel = new(characterData);
 
-            JObject responce = JObject.FromObject(new ResponseSchema(JObject.FromObject(playerMembershipModel)));
-            return SendData.JObject(responce, httpSession);
+            JObject response = JObject.FromObject(new ResponseSchema(JObject.FromObject(playerMembershipModel)));
+            return SendData.JObject(response, httpSession);
         }
     }
 }
