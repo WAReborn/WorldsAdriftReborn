@@ -19,7 +19,7 @@ namespace WorldsAdriftServer.Objects.CharacterSelection
         Pet
     }
 
-    internal struct ColorProperties
+    public struct ColorProperties
     {
         public ColorProperties( UnityColor primary, UnityColor secondary )
         {
@@ -29,47 +29,47 @@ namespace WorldsAdriftServer.Objects.CharacterSelection
             SpecColor = new UnityColor(1f, 1f, 1f, 1f);
         }
 
-        [JsonConverter(typeof(UnityObjects.ColorConverter))]
-        public UnityColor PrimaryColor;
+        [JsonConverter(typeof(ColorConverter))]
+        public UnityColor PrimaryColor { get; set; }
 
-        [JsonConverter(typeof(UnityObjects.ColorConverter))]
-        public UnityColor SecondaryColor;
+        [JsonConverter(typeof(ColorConverter))]
+        public UnityColor SecondaryColor { get; set; }
 
-        [JsonConverter(typeof(UnityObjects.ColorConverter))]
-        public UnityColor TertiaryColor;
+        [JsonConverter(typeof(ColorConverter))]
+        public UnityColor TertiaryColor { get; set; }
 
-        [JsonConverter(typeof(UnityObjects.ColorConverter))]
-        public UnityColor SpecColor;
+        [JsonConverter(typeof(ColorConverter))]
+        public UnityColor SpecColor { get; set; }
     }
 
-    internal struct CharacterUniversalColors
+    public struct CharacterUniversalColors
     {
-        [JsonConverter(typeof(UnityObjects.ColorConverter))]
-        public UnityColor HairColor;
+        [JsonConverter(typeof(ColorConverter))]
+        public UnityColor HairColor { get; set; }
 
-        [JsonConverter(typeof(UnityObjects.ColorConverter))]
-        public UnityColor SkinColor;
+        [JsonConverter(typeof(ColorConverter))]
+        public UnityColor SkinColor { get; set; }
 
-        [JsonConverter(typeof(UnityObjects.ColorConverter))]
-        public UnityColor LipColor;
+        [JsonConverter(typeof(ColorConverter))]
+        public UnityColor LipColor { get; set; }
     }
 
-    internal class ItemData
+    public class ItemData
     {
         public override string ToString()
         {
             return string.Format("{0}:{1}", Id, Prefab);
         }
 
-        public string Id;
+        public string Id { get; set; }
 
-        public string Prefab;
+        public string Prefab { get; set; }
 
-        public ColorProperties ColorProps;
+        public ColorProperties ColorProps { get; set; }
 
-        public float Health;
+        public float Health { get; set; }
 
-        public ItemData(string id, string prefab, ColorProperties colorProps, float health )
+        public ItemData( string id, string prefab, ColorProperties colorProps, float health )
         {
             Id = id;
             Prefab = prefab;
@@ -78,20 +78,20 @@ namespace WorldsAdriftServer.Objects.CharacterSelection
         }
     }
 
-    internal class CharacterCreationData
+    public class CharacterCreationData
     {
         public int Id { get; set; }
         public string characterUid { get; set; }
         public string Name { get; set; }
         public string Server { get; set; }
         public string serverIdentifier { get; set; }
-        public Dictionary<CharacterSlotType, ItemData> Cosmetics { get; set; }
+        public Dictionary<CharacterSlotType, ItemData>? Cosmetics { get; set; }
         public CharacterUniversalColors UniversalColors { get; set; }
         public bool isMale { get; set; }
         public bool seenIntro { get; set; }
         public bool skippedTutorial { get; set; }
 
-        public CharacterCreationData(int id, string characterUid, string name, string server, string serverIdentifier, Dictionary<CharacterSlotType, ItemData> cosmetics, CharacterUniversalColors universalColors, bool isMale, bool seenIntro, bool skippedTutorial )
+        public CharacterCreationData( int id, string characterUid, string name, string server, string serverIdentifier, Dictionary<CharacterSlotType, ItemData>? cosmetics, CharacterUniversalColors universalColors, bool isMale, bool seenIntro, bool skippedTutorial )
         {
             Id = id;
             this.characterUid = characterUid;

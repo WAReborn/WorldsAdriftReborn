@@ -1,20 +1,35 @@
-﻿namespace WorldsAdriftServer.Objects.CharacterSelection
+﻿using Newtonsoft.Json;
+
+namespace WorldsAdriftServer.Objects.CharacterSelection
 {
     internal class CharacterAuthResponse
     {
-        public string token { get; set; }
-        public string playerId { get; set; }
-        public long bossaId { get; set; }
-        public string tokenExpiryTime { get; set; }
-        public bool success { get; set; }
-
-        public CharacterAuthResponse(string token, string playerId, long bossaId, string tokenExpiryTime, bool success )
+        public CharacterAuthResponse() { }
+        internal CharacterAuthResponse( string token, bool success )
         {
-            this.token = token;
-            this.playerId = playerId;
-            this.bossaId = bossaId;
-            this.tokenExpiryTime = tokenExpiryTime;
-            this.success = success;
+            Token = token;
+            Success = success;
         }
+
+        [JsonProperty("token")]
+        public string Token { get; set; } = string.Empty;
+
+        [JsonProperty("playerId")]
+        public string PlayerId { get; set; } = Config.PlayerId;
+
+        [JsonProperty("bossaId")]
+        public string BossaId { get; set; } = Config.BossaId;
+
+        [JsonProperty("tokenExpiryTime")]
+        public string TokenExpiryTime { get; set; } = "12.12.12";
+
+        [JsonProperty("success")]
+        public bool Success { get; set; } = false;
+
+        [JsonProperty("messages")]
+        public string[] Messages { get; set; } = { };
+
+        [JsonProperty("message")]
+        public string Message { get; set; } = string.Empty;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using WorldsAdriftServer.Helper.Data;
 using WorldsAdriftServer.Server;
 
 namespace WorldsAdriftServer
@@ -11,11 +12,14 @@ namespace WorldsAdriftServer
 
             RequestRouterServer restServer = new RequestRouterServer(IPAddress.Any, restPort);
 
+            DataStore dataStore = DataStore.ReadData();
+            DataStore.Instance = dataStore;
+
             //server.AddStaticContent() here to add some filesystem path to serve
             restServer.Start();
 
-            Console.WriteLine("enter something to stop");
-            Console.ReadKey();
+            Console.WriteLine("Press enter to stop");
+            Console.ReadLine();
 
             restServer.Stop();
         }

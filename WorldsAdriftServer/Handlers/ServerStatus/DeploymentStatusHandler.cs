@@ -1,10 +1,10 @@
 ﻿using NetCoreServer;
 using Newtonsoft.Json.Linq;
-using WorldsAdriftServer.Objects.DeploymentStatus;
+using WorldsAdriftServer.Helper.Data;
 
 namespace WorldsAdriftServer.Handlers.ServerStatus
 {
-    internal static class DeploymentStatusHandler
+    internal class DeploymentStatusHandler : Handler
     {
         /*
          * URL: /deploymentStatus
@@ -12,20 +12,13 @@ namespace WorldsAdriftServer.Handlers.ServerStatus
          * the game requests this endpoint after requesting the character list and then continues to do so in a specific interval.
          * the response contains a list of available servers along with their status.
          */
-        internal static void HandleDeploymentStatusRequest(HttpSession session, HttpRequest request, string serverName, string serverIdentifier, int population )
+        internal override string Method { get; } = "GET";
+        internal override string[] URLs { get; } = { "/status" };
+        internal override bool CheckSteamToken { get; } = false;
+        internal override bool CheckCharacterToken { get; } = false;
+        internal override bool Handle( HttpSession httpSession, HttpRequest httpRequest )
         {
-            Dictionary<string, ServerStatusRecord> serverStatus = new Dictionary<string, ServerStatusRecord>();
-            serverStatus.Add(serverIdentifier, new ServerStatusRecord(serverName, serverIdentifier, Objects.DeploymentStatus.ServerStatus.UP, population.ToString()));
-
-            JObject respO = (JObject)JToken.FromObject(serverStatus);
-            if (respO != null)
-            {
-                HttpResponse resp = new HttpResponse();
-                resp.SetBegin(200);
-                resp.SetBody(respO.ToString());
-
-                session.SendResponseAsync(resp);
-            }
+            return SendData.JObject((JObject)JToken.FromObject(Config.ServerStatusDictionary), httpSession);
         }
     }
 }
