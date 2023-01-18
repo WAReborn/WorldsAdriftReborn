@@ -29,6 +29,17 @@ jobs:
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
 
+    # Adapted from https://stackoverflow.com/a/42700738
+    - name: Create DevEnv.targets and point it at the stripped and publicized assemblies
+      run: |
+        Copy-Item DevEnv.targets.example DevEnv.targets -Force
+        $filePathToTask = "DevEnv.targets"
+        $xml = New-Object XML
+        $xml.Load($filePathToTask)
+        $element = $xml.SelectSingleNode("//WorldsAdriftGameDir")
+        $element.InnerText = "StrippedAndPublicizedAssemblies\"
+        $xml.Save($filePathToTask)
+
     - name: Restore NuGet packages
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: nuget restore ${{env.SOLUTION_FILE_PATH}}
