@@ -83,8 +83,8 @@
     <ProjectReference Include="..\WorldsAdriftRebornCoreSdk\WorldsAdriftRebornCoreSdk.vcxproj">
       <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
       <OutputItemType>Content</OutputItemType>
-      <!-- <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory> -->
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
 
