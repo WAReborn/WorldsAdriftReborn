@@ -37,8 +37,9 @@ jobs:
         $xml = New-Object XML
         $xml.Load($filePathToTask)
         $element = $xml.SelectSingleNode("//*[local-name()='WorldsAdriftGameDir']")
-        $element.InnerText = "StrippedAndPublicizedAssemblies\"
+        $element.InnerText = (Resolve-Path "StrippedAndPublicizedAssemblies\")
         $xml.Save($filePathToTask)
+        Get-Content $filePathToTask
 
     - name: Restore NuGet packages
       working-directory: ${{env.GITHUB_WORKSPACE}}
