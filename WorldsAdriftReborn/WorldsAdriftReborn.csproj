@@ -84,7 +84,6 @@
       <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
       <OutputItemType>Content</OutputItemType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
 
