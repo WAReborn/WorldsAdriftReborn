@@ -91,7 +91,8 @@
     <GetFileHash Files="$(WorldsAdriftGameDir)\UnityClient@Windows_Data\Managed\Assembly-CSharp.dll">
       <Output TaskParameter="Hash" ItemName="AssemblyHash" />
     </GetFileHash>
-    <Error Condition="'@(AssemblyHash)'!='7A725DF3E96A168736CD017F1957CED9D918D83AED5ABBC79D5F740A7446AD4B'" Text="Referenced $(WorldsAdriftGameDir)\UnityClient@Windows_Data\Managed\Assembly-CSharp does match the expected hash, most likely a wrong version of Worlds Adrift was targeted. Please update the DevEnv.targets to point to the correct version or refer to the readme on how to obtain the correct version of the game.%0a(Provided hash: @(AssemblyHash) does not match expected hash: 7A725DF3E96A168736CD017F1957CED9D918D83AED5ABBC79D5F740A7446AD4B)" />
+    <!-- Second hash is hash of the stripped and publicized assembly -->
+    <Error Condition="'@(AssemblyHash)'!='7A725DF3E96A168736CD017F1957CED9D918D83AED5ABBC79D5F740A7446AD4B' And '@(AssemblyHash)'!='9455D01B35C950B4BD7CF8A9E9D95E361E98B99AE26876BEBCB3B888CD971E07'" Text="Referenced $(WorldsAdriftGameDir)\UnityClient@Windows_Data\Managed\Assembly-CSharp does match the expected hash, most likely a wrong version of Worlds Adrift was targeted. Please update the DevEnv.targets to point to the correct version or refer to the readme on how to obtain the correct version of the game.%0a(Provided hash: @(AssemblyHash) does not match expected hash: 7A725DF3E96A168736CD017F1957CED9D918D83AED5ABBC79D5F740A7446AD4B)" />
   </Target>
   
 </Project>
