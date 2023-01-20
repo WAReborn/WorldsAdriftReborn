@@ -81,6 +81,13 @@ jobs:
         name: WorldsAdriftReborn-${{ matrix.build-configuration }}
         path: publish
 
+    - uses: ncipollo/release-action@v1
+      if: ${{ github.event_name != 'pull_request' }}
+      with:
+        artifacts: "publish/*"
+        allowUpdates: true
+        prerelease: true
+
     # - name: Upload WorldsAdriftReborn Artifact
     #   uses: actions/upload-artifact@v3
     #   with:
