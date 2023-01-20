@@ -59,9 +59,20 @@ jobs:
     - name: Copy WorldsAdriftRebornCoreSdk Content to the WorldsAdriftReborn Bepinex plugin folder
       run: Copy-Item -Path "x64\${{env.BUILD_CONFIGURATION}}\*" -Destination "StrippedAndPublicizedAssemblies\BepInEx\plugins\WorldsAdriftReborn" -Recurse
 
-    # Upload artifacts for the various projects
     - name: Upload WorldsAdriftReborn Artifact
       uses: actions/upload-artifact@v3
       with:
         name: WorldsAdriftReborn
-        path: StrippedAndPublicizedAssemblies\BepInEx\plugins\WorldsAdriftReborn
+        path: StrippedAndPublicizedAssemblies\BepInEx\plugins\WorldsAdriftReborn\
+
+    - name: Upload WorldsAdriftRebornGameServer Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: WorldsAdriftRebornGameServer
+        path: WorldsAdriftRebornGameServer\bin\${{env.BUILD_CONFIGURATION}}\net6.0
+    
+    - name: Upload WorldsAdriftServer Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: WorldsAdriftServer
+        path: WorldsAdriftServer\bin\${{env.BUILD_CONFIGURATION}}\net6.0
