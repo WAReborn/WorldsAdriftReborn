@@ -91,7 +91,7 @@ jobs:
       uses: ncipollo/release-action@v1
       if: ${{ github.event_name != 'pull_request' }}
       with:
-        tag: v0.1
+        tag: bleeding-edge
         commit: ${{ github.event.base_ref }}
         artifacts: "WorldsAdriftReborn-${{ matrix.build-configuration }}.zip"
         allowUpdates: true
