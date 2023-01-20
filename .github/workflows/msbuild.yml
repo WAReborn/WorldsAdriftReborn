@@ -44,13 +44,6 @@ jobs:
         $xml.Save($filePathToTask)
         Get-Content $filePathToTask
 
-    - uses: actions/cache@v3
-      with:
-        path: ~/.nuget/packages
-        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-nuget-
-
     - name: Restore NuGet packages
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: nuget restore ${{env.SOLUTION_FILE_PATH}}
@@ -70,13 +63,13 @@ jobs:
 
     - name: Collect WorldsAdriftReborn, WorldsAdriftRebornGameServer and WorldsAdriftRebornGameServer into a single publish folder
       run: |
-        New-Item "publish" -Type Directory
         New-Item "publish\WorldsAdriftReborn" -Type Directory
         Copy-Item -Path "StrippedAndPublicizedAssemblies\BepInEx\plugins\WorldsAdriftReborn\*" -Destination "publish\WorldsAdriftReborn" -Recurse -Force
         New-Item "publish\WorldsAdriftRebornGameServer" -Type Directory
         Copy-Item -Path "WorldsAdriftRebornGameServer\bin\${{env.BUILD_CONFIGURATION}}\net6.0\*" -Destination "publish\WorldsAdriftRebornGameServer" -Recurse -Force
         New-Item "publish\WorldsAdriftServer" -Type Directory
         Copy-Item -Path "WorldsAdriftServer\bin\${{env.BUILD_CONFIGURATION}}\net6.0\*" -Destination "publish\WorldsAdriftServer" -Recurse -Force
+        Copy-Item -Path "README.md" -Destination "publish\"
 
     - name: Upload WorldsAdriftReborn Collection Artifact
       uses: actions/upload-artifact@v3
