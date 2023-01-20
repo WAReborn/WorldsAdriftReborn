@@ -14,7 +14,7 @@ env:
   # Configuration type to build.
   # You can convert this to a build matrix if you need coverage of multiple configuration types.
   # https://docs.github.com/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-  BUILD_CONFIGURATION: Release
+  # BUILD_CONFIGURATION: Release
   # BUILD_CONFIGURATION: Debug
 
 permissions:
@@ -23,6 +23,10 @@ permissions:
 jobs:
   build:
     runs-on: windows-latest
+
+    strategy:
+      matrix:
+        build-configuration: [Debug, Release]
 
     steps:
     - uses: actions/checkout@v3
@@ -52,45 +56,45 @@ jobs:
       working-directory: ${{env.GITHUB_WORKSPACE}}
       # Add additional options to the MSBuild command line here (like platform or verbosity level).
       # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
+      run: msbuild /m /p:Configuration=${{matrix.build-configuration}} ${{env.SOLUTION_FILE_PATH}}
 
     # Normally this is done automatically because the WorldsAdriftReborn and WorldsAdriftRebornGameServer project reference the WorldsAdriftRebornCoreSdk project and is configured to do so
     # however for some reason this does not work inside the pipeline so we have to do this as a second action
     - name: Copy WorldsAdriftRebornCoreSdk to the output folders of the dependant projects (WorldsAdriftReborn, WorldsAdriftRebornGameServer)
       run: |
-        Copy-Item -Path "x64\${{env.BUILD_CONFIGURATION}}\*" -Destination "StrippedAndPublicizedAssemblies\BepInEx\plugins\WorldsAdriftReborn" -Recurse
-        Copy-Item -Path "x64\${{env.BUILD_CONFIGURATION}}\*" -Destination "WorldsAdriftRebornGameServer\bin\${{env.BUILD_CONFIGURATION}}\net6.0" -Recurse
+        Copy-Item -Path "x64\${{matrix.build-configuration}}\*" -Destination "StrippedAndPublicizedAssemblies\BepInEx\plugins\WorldsAdriftReborn" -Recurse
+        Copy-Item -Path "x64\${{matrix.build-configuration}}\*" -Destination "WorldsAdriftRebornGameServer\bin\${{matrix.build-configuration}}\net6.0" -Recurse
 
     - name: Collect WorldsAdriftReborn, WorldsAdriftRebornGameServer and WorldsAdriftRebornGameServer into a single publish folder
       run: |
         New-Item "publish\WorldsAdriftReborn" -Type Directory
         Copy-Item -Path "StrippedAndPublicizedAssemblies\BepInEx\plugins\WorldsAdriftReborn\*" -Destination "publish\WorldsAdriftReborn" -Recurse -Force
         New-Item "publish\WorldsAdriftRebornGameServer" -Type Directory
-        Copy-Item -Path "WorldsAdriftRebornGameServer\bin\${{env.BUILD_CONFIGURATION}}\net6.0\*" -Destination "publish\WorldsAdriftRebornGameServer" -Recurse -Force
+        Copy-Item -Path "WorldsAdriftRebornGameServer\bin\${{matrix.build-configuration}}\net6.0\*" -Destination "publish\WorldsAdriftRebornGameServer" -Recurse -Force
         New-Item "publish\WorldsAdriftServer" -Type Directory
-        Copy-Item -Path "WorldsAdriftServer\bin\${{env.BUILD_CONFIGURATION}}\net6.0\*" -Destination "publish\WorldsAdriftServer" -Recurse -Force
+        Copy-Item -Path "WorldsAdriftServer\bin\${{matrix.build-configuration}}\net6.0\*" -Destination "publish\WorldsAdriftServer" -Recurse -Force
         Copy-Item -Path "README.md" -Destination "publish\"
 
     - name: Upload WorldsAdriftReborn Collection Artifact
       uses: actions/upload-artifact@v3
       with:
-        name: WorldsAdriftReborn
+        name: WorldsAdriftReborn-${{ matrix.build-configuration }}
         path: publish
 
     # - name: Upload WorldsAdriftReborn Artifact
     #   uses: actions/upload-artifact@v3
     #   with:
-    #     name: WorldsAdriftReborn
+    #     name: WorldsAdriftReborn-${{ matrix.build-configuration }}
     #     path: StrippedAndPublicizedAssemblies\BepInEx\plugins\WorldsAdriftReborn
 
     # - name: Upload WorldsAdriftRebornGameServer Artifact
     #   uses: actions/upload-artifact@v3
     #   with:
-    #     name: WorldsAdriftRebornGameServer
-    #     path: WorldsAdriftRebornGameServer\bin\${{env.BUILD_CONFIGURATION}}\net6.0
+    #     name: WorldsAdriftRebornGameServer-${{ matrix.build-configuration }}
+    #     path: WorldsAdriftRebornGameServer\bin\${{matrix.build-configuration}}\net6.0
     
     # - name: Upload WorldsAdriftServer Artifact
     #   uses: actions/upload-artifact@v3
     #   with:
-    #     name: WorldsAdriftServer
-    #     path: WorldsAdriftServer\bin\${{env.BUILD_CONFIGURATION}}\net6.0
+    #     name: WorldsAdriftServer-${{ matrix.build-configuration }}
+    #     path: WorldsAdriftServer\bin\${{matrix.build-configuration}}\net6.0
