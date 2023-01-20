@@ -86,8 +86,8 @@ jobs:
     - uses: ncipollo/release-action@v1
       if: ${{ github.event_name != 'pull_request' }}
       with:
-        tag: test
-        commit: test
+        tag: v0.1
+        commit: ${{ github.event.base_ref }}
         artifacts: "publish/*"
         allowUpdates: true
         prerelease: true
