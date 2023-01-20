@@ -23,6 +23,8 @@ permissions:
 jobs:
   build:
     runs-on: windows-latest
+    permissions:
+      contents: write
 
     strategy:
       matrix:
