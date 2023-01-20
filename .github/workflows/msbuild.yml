@@ -67,7 +67,7 @@ jobs:
         Copy-Item -Path "WorldsAdriftRebornGameServer\bin\${{env.BUILD_CONFIGURATION}}\net6.0\*" -Destination "publish\WorldsAdriftRebornGameServer" -Recurse
         Copy-Item -Path "WorldsAdriftServer\bin\${{env.BUILD_CONFIGURATION}}\net6.0\*" -Destination "publish\WorldsAdriftServer" -Recurse
 
-    - new: Upload WorldsAdriftReborn Collection Artifact
+    - name: Upload WorldsAdriftReborn Collection Artifact
       uses: actions/upload-artifact@v3
       with:
         name: WorldsAdriftReborn
