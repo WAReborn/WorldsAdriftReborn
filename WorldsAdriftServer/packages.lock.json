@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "dependencies": {
+    "net6.0": {
+      "NetCoreServer": {
+        "type": "Direct",
+        "requested": "[6.5.0, )",
+        "resolved": "6.5.0",
+        "contentHash": "qlrnwKXpOn49Ekgvxufqc4NbpiyrnNacOaaSpDll+WbskkzLIHrRdQBfNZbrMZjM/wyEkOQzRnewj2KhSbfCeg=="
+      },
+      "Newtonsoft.Json": {
+        "type": "Direct",
+        "requested": "[13.0.2-beta2, )",
+        "resolved": "13.0.2-beta2",
+        "contentHash": "4s+bY5Rv+i9PePsxf7JXzTCRq13fo53CHBrAp+Ud+4ARBn/RcNamADsQ0BXoBnWtlBGTCIGN4fPWMCSnpHdUvQ=="
+      }
+    }
+  }
+}
