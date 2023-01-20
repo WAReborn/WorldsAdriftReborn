@@ -63,8 +63,12 @@ jobs:
 
     - name: Collect WorldsAdriftReborn, WorldsAdriftRebornGameServer and WorldsAdriftRebornGameServer into a single publish folder
       run: |
+        New-Item "publish" -Type Directory
+        New-Item "publish\WorldsAdriftReborn" -Type Directory
         Copy-Item -Path "StrippedAndPublicizedAssemblies\BepInEx\plugins\WorldsAdriftReborn\*" -Destination "publish\WorldsAdriftReborn" -Recurse -Force
+        New-Item "publish\WorldsAdriftRebornGameServer" -Type Directory
         Copy-Item -Path "WorldsAdriftRebornGameServer\bin\${{env.BUILD_CONFIGURATION}}\net6.0\*" -Destination "publish\WorldsAdriftRebornGameServer" -Recurse -Force
+        New-Item "publish\WorldsAdriftServer" -Type Directory
         Copy-Item -Path "WorldsAdriftServer\bin\${{env.BUILD_CONFIGURATION}}\net6.0\*" -Destination "publish\WorldsAdriftServer" -Recurse -Force
 
     - name: Upload WorldsAdriftReborn Collection Artifact
