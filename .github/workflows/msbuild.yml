@@ -83,12 +83,17 @@ jobs:
         name: WorldsAdriftReborn-${{ matrix.build-configuration }}
         path: publish
 
-    - uses: ncipollo/release-action@v1
+    - name: Zip content before release
+      if: ${{ github.event_name != 'pull_request' }}
+      run: Compress-Archive -Path publish\* -DestinationPath WorldsAdriftReborn-${{ matrix.build-configuration }}.zip
+
+    - name: Create prerelease for content
+      uses: ncipollo/release-action@v1
       if: ${{ github.event_name != 'pull_request' }}
       with:
         tag: v0.1
         commit: ${{ github.event.base_ref }}
-        artifacts: "publish/*"
+        artifacts: "WorldsAdriftReborn-${{ matrix.build-configuration }}.zip"
         allowUpdates: true
         prerelease: true
 
