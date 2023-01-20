@@ -7,7 +7,6 @@
     <Product>WorldsAdriftReborn</Product>
     <Copyright>Copyright ©  2021</Copyright>
     <LangVersion>7.3</LangVersion>
-    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
   
   <PropertyGroup Condition="Exists('$(WorldsAdriftGameDir)') Or Exists('$(PropSheetPath).remoteBuild')">
