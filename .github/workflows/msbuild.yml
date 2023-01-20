@@ -11,8 +11,8 @@ env:
   # Path to the solution file relative to the root of the project.
   SOLUTION_FILE_PATH: .
 
-  # TODO: Change mmjr-x/WorldsAdriftReborn to sp00ktober/WorldsAdriftReborn when this works
-  ENABLE_PRERELEASE: ${{ github.event_name != 'pull_request' && github.repository == 'mmjr-x/WorldsAdriftReborn' }}
+  # # TODO: Change mmjr-x/WorldsAdriftReborn to sp00ktober/WorldsAdriftReborn when this works
+  # ENABLE_PRERELEASE: ${{ github.event_name != 'pull_request' && github.repository == 'mmjr-x/WorldsAdriftReborn' }}
 
 permissions:
   contents: read
@@ -83,15 +83,17 @@ jobs:
         path: publish
 
     - name: Zip content for prerelease
-      if: ${{ env.ENABLE_PRERELEASE }}
+      # TODO: Change mmjr-x/WorldsAdriftReborn to sp00ktober/WorldsAdriftReborn when this works
+      if: ${{ github.event_name != 'pull_request' && github.repository == 'mmjr-x/WorldsAdriftReborn' }}
       run: Compress-Archive -Path publish\* -DestinationPath WorldsAdriftReborn-${{ matrix.build-configuration }}.zip
 
     - name: Create or update bleeding-edge prerelease
+      # TODO: Change mmjr-x/WorldsAdriftReborn to sp00ktober/WorldsAdriftReborn when this works
+      if: ${{ github.event_name != 'pull_request' && github.repository == 'mmjr-x/WorldsAdriftReborn' }}
       uses: ncipollo/release-action@v1
-      if: ${{ env.ENABLE_PRERELEASE }}
       with:
         tag: bleeding-edge
-        commit: ${{ github.event.base_ref }}
+        # commit: ${{ github.event.base_ref }}
         artifacts: "WorldsAdriftReborn-${{ matrix.build-configuration }}.zip"
         allowUpdates: true
         prerelease: true
