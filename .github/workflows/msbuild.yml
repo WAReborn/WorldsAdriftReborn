@@ -98,32 +98,57 @@ jobs:
         Compress-Archive -Path WorldsAdriftReborn-Release\* -DestinationPath WorldsAdriftReborn-Release.zip
         Compress-Archive -Path WorldsAdriftReborn-Debug\* -DestinationPath WorldsAdriftReborn-Debug.zip
 
-    - name: Find and delete existing bleeding-edge prerelease (if it exists)
+    # - name: Find and delete existing bleeding-edge prerelease (if it exists)
+    #   env:
+    #     GH_TOKEN: ${{ github.token }}
+    #   run: |
+    #     $response = gh api `
+    #       -H "Accept: application/vnd.github+json" `
+    #       /repos/${{ github.repository }}/releases/tags/bleeding-edge `
+    #       | ConvertFrom-Json
+
+    #     gh api `
+    #       --method DELETE `
+    #       -H "Accept: application/vnd.github+json" `
+    #       /repos/${{ github.repository }}/releases/$($response.id) `
+    #       | Out-Null
+
+    - name: Find and delete existing bleeding-edge-x prerelease's and tag's (if they exists)
       env:
         GH_TOKEN: ${{ github.token }}
       run: |
         $response = gh api `
           -H "Accept: application/vnd.github+json" `
-          /repos/${{ github.repository }}/releases/tags/bleeding-edge `
+          /repos/${{ github.repository }}/releases `
           | ConvertFrom-Json
 
-        gh api `
-          --method DELETE `
-          -H "Accept: application/vnd.github+json" `
-          /repos/${{ github.repository }}/releases/$($response.id) `
-          | Out-Null
+        $releases = $response | where tag_name -Like "bleeding-edge-*"
 
-    - name: Update or create bleeding-edge tag
-      run: |
-        git tag -f bleeding-edge ${{ github.sha }}
-        git push -f origin bleeding-edge
+        foreach ($release in $releases)
+        {
+          gh api `
+            --method DELETE `
+            -H "Accept: application/vnd.github+json" `
+            /repos/${{ github.repository }}/releases/$($release.id) `
+            | Out-Null
+        }
+
+        foreach ($release in $releases)
+        {
+          git tag -d origin $($release.tag_name)
+        }
+
+    # - name: Update or create bleeding-edge tag
+    #   run: |
+    #     git tag -f bleeding-edge-${{ github.sha }} ${{ github.sha }}
+    #     git push -f origin bleeding-edge-${{ github.sha }}
 
     - name: Create bleeding-edge prerelease
       # id: prerelease
       uses: ncipollo/release-action@v1
       with:
-        tag: bleeding-edge
-        # commit: ${{ github.sha }}
+        tag: bleeding-edge-${{ github.sha }}
+        commit: ${{ github.sha }}
         artifacts: "WorldsAdriftReborn-*.zip"
         # allowUpdates: true
         prerelease: true
