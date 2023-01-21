@@ -95,10 +95,12 @@ jobs:
     - name: Download artifacts from build jobs
       uses: actions/download-artifact@v3
 
-    # - name: Zip content for prerelease
-    #   # TODO: Change mmjr-x/WorldsAdriftReborn to sp00ktober/WorldsAdriftReborn when this works
-    #   if: ${{ github.event_name != 'pull_request' && github.repository == 'mmjr-x/WorldsAdriftReborn' }}
-    #   run: Compress-Archive -Path publish\* -DestinationPath WorldsAdriftReborn-${{ matrix.build-configuration }}.zip
+    - name: Zip content for prerelease
+      # TODO: Change mmjr-x/WorldsAdriftReborn to sp00ktober/WorldsAdriftReborn when this works
+      # if: ${{ github.event_name != 'pull_request' && github.repository == 'mmjr-x/WorldsAdriftReborn' }}
+      run:| 
+        Compress-Archive -Path WorldsAdriftReborn-Release\* -DestinationPath WorldsAdriftReborn-Release.zip
+        Compress-Archive -Path WorldsAdriftReborn-Debug\* -DestinationPath WorldsAdriftReborn-Debug.zip
 
     - name: Create or update bleeding-edge prerelease
       # TODO: Change mmjr-x/WorldsAdriftReborn to sp00ktober/WorldsAdriftReborn when this works
