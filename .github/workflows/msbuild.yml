@@ -92,7 +92,7 @@ jobs:
       if: ${{ github.event_name != 'pull_request' && github.repository == 'mmjr-x/WorldsAdriftReborn' }}
       uses: ncipollo/release-action@v1
       with:
-        tag: bleeding-edge3
+        tag: bleeding-edge4
         # commit: ${{ github.sha }}
         commit: release-pipeline
         artifacts: "WorldsAdriftReborn-${{ matrix.build-configuration }}.zip"
