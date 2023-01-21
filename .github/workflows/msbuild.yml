@@ -97,5 +97,5 @@ jobs:
         artifacts: "WorldsAdriftReborn-${{ matrix.build-configuration }}.zip"
         allowUpdates: true
         prerelease: true
-        generateReleaseNotes: true
+        # generateReleaseNotes: true
 
