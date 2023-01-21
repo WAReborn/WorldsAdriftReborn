@@ -98,7 +98,7 @@ jobs:
     - name: Zip content for prerelease
       # TODO: Change mmjr-x/WorldsAdriftReborn to sp00ktober/WorldsAdriftReborn when this works
       # if: ${{ github.event_name != 'pull_request' && github.repository == 'mmjr-x/WorldsAdriftReborn' }}
-      run:| 
+      run: |
         Compress-Archive -Path WorldsAdriftReborn-Release\* -DestinationPath WorldsAdriftReborn-Release.zip
         Compress-Archive -Path WorldsAdriftReborn-Debug\* -DestinationPath WorldsAdriftReborn-Debug.zip
 
