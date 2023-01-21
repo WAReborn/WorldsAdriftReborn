@@ -11,7 +11,8 @@ env:
   # Path to the solution file relative to the root of the project.
   SOLUTION_FILE_PATH: .
 
-  BUILD_CONFIGURATIONS: "[\"Release\", \"Debug\"]"
+  # TODO: Change mmjr-x/WorldsAdriftReborn to sp00ktober/WorldsAdriftReborn when this works
+  ENABLE_RELEASE_FOR_REPO: mmjr-x/WorldsAdriftReborn
 
 permissions:
   contents: read
@@ -24,7 +25,7 @@ jobs:
       matrix:
         # Configuration type to build.
         # https://docs.github.com/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-        build-configuration: fromJSON(${{ env.BUILD_CONFIGURATIONS}})
+        build-configuration: [Release, Debug]
 
     steps:
     - uses: actions/checkout@v3
@@ -80,8 +81,7 @@ jobs:
         path: publish
         
   release:
-    # TODO: Change mmjr-x/WorldsAdriftReborn to sp00ktober/WorldsAdriftReborn when this works
-    if: ${{ github.event_name != 'pull_request' && github.repository == 'mmjr-x/WorldsAdriftReborn' }}
+    if: ${{ github.event_name != 'pull_request' && github.repository == env.ENABLE_RELEASE_FOR_REPO }}
     runs-on: windows-latest
     needs: [ build ]
 
