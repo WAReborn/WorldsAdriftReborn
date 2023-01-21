@@ -11,9 +11,6 @@ env:
   # Path to the solution file relative to the root of the project.
   SOLUTION_FILE_PATH: .
 
-  # TODO: Change mmjr-x/WorldsAdriftReborn to sp00ktober/WorldsAdriftReborn when this works
-  ENABLE_RELEASE_FOR_REPO: mmjr-x/WorldsAdriftReborn
-
 permissions:
   contents: read
 
@@ -81,7 +78,8 @@ jobs:
         path: publish
         
   release:
-    if: ${{ github.event_name != 'pull_request' && github.repository == env.ENABLE_RELEASE_FOR_REPO }}
+    # TODO: Change mmjr-x/WorldsAdriftReborn to sp00ktober/WorldsAdriftReborn when this works
+    if: ${{ github.event_name != 'pull_request' && github.repository == 'mmjr-x/WorldsAdriftReborn' }}
     runs-on: windows-latest
     needs: [ build ]
 
@@ -94,11 +92,13 @@ jobs:
 
     - name: Download artifacts from build jobs
       uses: actions/download-artifact@v3
+      with:
+        path: artifacts
 
     - name: Zip content for prerelease
       run: |
-        Compress-Archive -Path WorldsAdriftReborn-Release\* -DestinationPath WorldsAdriftReborn-Release.zip
-        Compress-Archive -Path WorldsAdriftReborn-Debug\* -DestinationPath WorldsAdriftReborn-Debug.zip
+        Compress-Archive -Path artifacts\WorldsAdriftReborn-Release\* -DestinationPath WorldsAdriftReborn-Release.zip
+        Compress-Archive -Path artifacts\WorldsAdriftReborn-Debug\* -DestinationPath WorldsAdriftReborn-Debug.zip
 
     - name: Find and delete existing bleeding-edge-x prerelease's and tag's (if they exists)
       env:
