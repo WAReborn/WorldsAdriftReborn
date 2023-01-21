@@ -83,6 +83,10 @@ jobs:
     runs-on: windows-latest
     needs: [ build ]
 
+    env:
+      # Required to use gh api
+      GH_TOKEN: ${{ github.token }}
+
     permissions:
       contents: write
 
