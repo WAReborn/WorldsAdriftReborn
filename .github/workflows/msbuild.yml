@@ -3,7 +3,7 @@ name: MSBuild
 on:
   push:
     # NOTE: Add your own branch here if you want to test, and commit to that branch to trigger the pipeline
-    branches: [ "main", "release-pipeline" ]
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
@@ -79,7 +79,7 @@ jobs:
         
   release:
     # NOTE: Change sp00ktober/WorldsAdriftReborn to your own fork if you want to test the release part of the pipeline
-    if: ${{ github.event_name != 'pull_request' && github.repository == 'mmjr-x/WorldsAdriftReborn' }}
+    if: ${{ github.event_name != 'pull_request' && github.repository == 'sp00ktober/WorldsAdriftReborn' }}
     runs-on: windows-latest
     needs: [ build ]
 
