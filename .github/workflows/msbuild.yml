@@ -79,7 +79,7 @@ jobs:
       with:
         name: WorldsAdriftReborn-${{ matrix.build-configuration }}
         path: publish
-
+        
   release:
     if: ${{ github.event_name != 'pull_request' && github.repository == 'mmjr-x/WorldsAdriftReborn' }}
     runs-on: windows-latest
@@ -89,8 +89,8 @@ jobs:
       contents: write
 
     steps:
-      - name: Download artifacts from build jobs
-        uses: actions/download-artifact@v3
+    - name: Download artifacts from build jobs
+      uses: actions/download-artifact@v3
 
     # - name: Zip content for prerelease
     #   # TODO: Change mmjr-x/WorldsAdriftReborn to sp00ktober/WorldsAdriftReborn when this works
