@@ -135,5 +135,5 @@ jobs:
           --method PATCH `
           -H "Accept: application/vnd.github+json" `
           /repos/${{github.repository}}/releases/${{steps.prerelease.outputs.id}} `
-          -f body='Description of the release'
+          -f body=$response.body
 
