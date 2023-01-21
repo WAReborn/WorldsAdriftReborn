@@ -83,10 +83,6 @@ jobs:
     runs-on: windows-latest
     needs: [ build ]
 
-    env:
-      # Required to use gh api
-      GH_TOKEN: ${{ github.token }}
-
     permissions:
       contents: write
 
@@ -108,12 +104,10 @@ jobs:
       with:
         tag: bleeding-edge
         commit: ${{ github.sha }}
-        # commit: release-pipeline
-        # artifacts: "WorldsAdriftReborn-${{ matrix.build-configuration }}.zip"
         artifacts: "WorldsAdriftReborn-*.zip"
         allowUpdates: true
         prerelease: true
-        # generateReleaseNotes: true
+        removeArtifacts: true
 
     - name: Update bleeding-edge tag to latest commit
       run: |
@@ -121,6 +115,8 @@ jobs:
         git push -f origin bleeding-edge
 
     - name: Generate and update release body
+      env:
+        GH_TOKEN: ${{ github.token }}
       run: |
         $response = gh api `
           --method POST `
@@ -135,5 +131,6 @@ jobs:
           --method PATCH `
           -H "Accept: application/vnd.github+json" `
           /repos/${{github.repository}}/releases/${{steps.prerelease.outputs.id}} `
-          -f body=$($response.body)
+          -f body=$($response.body) `
+          | Out-Null
 
