@@ -93,7 +93,8 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         tag: bleeding-edge3
-        commit: ${{ github.sha }}
+        # commit: ${{ github.sha }}
+        commit: release-pipeline
         artifacts: "WorldsAdriftReborn-${{ matrix.build-configuration }}.zip"
         allowUpdates: true
         prerelease: true
