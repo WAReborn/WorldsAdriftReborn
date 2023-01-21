@@ -92,12 +92,19 @@ jobs:
       if: ${{ github.event_name != 'pull_request' && github.repository == 'mmjr-x/WorldsAdriftReborn' }}
       uses: ncipollo/release-action@v1
       with:
-        tag: bleeding-edge4
-        # commit: ${{ github.sha }}
-        commit: release-pipeline
+        tag: bleeding-edge
+        commit: ${{ github.sha }}
+        # commit: release-pipeline
         artifacts: "WorldsAdriftReborn-${{ matrix.build-configuration }}.zip"
         allowUpdates: true
         prerelease: true
         # generateReleaseNotes: true
+
+    - name: Update bleeding-edge tag to latest commit
+      # TODO: Change mmjr-x/WorldsAdriftReborn to sp00ktober/WorldsAdriftReborn when this works
+      if: ${{ github.event_name != 'pull_request' && github.repository == 'mmjr-x/WorldsAdriftReborn' }}
+      run: |
+        git tag -f bleeding-edge ${{ github.sha }}
+        git push -f origin bleeding-edge
 
 
