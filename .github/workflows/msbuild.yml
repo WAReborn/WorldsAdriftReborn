@@ -20,8 +20,6 @@ permissions:
 jobs:
   build:
     runs-on: windows-latest
-    permissions:
-      contents: write
 
     strategy:
       matrix:
@@ -82,27 +80,40 @@ jobs:
         name: WorldsAdriftReborn-${{ matrix.build-configuration }}
         path: publish
 
-    - name: Zip content for prerelease
-      # TODO: Change mmjr-x/WorldsAdriftReborn to sp00ktober/WorldsAdriftReborn when this works
-      if: ${{ github.event_name != 'pull_request' && github.repository == 'mmjr-x/WorldsAdriftReborn' }}
-      run: Compress-Archive -Path publish\* -DestinationPath WorldsAdriftReborn-${{ matrix.build-configuration }}.zip
+  release:
+    if: ${{ github.event_name != 'pull_request' && github.repository == 'mmjr-x/WorldsAdriftReborn' }}
+    runs-on: windows-latest
+    needs: [ build ]
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download artifacts from build jobs
+        uses: actions/download-artifact@v3
+
+    # - name: Zip content for prerelease
+    #   # TODO: Change mmjr-x/WorldsAdriftReborn to sp00ktober/WorldsAdriftReborn when this works
+    #   if: ${{ github.event_name != 'pull_request' && github.repository == 'mmjr-x/WorldsAdriftReborn' }}
+    #   run: Compress-Archive -Path publish\* -DestinationPath WorldsAdriftReborn-${{ matrix.build-configuration }}.zip
 
     - name: Create or update bleeding-edge prerelease
       # TODO: Change mmjr-x/WorldsAdriftReborn to sp00ktober/WorldsAdriftReborn when this works
-      if: ${{ github.event_name != 'pull_request' && github.repository == 'mmjr-x/WorldsAdriftReborn' }}
+      # if: ${{ github.event_name != 'pull_request' && github.repository == 'mmjr-x/WorldsAdriftReborn' }}
       uses: ncipollo/release-action@v1
       with:
         tag: bleeding-edge
         commit: ${{ github.sha }}
         # commit: release-pipeline
-        artifacts: "WorldsAdriftReborn-${{ matrix.build-configuration }}.zip"
+        # artifacts: "WorldsAdriftReborn-${{ matrix.build-configuration }}.zip"
+        artifacts: "WorldsAdriftReborn-*.zip"
         allowUpdates: true
         prerelease: true
         # generateReleaseNotes: true
 
     - name: Update bleeding-edge tag to latest commit
       # TODO: Change mmjr-x/WorldsAdriftReborn to sp00ktober/WorldsAdriftReborn when this works
-      if: ${{ github.event_name != 'pull_request' && github.repository == 'mmjr-x/WorldsAdriftReborn' }}
+      # if: ${{ github.event_name != 'pull_request' && github.repository == 'mmjr-x/WorldsAdriftReborn' }}
       run: |
         git tag -f bleeding-edge ${{ github.sha }}
         git push -f origin bleeding-edge
