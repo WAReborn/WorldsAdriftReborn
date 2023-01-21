@@ -11,9 +11,6 @@ env:
   # Path to the solution file relative to the root of the project.
   SOLUTION_FILE_PATH: .
 
-  # # TODO: Change mmjr-x/WorldsAdriftReborn to sp00ktober/WorldsAdriftReborn when this works
-  # ENABLE_PRERELEASE: ${{ github.event_name != 'pull_request' && github.repository == 'mmjr-x/WorldsAdriftReborn' }}
-
 permissions:
   contents: read
 
@@ -81,6 +78,7 @@ jobs:
         path: publish
         
   release:
+    # TODO: Change mmjr-x/WorldsAdriftReborn to sp00ktober/WorldsAdriftReborn when this works
     if: ${{ github.event_name != 'pull_request' && github.repository == 'mmjr-x/WorldsAdriftReborn' }}
     runs-on: windows-latest
     needs: [ build ]
@@ -96,15 +94,11 @@ jobs:
       uses: actions/download-artifact@v3
 
     - name: Zip content for prerelease
-      # TODO: Change mmjr-x/WorldsAdriftReborn to sp00ktober/WorldsAdriftReborn when this works
-      # if: ${{ github.event_name != 'pull_request' && github.repository == 'mmjr-x/WorldsAdriftReborn' }}
       run: |
         Compress-Archive -Path WorldsAdriftReborn-Release\* -DestinationPath WorldsAdriftReborn-Release.zip
         Compress-Archive -Path WorldsAdriftReborn-Debug\* -DestinationPath WorldsAdriftReborn-Debug.zip
 
     - name: Create or update bleeding-edge prerelease
-      # TODO: Change mmjr-x/WorldsAdriftReborn to sp00ktober/WorldsAdriftReborn when this works
-      # if: ${{ github.event_name != 'pull_request' && github.repository == 'mmjr-x/WorldsAdriftReborn' }}
       uses: ncipollo/release-action@v1
       with:
         tag: bleeding-edge
@@ -117,8 +111,16 @@ jobs:
         # generateReleaseNotes: true
 
     - name: Update bleeding-edge tag to latest commit
-      # TODO: Change mmjr-x/WorldsAdriftReborn to sp00ktober/WorldsAdriftReborn when this works
-      # if: ${{ github.event_name != 'pull_request' && github.repository == 'mmjr-x/WorldsAdriftReborn' }}
       run: |
         git tag -f bleeding-edge ${{ github.sha }}
         git push -f origin bleeding-edge
+
+    # TODO: Change mmjr-x/WorldsAdriftReborn to sp00ktober/WorldsAdriftReborn when this works
+    - name: Generate and update release body
+      run: |
+        gh api \
+          --method POST \
+          -H "Accept: application/vnd.github+json" \
+          /repos/${{github.repository}}/releases/generate-notes \
+          -f tag_name='bleeding-edge' \
+          | Write-Output
