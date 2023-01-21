@@ -135,7 +135,7 @@ jobs:
 
         foreach ($release in $releases)
         {
-          git tag -d origin $($release.tag_name)
+          git push -d origin $($release.tag_name)
         }
 
     # - name: Update or create bleeding-edge tag
