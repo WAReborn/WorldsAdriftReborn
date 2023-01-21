@@ -3,7 +3,7 @@ name: MSBuild
 on:
   push:
     # NOTE: Add your own branch here if you want to test, and commit to that branch to trigger the pipeline
-    branches: [ "main" ]
+    branches: [ "main", "release-pipeline" ]
   pull_request:
     branches: [ "main" ]
 
