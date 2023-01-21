@@ -105,7 +105,7 @@ jobs:
         $directories = Get-ChildItem -Path "artifacts" -Directory
 
         foreach ($directory in $directories) {
-          Compress-Archive -Path "artifacts\$($directory.FullName)" -DestinationPath "$($directory.FullName).zip" -Force
+          Compress-Archive -Path $directory.FullName -DestinationPath "$($directory.Name).zip" -Force
         }
 
     - name: Find and delete existing bleeding-edge-x prerelease's and tag's (if they exists)
