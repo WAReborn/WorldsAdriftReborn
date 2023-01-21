@@ -95,11 +95,6 @@ jobs:
       with:
         path: artifacts
 
-    # - name: Zip content for prerelease
-    #   run: |
-    #     Compress-Archive -Path artifacts\WorldsAdriftReborn-Release\* -DestinationPath WorldsAdriftReborn-Release.zip
-    #     Compress-Archive -Path artifacts\WorldsAdriftReborn-Debug\* -DestinationPath WorldsAdriftReborn-Debug.zip
-
     - name: Zip artifacts for prerelease
       run: |
         $directories = Get-ChildItem -Path "artifacts" -Directory
