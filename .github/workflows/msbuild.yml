@@ -79,7 +79,7 @@ jobs:
         
   release:
     # NOTE: Change sp00ktober/WorldsAdriftReborn to your own fork if you want to test the release part of the pipeline
-    if: ${{ github.event_name != 'pull_request' && github.repository == 'sp00ktober/WorldsAdriftReborn' }}
+    if: ${{ github.event_name != 'pull_request' && github.repository == 'mmjr-x/WorldsAdriftReborn' }}
     runs-on: windows-latest
     needs: [ build ]
 
@@ -100,7 +100,7 @@ jobs:
         $directories = Get-ChildItem -Path "artifacts" -Directory
 
         foreach ($directory in $directories) {
-          Compress-Archive -Path $directory.FullName -DestinationPath "$($directory.Name).zip" -Force
+          Compress-Archive -Path "$($directory.FullName)\*" -DestinationPath "$($directory.Name).zip" -Force
         }
 
     - name: Find and delete existing bleeding-edge-x prerelease's and tag's (if they exists)
