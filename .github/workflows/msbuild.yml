@@ -98,39 +98,56 @@ jobs:
         Compress-Archive -Path WorldsAdriftReborn-Release\* -DestinationPath WorldsAdriftReborn-Release.zip
         Compress-Archive -Path WorldsAdriftReborn-Debug\* -DestinationPath WorldsAdriftReborn-Debug.zip
 
-    - name: Create or update bleeding-edge prerelease
-      id: prerelease
-      uses: ncipollo/release-action@v1
-      with:
-        tag: bleeding-edge
-        commit: ${{ github.sha }}
-        artifacts: "WorldsAdriftReborn-*.zip"
-        allowUpdates: true
-        prerelease: true
-        removeArtifacts: true
-
-    - name: Update bleeding-edge tag to latest commit
-      run: |
-        git tag -f bleeding-edge ${{ github.sha }}
-        git push -f origin bleeding-edge
-
-    - name: Generate and update release body
+    - name: Find and delete existing bleeding-edge prerelease (if it exists)
       env:
         GH_TOKEN: ${{ github.token }}
       run: |
         $response = gh api `
-          --method POST `
           -H "Accept: application/vnd.github+json" `
-          /repos/${{github.repository}}/releases/generate-notes `
-          -f tag_name='bleeding-edge' `
+          /repos/${{ github.repository }}/releases/tags/bleeding-edge `
           | ConvertFrom-Json
-        
-        $response.body | Write-Output
 
         gh api `
-          --method PATCH `
+          --method DELETE `
           -H "Accept: application/vnd.github+json" `
-          /repos/${{github.repository}}/releases/${{steps.prerelease.outputs.id}} `
-          -f body=$($response.body) `
+          /repos/${{ github.repository }}/releases/$($response.id) `
           | Out-Null
+
+    - name: Update or create bleeding-edge tag
+      run: |
+        git tag -f bleeding-edge ${{ github.sha }}
+        git push -f origin bleeding-edge
+
+    - name: Create bleeding-edge prerelease
+      # id: prerelease
+      uses: ncipollo/release-action@v1
+      with:
+        tag: bleeding-edge
+        # commit: ${{ github.sha }}
+        artifacts: "WorldsAdriftReborn-*.zip"
+        # allowUpdates: true
+        prerelease: true
+        # removeArtifacts: true
+        generateReleaseNotes: true
+
+
+    # - name: Generate and update release body
+    #   env:
+    #     GH_TOKEN: ${{ github.token }}
+    #   run: |
+    #     $response = gh api `
+    #       --method POST `
+    #       -H "Accept: application/vnd.github+json" `
+    #       /repos/${{ github.repository }}/releases/generate-notes `
+    #       -f tag_name='bleeding-edge' `
+    #       | ConvertFrom-Json
+        
+    #     $response.body | Write-Output
+
+    #     gh api `
+    #       --method PATCH `
+    #       -H "Accept: application/vnd.github+json" `
+    #       /repos/${{github.repository}}/releases/${{steps.prerelease.outputs.id}} `
+    #       -f body=$($response.body) `
+    #       | Out-Null
 
