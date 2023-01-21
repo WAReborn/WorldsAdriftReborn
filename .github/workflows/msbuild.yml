@@ -11,7 +11,7 @@ env:
   # Path to the solution file relative to the root of the project.
   SOLUTION_FILE_PATH: .
 
-  BUILD_CONFIGURATIONS: "['Release', 'Debug']"
+  BUILD_CONFIGURATIONS: "[\"Release\", \"Debug\"]"
 
 permissions:
   contents: read
