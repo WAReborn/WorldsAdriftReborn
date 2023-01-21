@@ -24,7 +24,7 @@ jobs:
       matrix:
         # Configuration type to build.
         # https://docs.github.com/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-        build-configuration: fromJson( ${{ env.BUILD_CONFIGURATIONS }} )
+        build-configuration: ${{ fromJson(env.BUILD_CONFIGURATIONS) }} 
 
     steps:
     - uses: actions/checkout@v3
