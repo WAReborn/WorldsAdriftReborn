@@ -11,7 +11,7 @@ env:
   # Path to the solution file relative to the root of the project.
   SOLUTION_FILE_PATH: .
 
-  BUILD_CONFIGURATIONS: [Release, Debug]
+  BUILD_CONFIGURATIONS: "['Release', 'Debug']"
 
 permissions:
   contents: read
@@ -24,7 +24,7 @@ jobs:
       matrix:
         # Configuration type to build.
         # https://docs.github.com/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-        build-configuration: ${{ fromJson(${{env.BUILD_CONFIGURATIONS}}) }}
+        build-configuration: ${{ fromJSON(env.BUILD_CONFIGURATIONS) }}
 
     steps:
     - uses: actions/checkout@v3
