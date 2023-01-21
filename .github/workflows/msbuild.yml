@@ -95,10 +95,18 @@ jobs:
       with:
         path: artifacts
 
-    - name: Zip content for prerelease
+    # - name: Zip content for prerelease
+    #   run: |
+    #     Compress-Archive -Path artifacts\WorldsAdriftReborn-Release\* -DestinationPath WorldsAdriftReborn-Release.zip
+    #     Compress-Archive -Path artifacts\WorldsAdriftReborn-Debug\* -DestinationPath WorldsAdriftReborn-Debug.zip
+
+    - name: Zip artifacts for prerelease
       run: |
-        Compress-Archive -Path artifacts\WorldsAdriftReborn-Release\* -DestinationPath WorldsAdriftReborn-Release.zip
-        Compress-Archive -Path artifacts\WorldsAdriftReborn-Debug\* -DestinationPath WorldsAdriftReborn-Debug.zip
+        $directories = Get-ChildItem -Path "artifacts" -Directory
+
+        foreach ($directory in $directories) {
+          Compress-Archive -Path $directory.FullName -DestinationPath "$($directory.FullName).zip" -Force
+        }
 
     - name: Find and delete existing bleeding-edge-x prerelease's and tag's (if they exists)
       env:
