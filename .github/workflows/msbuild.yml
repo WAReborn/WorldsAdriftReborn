@@ -103,6 +103,7 @@ jobs:
         Compress-Archive -Path WorldsAdriftReborn-Debug\* -DestinationPath WorldsAdriftReborn-Debug.zip
 
     - name: Create or update bleeding-edge prerelease
+      id: prerelease
       uses: ncipollo/release-action@v1
       with:
         tag: bleeding-edge
@@ -119,9 +120,20 @@ jobs:
         git tag -f bleeding-edge ${{ github.sha }}
         git push -f origin bleeding-edge
 
-    # TODO: Change mmjr-x/WorldsAdriftReborn to sp00ktober/WorldsAdriftReborn when this works
     - name: Generate and update release body
       run: |
-        $response = gh api --method POST -H "Accept: application/vnd.github+json" /repos/${{github.repository}}/releases/generate-notes -f tag_name='bleeding-edge' | ConvertFrom-Json
+        $response = gh api `
+          --method POST `
+          -H "Accept: application/vnd.github+json" `
+          /repos/${{github.repository}}/releases/generate-notes `
+          -f tag_name='bleeding-edge' `
+          | ConvertFrom-Json
+        
         $response.body | Write-Output
+
+        gh api `
+          --method PATCH `
+          -H "Accept: application/vnd.github+json" `
+          /repos/${{github.repository}}/releases/${{steps.prerelease.outputs.id}} `
+          -f body='Description of the release'
 
