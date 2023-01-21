@@ -27,7 +27,7 @@ jobs:
       matrix:
         # Configuration type to build.
         # https://docs.github.com/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
-        build-configuration: [Debug, Release]
+        build-configuration: [Release, Debug]
 
     steps:
     - uses: actions/checkout@v3
@@ -92,8 +92,8 @@ jobs:
       if: ${{ github.event_name != 'pull_request' && github.repository == 'mmjr-x/WorldsAdriftReborn' }}
       uses: ncipollo/release-action@v1
       with:
-        tag: bleeding-edge2
-        # commit: ${{ github.event.base_ref }}
+        tag: bleeding-edge3
+        commit: ${{ github.sha }}
         artifacts: "WorldsAdriftReborn-${{ matrix.build-configuration }}.zip"
         allowUpdates: true
         prerelease: true
