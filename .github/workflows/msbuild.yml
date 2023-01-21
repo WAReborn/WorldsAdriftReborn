@@ -118,9 +118,4 @@ jobs:
     # TODO: Change mmjr-x/WorldsAdriftReborn to sp00ktober/WorldsAdriftReborn when this works
     - name: Generate and update release body
       run: |
-        gh api \
-          --method POST \
-          -H "Accept: application/vnd.github+json" \
-          /repos/${{github.repository}}/releases/generate-notes \
-          -f tag_name='bleeding-edge' \
-          | Write-Output
+        gh api --method POST -H "Accept: application/vnd.github+json" /repos/${{github.repository}}/releases/generate-notes -f tag_name='bleeding-edge' | Write-Output
