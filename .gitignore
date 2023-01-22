@@ -349,6 +349,8 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
+# JetBrains IDEs (run configurations are added to the repo in the .run subdirectory)
+.idea/
 
 ## Worlds Adrift Reborn-specific files
 DevEnv.targets

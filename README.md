@@ -42,6 +42,8 @@ Also create a `steam_appid.txt` file in the gameroot which contains a single lin
 Now open up the project sln with Visual Studio 2022 (⚠ Lower versions of Visual Studio are not supported due to this project requiring dotnet 6.0).  
 ⚠ Also note that at this moment ony the `Any CPU` (default) and `x64` solution platforms are supported.
 
+Rider (JetBrains C# IDE) can open and build the solution as well. You just need to create an empty `LocalPackages` subdirectory inside the solution folder.
+
 If your game installation is not at the default location (`C:\Program Files (x86)\Steam\steamapps\common\WorldsAdrift`) visual studio will report an error and a DevEnv.targets file should have been generated at the root of your copy of the WorldsAdriftReborn repo. 
 You can change the path to your game installation location, save and reopen the project sln with visual studio.
 
