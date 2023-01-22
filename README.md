@@ -8,6 +8,8 @@ This means anyone would be able to host his/her own server and let other people 
 As you might guessed this is a very ambitious project. The game heavily relies on proprietary code for its networking (SpatialOS) and we need to replace it with our own implementation.
 We can't say for sure if this project will succeed but we will do our best for it.
 
+
+
 ## Boot the game
 The Game cannot be purchased anymore so we patched out the need to have steam running (for now) as well as a few other checks made when the game starts.
 This way we can reach the main menu.
@@ -26,6 +28,31 @@ Our implementation offers the same methods as SpatialOs does. This means the gam
 
 At the moment we can instruct the game to load and spawn entities this way, the next thing will be to add and update their components to get a similar result as the one you see in the last video found [here](https://www.youtube.com/watch?v=IWKu2Olw0rc)
 
+## Installation and launching the game using the precompiled binaries
+First you will need the correct version of the game. Get a copy of [DepotDownloader](https://github.com/SteamRE/DepotDownloader) and run `DepotDownloader.exe -app 322780 -depot 322783 -manifest 4624240741051053915 -username <yourusername> -password <yourpassword>`
+Which will download the correct game files. Copy the files over to the gameroot folder.  
+⚠ Note that the most up to date steam version of the game is **Not** supported! 
+This is due to the game having been stripped of most of its contents in and update just before the game's shutdown.
+
+Next download the latest 5.x [BepInEx Release](https://github.com/BepInEx/BepInEx/releases) and unzip those files into gameroot (detailed installation instructions can be found [here](https://docs.bepinex.dev/articles/user_guide/installation/index.html)).
+
+Also create a `steam_appid.txt` file in the gameroot which contains a single line `322780` (this is the appid and is required to start the game, else you get a steam required error).
+
+Next download the latest bleeding-edge release, you can find this on the [releases](https://github.com/sp00ktober/WorldsAdriftReborn/releases) page of the repo.
+Download the WorldsAdriftReborn-Release.zip and extract its content to a folder of your choosing.
+
+Inside the folder you extracted the zip into you will find 3 folders:
+- WorldsAdriftReborn
+- WorldsAdriftRebornGameServer
+- WorldsAdriftRebornServer
+
+Copy or move the WorldsAdriftReborn directory into you `<game root>\BepInEx\plugins` folder.
+
+To launch the game follow the following steps:
+Go into the WorldsAdriftRebornGameServer folder and launch the `WorldsAdriftRebornGameServer.exe`
+Go into the WorldsAdriftRebornServer folder and launch the `WorldsAdriftRebornServer.exe`
+Launch the game from the gameroot
+
 ## Build Instructions
 First you will need the correct version of the game. Get a copy of [DepotDownloader](https://github.com/SteamRE/DepotDownloader) and run `DepotDownloader.exe -app 322780 -depot 322783 -manifest 4624240741051053915 -username <yourusername> -password <yourpassword>`
 Which will download the correct game files. Copy the files over to the gameroot folder.  
@@ -35,7 +62,7 @@ This is due to the game having been stripped of most of its contents in and upda
 Clone the repository including submodules using `git clone --recurse-submodules <repository>`
 or (if you already cloned the repository normally) cd to your repository and run `git submodule update --init --recursive`
 
-Next download the latest [BepInEx Release](https://github.com/BepInEx/BepInEx/releases) and unzip those files into gameroot.
+Next download the latest 5.x [BepInEx Release](https://github.com/BepInEx/BepInEx/releases) and unzip those files into gameroot (detailed installation instructions can be found [here](https://docs.bepinex.dev/articles/user_guide/installation/index.html)).
 
 Also create a `steam_appid.txt` file in the gameroot which contains a single line `322780` (this is the appid and is required to start the game, else you get a steam required error).
 

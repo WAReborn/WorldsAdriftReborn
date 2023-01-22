@@ -1,0 +1,141 @@
+name: MSBuild
+
+on:
+  push:
+    # NOTE: Add your own branch here if you want to test, and commit to that branch to trigger the pipeline
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  # Path to the solution file relative to the root of the project.
+  SOLUTION_FILE_PATH: .
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    strategy:
+      matrix:
+        # Configuration type to build.
+        # https://docs.github.com/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+        build-configuration: [Release, Debug]
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1.1
+
+    # Adapted from https://stackoverflow.com/a/42700738 and https://stackoverflow.com/a/1474968
+    - name: Create DevEnv.targets and point it at the stripped and publicized assemblies
+      run: |
+        Copy-Item DevEnv.targets.example DevEnv.targets -Force
+        $filePathToTask = (Resolve-Path "DevEnv.targets")
+        $xml = New-Object XML
+        $xml.Load($filePathToTask)
+        $element = $xml.SelectSingleNode("//*[local-name()='WorldsAdriftGameDir']")
+        $element.InnerText = (Resolve-Path "StrippedAndPublicizedAssemblies\")
+        $xml.Save($filePathToTask)
+        Get-Content $filePathToTask
+
+    - name: Restore NuGet packages
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: nuget restore ${{env.SOLUTION_FILE_PATH}}
+
+    - name: Build
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      # Add additional options to the MSBuild command line here (like platform or verbosity level).
+      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
+      run: msbuild /m /p:Configuration=${{matrix.build-configuration}} ${{env.SOLUTION_FILE_PATH}}
+
+    # Normally this is done automatically because the WorldsAdriftReborn and WorldsAdriftRebornGameServer project reference the WorldsAdriftRebornCoreSdk project and is configured to do so
+    # however for some reason this does not work inside the pipeline so we have to do this as a second action
+    - name: Copy WorldsAdriftRebornCoreSdk to the output folders of the dependant projects (WorldsAdriftReborn, WorldsAdriftRebornGameServer)
+      run: |
+        Copy-Item -Path "x64\${{matrix.build-configuration}}\*" -Destination "StrippedAndPublicizedAssemblies\BepInEx\plugins\WorldsAdriftReborn" -Recurse
+        Copy-Item -Path "x64\${{matrix.build-configuration}}\*" -Destination "WorldsAdriftRebornGameServer\bin\${{matrix.build-configuration}}\net6.0" -Recurse
+
+    - name: Collect WorldsAdriftReborn, WorldsAdriftRebornGameServer and WorldsAdriftRebornGameServer into a single publish folder
+      run: |
+        New-Item "publish\WorldsAdriftReborn" -Type Directory
+        Copy-Item -Path "StrippedAndPublicizedAssemblies\BepInEx\plugins\WorldsAdriftReborn\*" -Destination "publish\WorldsAdriftReborn" -Recurse -Force
+        New-Item "publish\WorldsAdriftRebornGameServer" -Type Directory
+        Copy-Item -Path "WorldsAdriftRebornGameServer\bin\${{matrix.build-configuration}}\net6.0\*" -Destination "publish\WorldsAdriftRebornGameServer" -Recurse -Force
+        New-Item "publish\WorldsAdriftServer" -Type Directory
+        Copy-Item -Path "WorldsAdriftServer\bin\${{matrix.build-configuration}}\net6.0\*" -Destination "publish\WorldsAdriftServer" -Recurse -Force
+        Copy-Item -Path "README.md" -Destination "publish\"
+
+    - name: Upload WorldsAdriftReborn Collection Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: WorldsAdriftReborn-${{ matrix.build-configuration }}
+        path: publish
+        
+  release:
+    # NOTE: Change sp00ktober/WorldsAdriftReborn to your own fork if you want to test the release part of the pipeline
+    if: ${{ github.event_name != 'pull_request' && github.repository == 'sp00ktober/WorldsAdriftReborn' }}
+    runs-on: windows-latest
+    needs: [ build ]
+
+    permissions:
+      contents: write
+
+    steps:
+
+    - uses: actions/checkout@v3
+
+    - name: Download artifacts from build jobs
+      uses: actions/download-artifact@v3
+      with:
+        path: artifacts
+
+    - name: Zip artifacts for prerelease
+      run: |
+        $directories = Get-ChildItem -Path "artifacts" -Directory
+
+        foreach ($directory in $directories) {
+          Compress-Archive -Path "$($directory.FullName)\*" -DestinationPath "$($directory.Name).zip" -Force
+        }
+
+    - name: Find and delete existing bleeding-edge-x prerelease's and tag's (if they exists)
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        $response = gh api `
+          -H "Accept: application/vnd.github+json" `
+          /repos/${{ github.repository }}/releases `
+          | ConvertFrom-Json
+
+        $releases = $response | where tag_name -Like "bleeding-edge-*"
+
+        foreach ($release in $releases)
+        {
+          gh api `
+            --method DELETE `
+            -H "Accept: application/vnd.github+json" `
+            /repos/${{ github.repository }}/releases/$($release.id) `
+            | Out-Null
+        }
+
+        foreach ($release in $releases)
+        {
+          git push -d origin $($release.tag_name)
+        }
+
+    - name: Get short SHA
+      run: echo "SHORT_SHA=$("${{ github.sha }}".SubString(0, 8))" >> $env:GITHUB_ENV
+
+    - name: Create bleeding-edge prerelease
+      uses: ncipollo/release-action@v1
+      with:
+        tag: bleeding-edge-${{ env.SHORT_SHA }}
+        commit: ${{ github.sha }}
+        artifacts: "WorldsAdriftReborn-*.zip"
+        prerelease: true
+        generateReleaseNotes: true
