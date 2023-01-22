@@ -51,6 +51,8 @@ Copy or move the WorldsAdriftReborn directory into you `<game root>\BepInEx\plug
 To launch the game follow the following steps:
 Go into the WorldsAdriftRebornGameServer folder and launch the `WorldsAdriftRebornGameServer.exe`
 Go into the WorldsAdriftRebornServer folder and launch the `WorldsAdriftRebornServer.exe`
+⚠ Temporarily you will also need to replace the `Improbable.WorkerSdkCsharp.dll`, `Improbable.WorkerSdkCsharp.Framework.dll`, `Generated.Code.dll` and `protobuf-net.dll` in the WorldsAdriftRebornGameServer folder with the ones found in the `<game root>\UnityClient@Windows_Data\Managed` folder!
+This will be fixed in future releases.
 Launch the game from the gameroot
 
 ## Build Instructions
