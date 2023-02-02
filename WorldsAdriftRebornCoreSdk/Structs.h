@@ -214,6 +214,11 @@ struct RemoveComponentOp {
     unsigned int ComponentId;
 };
 
+struct Stripped_AuthorityChangeOp {
+    unsigned int ComponentId;
+    unsigned char HasAuthority;
+};
+
 struct AuthorityChangeOp {
     long EntityId;
     unsigned int ComponentId;

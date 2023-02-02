@@ -7,7 +7,7 @@ Connection::Connection(char* hostname, unsigned short port, ConnectionParameters
 
     if (this->client != NULL && this->hostname != NULL && this->port != 0) {
         Logger::Debug("Trying to connect to game server at " + std::string(this->hostname));
-        this->peer = ENet_Connect(this->hostname, this->port, this->client, 3);
+        this->peer = ENet_Connect(this->hostname, this->port, this->client, 4);
         if (this->peer != NULL) {
             Logger::Debug("SUCCESS!");
         }
@@ -86,6 +86,24 @@ OpList* Connection::GetOpList() {
                             op_list->addComponentOp[i].InitialComponent.ComponentId = addComponentOp[i].ComponentId;
                             op_list->addComponentOp[i].InitialComponent.Object = object;
                         }
+                    }
+                }
+            }
+            else if (packet->channel == CH_AuthorityChangeOp) {
+                Stripped_AuthorityChangeOp* authorityChangeOp = NULL;
+                unsigned int authorityChangeOpCount = 0;
+                long entityId = 0;
+                if (!PB_AuthorityChangeOp_Deserialize(packet->data, packet->dataLength, &entityId, &authorityChangeOp, &authorityChangeOpCount)) {
+                    Logger::Debug("FAILED TO DESERIALIZE AUTH CHANGE!");
+                }
+                else {
+                    op_list->authorityChangeOp = new AuthorityChangeOp[authorityChangeOpCount];
+                    op_list->authorityChangeOpLen = authorityChangeOpCount;
+
+                    for (int i = 0; i < authorityChangeOpCount; i++) {
+                        op_list->authorityChangeOp[i].EntityId = entityId;
+                        op_list->authorityChangeOp[i].ComponentId = authorityChangeOp[i].ComponentId;
+                        op_list->authorityChangeOp[i].HasAuthority = authorityChangeOp[i].HasAuthority;
                     }
                 }
             }

@@ -8,12 +8,14 @@
 #include "AddEntityOp.pb.h"
 #include "SendComponentInterest.pb.h"
 #include "AddComponentOp.pb.h"
+#include "AuthorityChangeOp.pb.h"
 
 #define DLL_EXPORT extern "C" __declspec(dllexport)
 
 #define CH_AssetLoadRequestOp 0
 #define CH_AddEntityOp 1
 #define CH_SendComponentInterest 2
+#define CH_AuthorityChangeOp 3
 
 typedef void OnNewClientConnected(ENetPeer* peer);
 typedef void OnClientDisconnected(ENetPeer* peer);
@@ -40,6 +42,7 @@ DLL_EXPORT void* __cdecl PB_EXP_AssetLoadRequestOp_Serialize(AssetLoadRequestOp*
 DLL_EXPORT void* __cdecl PB_EXP_AddEntityOp_Serialize(stripped_AddEntityOp* op, int* len, long entityId);
 DLL_EXPORT bool __cdecl PB_EXP_SendComponentInterest_Deserialize(const void* data, int len, long* entityId, InterestOverride** interest_override, unsigned int* interest_override_count);
 DLL_EXPORT void* __cdecl PB_EXP_AddComponentOp_Serialize(long entityId, PB_AddComponentOp* addComponentOp, unsigned int addComponentOp_count, int* len);
+DLL_EXPORT void* __cdecl PB_EXP_AuthorityChangeOp_Serialize(long entityId, Stripped_AuthorityChangeOp* authorityChangeOp, unsigned int authorityChangeOp_count, int* len);
 
 int ENet_Initialize();
 // set port to 0 if you are a client
@@ -60,3 +63,5 @@ void* PB_SendComponentInterest_Serialize(long entityId, InterestOverride* intere
 bool PB_SendComponentInterest_Deserialize(const void* data, int len, long* entityId, InterestOverride** interest_override, unsigned int* interest_override_count);
 void* PB_AddComponentOp_Serialize(long entityId, PB_AddComponentOp* addComponentOp, unsigned int addComponentOp_count, int* len);
 bool PB_AddComponentOp_Deserialze(const void* data, int len, long* entityId, PB_AddComponentOp** addComponentOp, unsigned int* addComponentOp_count);
+void* PB_AuthorityChangeOp_Serialize(long entityId, Stripped_AuthorityChangeOp* authorityChangeOp, unsigned int authorityChangeOp_count, int* len);
+bool PB_AuthorityChangeOp_Deserialize(const void* data, int len, long* entityId, Stripped_AuthorityChangeOp** authorityChangeOp, unsigned int* authorityChangeOp_count);

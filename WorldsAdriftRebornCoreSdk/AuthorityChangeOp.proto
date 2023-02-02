@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package WorldsAdriftRebornCoreSdk;
+
+message AuthorityChangeOpWrapper{
+    optional int64 EntityId = 1;
+    repeated AuthorityChange OpList = 2;
+}
+
+message AuthorityChange{
+    optional uint32 ComponentId = 1;
+    optional bool HasAuthority = 2;
+}

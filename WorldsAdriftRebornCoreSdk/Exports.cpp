@@ -78,7 +78,7 @@ void __cdecl WorkerProtocol_Dispatcher_RegisterRemoveComponentCallback(Dispatche
 }
 void __cdecl WorkerProtocol_Dispatcher_RegisterAuthorityChangeCallback(Dispatcher* dispatcher, void* data, AuthorityChangeCallback callback) {
     hook("WorkerProtocol_Dispatcher_RegisterAuthorityChangeCallback");
-    // TODO: Add method RegisterAuthorityChangeCallback to dispatcher and call it here
+    dispatcher->RegisterAuthorityChangeCallback(callback, data);
 }
 void __cdecl WorkerProtocol_Dispatcher_RegisterComponentUpdateCallback(Dispatcher* dispatcher, void* data, ComponentUpdateCallback callback) {
     hook("WorkerProtocol_Dispatcher_RegisterComponentUpdateCallback");

@@ -23,6 +23,7 @@
     <ClInclude Include="AddComponentOp.pb.h" />
     <ClInclude Include="AddEntityOp.pb.h" />
     <ClInclude Include="AssetLoadRequestOp.pb.h" />
+    <ClInclude Include="AuthorityChangeOp.pb.h" />
     <ClInclude Include="Callbacks.h" />
     <ClInclude Include="Connection.h" />
     <ClInclude Include="ConnectionFuture.h" />
@@ -50,6 +51,7 @@
     <ClCompile Include="AddComponentOp.pb.cc" />
     <ClCompile Include="AddEntityOp.pb.cc" />
     <ClCompile Include="AssetLoadRequestOp.pb.cc" />
+    <ClCompile Include="AuthorityChangeOp.pb.cc" />
     <ClCompile Include="Connection.cpp" />
     <ClCompile Include="ConnectionFuture.cpp" />
     <ClCompile Include="DeploymentListFuture.cpp" />
@@ -84,6 +86,7 @@
     <Proto Include="AssetLoadRequestOp.proto">
       <FileType>Document</FileType>
     </Proto>
+    <Proto Include="AuthorityChangeOp.proto" />
     <Proto Include="SendComponentInterest.proto">
       <FileType>Document</FileType>
     </Proto>
