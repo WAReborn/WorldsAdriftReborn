@@ -40,10 +40,7 @@ void Dispatcher::Process(OpList* op_list) {
             op->EntityId = op_list->authorityChangeOp[i].EntityId;
             op->ComponentId = op_list->authorityChangeOp[i].ComponentId;
             op->HasAuthority = op_list->authorityChangeOp[i].HasAuthority;
-            /*
-            * TODO: in C# the values of this struct are garbage, seems like its reading random memory. Question is why, see the above calls as they do work.
-            * to debug set a breakpoint in the game at Imporbable.Worker.Dispatcher.AuthorityChangeThunk(void* dispatcherHandlePtr, WorkerProtocol.AuthorityChangeOp* op)
-            */
+
             this->authorityChangeCallback(this->GCHandle, op);
 
             delete op;
