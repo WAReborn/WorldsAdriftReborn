@@ -9,7 +9,8 @@ namespace WorldsAdriftRebornGameServer.DLLCommunication
         {
             AssetLoadRequestOp = 0,
             AddEntityOp = 1,
-            SendComponentInterest = 2
+            SendComponentInterest = 2,
+            AuthorityChangeOp = 3
         }
         public struct ENetPacket_Wrapper
         {
@@ -54,6 +55,9 @@ namespace WorldsAdriftRebornGameServer.DLLCommunication
 
         [DllImport("CoreSdkDll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "PB_EXP_AddComponentOp_Serialize")]
         public static unsafe extern void* PB_EXP_AddComponentOp_Serialize( long entityId, AddComponentOp* addComponentOp, uint addComponentOp_count, int* len );
+
+        [DllImport("CoreSdkDll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "PB_EXP_AuthorityChangeOp_Serialize")]
+        public static unsafe extern void* PB_EXP_AuthorityChangeOp_Serialize( long entityId, AuthorityChangeOp* authorityChangeOp, uint authorityChangeOp_count, int* len );
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public unsafe delegate void ENet_Poll_Callback( IntPtr peer );

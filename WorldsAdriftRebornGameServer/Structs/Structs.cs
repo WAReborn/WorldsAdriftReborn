@@ -34,5 +34,11 @@ namespace WorldsAdriftRebornGameServer.Structs
             public unsafe byte* ComponentData;
             public int DataLength;
         }
+        public struct AuthorityChangeOp
+        {
+            public AuthorityChangeOp(uint ComponentId, bool HasAuthority ) { this.ComponentId = ComponentId; this.HasAuthority = (byte)(HasAuthority ? 0x01 : 0x00); }
+            public uint ComponentId;
+            public byte HasAuthority;
+        }
     }
 }

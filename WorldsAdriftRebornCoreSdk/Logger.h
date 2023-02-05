@@ -43,9 +43,17 @@ public:
 
     static void Hexify(char* buffer, int length) {
         for (int i = 0; i < length; i++) {
-            toHex(buffer[i]);
+            GetLogger()->toHex(buffer[i]);
         }
-        std::cerr << std::endl;
+        GetLogger()->debug("");
+    }
+
+    static void printAddr(void* addr) {
+        std::cerr << addr << std::endl;
+    }
+
+    static void PrintAddress(void* addr) {
+        GetLogger()->printAddr(addr);
     }
 };
 

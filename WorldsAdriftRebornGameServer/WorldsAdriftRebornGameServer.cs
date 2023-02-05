@@ -48,7 +48,7 @@ namespace WorldsAdriftRebornGameServer
             }
 
             Console.WriteLine("[info] successfully initialized ENet.");
-            ENetHostHandle server = EnetLayer.ENet_Create_Host(7777, 1, 3, 0, 0);
+            ENetHostHandle server = EnetLayer.ENet_Create_Host(7777, 1, 4, 0, 0);
 
             if (server.IsInvalid)
             {
@@ -266,6 +266,29 @@ namespace WorldsAdriftRebornGameServer
                     else if(keyValuePair.Value == GameState.State.PLAYER_SPAWNED)
                     {
                         Console.WriteLine("[info] client ack'ed player spawning instruction (info by sdk, does not mean it truly spawned).");
+                        Console.WriteLine("[info] sending out AuthorityChangeOp and hoping that it arrives before the component requests...");
+
+                        // need to prevent confusion with the games own structs
+                        List<Structs.Structs.AuthorityChangeOp> authorityChangeOp = new List<Structs.Structs.AuthorityChangeOp>()
+                        {
+                            { new Structs.Structs.AuthorityChangeOp(8051, true) }, // 8051 is ToolState which is the Reader for ToolBehaviour
+                            { new Structs.Structs.AuthorityChangeOp(8065, true) } // 8065 is BlueprintData, this is only to test if we can add more than one request here.
+                        };
+
+                        fixed(Structs.Structs.AuthorityChangeOp* authChangeOps = authorityChangeOp.ToArray())
+                        {
+                            int len = 0;
+                            void* ptr = EnetLayer.PB_EXP_AuthorityChangeOp_Serialize(1, authChangeOps, (uint)authorityChangeOp.Count, &len);
+
+                            if(ptr != null && len > 0)
+                            {
+                                Console.WriteLine("[info] serialized all AuthorityRequestOp instructions.");
+
+                                EnetLayer.ENet_Send(keyValuePair.Key, (int)EnetLayer.ENetChannel.AuthorityChangeOp, ptr, len, 1);
+                                EnetLayer.ENet_Flush(server);
+                            }
+                        }
+
                         PeerManager.Instance.playerState[keyValuePair.Key] = GameState.State.DONE;
                     }
                 }

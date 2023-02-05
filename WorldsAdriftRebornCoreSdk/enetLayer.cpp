@@ -39,6 +39,9 @@ bool __cdecl PB_EXP_SendComponentInterest_Deserialize(const void* data, int len,
 void* __cdecl PB_EXP_AddComponentOp_Serialize(long entityId, PB_AddComponentOp* addComponentOp, unsigned int addComponentOp_count, int* len) {
     return PB_AddComponentOp_Serialize(entityId, addComponentOp, addComponentOp_count, len);
 }
+void* __cdecl PB_EXP_AuthorityChangeOp_Serialize(long entityId, Stripped_AuthorityChangeOp* authorityChangeOp, unsigned int authorityChangeOp_count, int* len) {
+    return PB_AuthorityChangeOp_Serialize(entityId, authorityChangeOp, authorityChangeOp_count, len);
+}
 
 int ENet_Initialize() {
     return enet_initialize();
@@ -465,6 +468,70 @@ bool PB_AddComponentOp_Deserialze(const void* data, int len, long* entityId, PB_
         (*addComponentOp)[i].DataLength = pb_op->components(i).datalength();
         (*addComponentOp)[i].ComponentData = new char[(*addComponentOp)[i].DataLength];
         memcpy((*addComponentOp)[i].ComponentData, pb_op->components(i).data().data(), (*addComponentOp)[i].DataLength);
+    }
+
+    delete pb_op;
+    delete str;
+
+    return true;
+}
+
+void* PB_AuthorityChangeOp_Serialize(long entityId, Stripped_AuthorityChangeOp* authorityChangeOp, unsigned int authorityChangeOp_count, int* len) {
+    if (authorityChangeOp == NULL || len == NULL) {
+        if (len != NULL) {
+            *len = 0;
+        }
+        return NULL;
+    }
+
+    WorldsAdriftRebornCoreSdk::AuthorityChangeOpWrapper* pb_op = new WorldsAdriftRebornCoreSdk::AuthorityChangeOpWrapper();
+
+    pb_op->set_entityid(entityId);
+    for (unsigned int i = 0; i < authorityChangeOp_count; i++) {
+        WorldsAdriftRebornCoreSdk::AuthorityChange* op = pb_op->add_oplist();
+        op->set_componentid(authorityChangeOp[i].ComponentId);
+        op->set_hasauthority(authorityChangeOp[i].HasAuthority);
+    }
+
+    std::string* serialized = new std::string();
+
+    if (!pb_op->SerializeToString(serialized)) {
+        delete serialized;
+        delete pb_op;
+
+        *len = 0;
+        return NULL;
+    }
+
+    delete pb_op;
+    *len = serialized->size();
+
+    return (void*)serialized->data();
+}
+
+bool PB_AuthorityChangeOp_Deserialize(const void* data, int len, long* entityId, Stripped_AuthorityChangeOp** authorityChangeOp, unsigned int* authorityChangeOp_count) {
+    if (data == NULL || entityId == NULL || authorityChangeOp_count == NULL) {
+        return false;
+    }
+
+    WorldsAdriftRebornCoreSdk::AuthorityChangeOpWrapper* pb_op = new WorldsAdriftRebornCoreSdk::AuthorityChangeOpWrapper();
+    std::string* str = new std::string(reinterpret_cast<char const*>(data), len);
+
+    if (!pb_op->ParseFromString(*str)) {
+        delete pb_op;
+        *authorityChangeOp_count = 0;
+
+        return false;
+    }
+
+    if (pb_op->has_entityid()) {
+        *entityId = pb_op->entityid();
+    }
+    *authorityChangeOp_count = pb_op->oplist_size();
+    *authorityChangeOp = new Stripped_AuthorityChangeOp[*authorityChangeOp_count];
+    for (int i = 0; i < *authorityChangeOp_count; i++) {
+        (*authorityChangeOp)[i].ComponentId = pb_op->oplist(i).componentid();
+        (*authorityChangeOp)[i].HasAuthority = pb_op->oplist(i).hasauthority();
     }
 
     delete pb_op;

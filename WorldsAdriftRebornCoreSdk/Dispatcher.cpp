@@ -1,9 +1,12 @@
 #include "Dispatcher.h"
 #include <corecrt_malloc.h>
+#include "Logger.h"
+#include <string>
 
 void Dispatcher::RegisterAddEntityCallback(AddEntityCallback callback, void* GCHandle) { this->addEntityCallback = callback; this->GCHandle = GCHandle; }
 void Dispatcher::RegisterAssetLoadRequestCallback(AssetLoadRequestCallback callback, void* GCHandle) { this->assetLoadRequestCallback = callback; this->GCHandle = GCHandle; }
 void Dispatcher::RegisterAddComponentCallback(AddComponentCallback callback, void* GCHandle) { this->addComponentCallback = callback; this->GCHandle = GCHandle; }
+void Dispatcher::RegisterAuthorityChangeCallback(AuthorityChangeCallback callback, void* GCHandle) { this->authorityChangeCallback = callback; this->GCHandle = GCHandle; }
 
 void Dispatcher::Process(OpList* op_list) {
     if (op_list != nullptr && op_list->addEntityOp != nullptr) {
@@ -27,6 +30,18 @@ void Dispatcher::Process(OpList* op_list) {
             op->InitialComponent = op_list->addComponentOp[i].InitialComponent;
 
             this->addComponentCallback(this->GCHandle, op);
+
+            delete op;
+        }
+    }
+    if (op_list != nullptr && op_list->authorityChangeOp != nullptr) {
+        for (int i = 0; i < op_list->authorityChangeOpLen; i++) {
+            AuthorityChangeOp* op = new AuthorityChangeOp();
+            op->EntityId = op_list->authorityChangeOp[i].EntityId;
+            op->ComponentId = op_list->authorityChangeOp[i].ComponentId;
+            op->HasAuthority = op_list->authorityChangeOp[i].HasAuthority;
+
+            this->authorityChangeCallback(this->GCHandle, op);
 
             delete op;
         }

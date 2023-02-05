@@ -1,6 +1,7 @@
 #pragma once
 
 #include "VTable.h"
+#include <cstdint>
 
 struct EntityId {
     long Id;
@@ -214,11 +215,18 @@ struct RemoveComponentOp {
     unsigned int ComponentId;
 };
 
-struct AuthorityChangeOp {
-    long EntityId;
+struct Stripped_AuthorityChangeOp {
     unsigned int ComponentId;
     unsigned char HasAuthority;
 };
+
+#pragma pack(push, 1)
+struct AuthorityChangeOp {
+    int64_t EntityId;
+    int32_t ComponentId;
+    unsigned char HasAuthority;
+};
+#pragma pack(pop)
 
 struct ComponentUpdateOp {
     long EntityId;

@@ -2,8 +2,13 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
+using Bossa.Travellers.Player;
 using HarmonyLib;
+using Improbable;
 using Improbable.Entity.Component;
+using Improbable.Unity.Internal;
+using Improbable.Unity.Visualizer;
+using Improbable.Util.Injection;
 using Newtonsoft.Json.Serialization;
 using UnityEngine;
 

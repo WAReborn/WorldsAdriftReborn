@@ -7,5 +7,7 @@ public:
     AddEntityOp* addEntityOp;
     AssetLoadRequestOp* assetLoadRequestOp;
     AddComponentOp* addComponentOp;
+    AuthorityChangeOp* authorityChangeOp;
     int addComponentLen;
+    int authorityChangeOpLen;
 };
