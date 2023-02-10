@@ -234,12 +234,111 @@
     "metadata":{}
   },
   {
+    "itemTypeID":"cedar",
+    "height":2,
+    "width":3,
+    "name":"Cedar Wood",
+    "description": "Extremely light and soft, cannot withstand much damage.",
+    "category":"Wood",
+    "iconName":"woods/Wood_Cedar",
+    "equippable":false,
+    "characterSlot":"None",
+    "metadata":{
+
+    }
+  },
+  {
+    "itemTypeID":"hemlock",
+    "height":2,
+    "width":3,
+    "name":"Hemlock Wood",
+    "description": "Very light but durable enough to be used in certain scenarios.",
+    "category":"Wood",
+    "iconName":"woods/Wood_Hemlock",
+    "equippable":false,
+    "characterSlot":"None",
+    "metadata":{
+
+    }
+  },
+  {
+    "itemTypeID":"chestnut",
+    "height":2,
+    "width":3,
+    "name":"Chestnut Wood",
+    "description": "Lightweight but nevertheless versatile timber.",
+    "category":"Wood",
+    "iconName":"woods/Wood_Chestnut",
+    "equippable":false,
+    "characterSlot":"None",
+    "metadata":{
+
+    }
+  },
+  {
+    "itemTypeID":"elm",
+    "height":2,
+    "width":3,
+    "name":"Elm Wood",
+    "description": "Medium weight with no outstanding strengths or vulnerabilities.",
+    "category":"Wood",
+    "iconName":"woods/Wood_Chestnut",
+    "equippable":false,
+    "characterSlot":"None",
+    "metadata":{
+
+    }
+  },
+  {
     "itemTypeID":"birch",
     "height":2,
     "width":3,
     "name":"Birch Wood",
+    "description": "Soft but otherwise high performance for it's weight.",
     "category":"Wood",
     "iconName":"woods/Wood_Birch",
+    "equippable":false,
+    "characterSlot":"None",
+    "metadata":{
+
+    }
+  },
+  {
+    "itemTypeID":"ash",
+    "height":2,
+    "width":3,
+    "name":"Ash Wood",
+    "description": "Extremely flexible all-rounder but heavy for timber.",
+    "category":"Wood",
+    "iconName":"woods/Wood_Ash",
+    "equippable":false,
+    "characterSlot":"None",
+    "metadata":{
+
+    }
+  },
+  {
+    "itemTypeID":"oak",
+    "height":2,
+    "width":3,
+    "name":"Oak Wood",
+    "description": "Durable and versatile but heavy for wood.",
+    "category":"Wood",
+    "iconName":"woods/Wood_Oak",
+    "equippable":false,
+    "characterSlot":"None",
+    "metadata":{
+
+    }
+  },
+  {
+    "itemTypeID":"palm",
+    "height":2,
+    "width":3,
+    "name":"Palm Wood",
+    "description": "The heaviest but also most useful wood.",
+    "category":"Wood",
+    "iconName":"woods/Wood_palm",
     "equippable":false,
     "characterSlot":"None",
     "metadata":{
