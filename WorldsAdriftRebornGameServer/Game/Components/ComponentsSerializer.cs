@@ -13,6 +13,7 @@ using Bossa.Travellers.Items;
 using Bossa.Travellers.Loot;
 using Bossa.Travellers.Misc;
 using Bossa.Travellers.Player;
+using Bossa.Travellers.Refdata;
 using Bossa.Travellers.Rope;
 using Bossa.Travellers.Scanning;
 using Bossa.Travellers.Ship.Lock;
@@ -72,17 +73,22 @@ namespace WorldsAdriftRebornGameServer.Game.Components
 
                         obj = thData;
                     }
+                    else if(componentId == 1080)
+                    {
+                        SchematicsLearnerGSimState.Data schematicGsimData = new SchematicsLearnerGSimState.Data(new Improbable.Collections.List<string>(), new Map<string, string>(), false, new Improbable.Collections.List<string>());
+                        obj = schematicGsimData;
+                    }
                     else if(componentId == 1081)
                     {
                         InventoryState.Data iData = new InventoryState.Data(new InventoryStateData(100,
                                                                                         "{}",
-                                                                                        new Improbable.Collections.List<ScalaSlottedInventoryItem> { },
-                                                                                        new Improbable.Collections.List<ScalaSlottedInventoryItem> { },
-                                                                                        200,
-                                                                                        100,
+                                                                                        ItemHelper.GetDefaultItems(),
+                                                                                        ItemHelper.GetStashItems(true, true),
+                                                                                        10,
+                                                                                        18,
                                                                                         new Improbable.Collections.List<string> { },
                                                                                         true,
-                                                                                        1));
+                                                                                        3));
                         obj = iData;
                     }
                     else if(componentId == 1086)
@@ -251,6 +257,12 @@ namespace WorldsAdriftRebornGameServer.Game.Components
 
                         obj = svData;
                     }
+                    else if(componentId == 1003)
+                    {
+                        PlayerCraftingInteractionState.Data pcisData = new PlayerCraftingInteractionState.Data(new EntityId(1), true);
+                        
+                        obj = pcisData;
+                    }
                     else if(componentId == 1005)
                     {
                         CraftingStationClientState.Data csData = new CraftingStationClientState.Data(new CraftingStationClientStateData("schematicId",
@@ -397,6 +409,57 @@ namespace WorldsAdriftRebornGameServer.Game.Components
                                                                                                                         new Vector3d(0, 0, 0),
                                                                                                                         0));
                         obj = data;
+                    }else if(componentId == 1240)  // reader
+                    {
+                        LorePiecesCollectorGsimState.Data loreGsimData = new LorePiecesCollectorGsimState.Data(new Improbable.Collections.List<string>());
+                        obj = loreGsimData;
+                    }
+                    else if(componentId == 1241) // writer
+                    {
+                        LorePiecesCollectorClientState.Data loreClientData = new LorePiecesCollectorClientState.Data();
+                        obj = loreClientData;
+                    }
+                    else if (componentId == 8051)
+                    {
+                        ToolState.Data toolData = new ToolState.Data(new ToolStateData(30));
+
+                        obj = toolData;
+                    }
+                    else if (componentId == 8050)
+                    {
+                        ToolRequestState.Data toolRequestData = new ToolRequestState.Data(new ToolRequestStateData());
+
+                        obj = toolRequestData;
+                    }
+                    
+                    else if (componentId == 6908)
+                    {
+                        ReferenceDataRequestState.Data eeeData = new ReferenceDataRequestState.Data(new ReferenceDataRequestStateData());
+
+                        obj = eeeData;
+                    }
+                    else if (componentId == 1097)
+                    {
+                        ReferenceDataState.Data referenceData = new ReferenceDataState.Data(new ReferenceDataStateData(
+                            new EntityId(-1), 
+                            "",
+                            new Map<string, string>(),
+                            "{}", 
+                            "{}",
+                            "{}",
+                            "{}",
+                            10, 
+                            new Map<string, string>(),
+                            true
+                        ));
+                    
+                        obj = referenceData;
+                    }
+                    else if (componentId == 1260)
+                    {
+                        SchematicsUnlearnerState.Data susData = new SchematicsUnlearnerState.Data();
+
+                        obj = susData;
                     }
                     else
                     {
