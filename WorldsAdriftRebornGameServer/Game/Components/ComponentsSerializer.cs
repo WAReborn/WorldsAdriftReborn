@@ -444,7 +444,7 @@ namespace WorldsAdriftRebornGameServer.Game.Components
                             new EntityId(-1), 
                             "",
                             new Map<string, string>(),
-                            "{}", 
+                            new Map<string, string>(), 
                             "{}",
                             "{}",
                             "{}",
