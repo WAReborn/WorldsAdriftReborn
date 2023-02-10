@@ -1,4 +1,22 @@
 [
+    {
+    "itemTypeID":"lore",
+    "height":2,
+    "width":2,
+    "name":"Codex - Unknown Piece",
+    "category":"",
+    "iconName":"temp_lore_icon",
+    "equippable":false,
+    "characterSlot":"None",
+    "metadata":{},
+    "entries":{
+      "2743": [
+        "Grandpapa blowed a hole in the flame. He said I must try to sleep. But I was scared and I couldn't, not with the great purple howl, and the shuffling of the beetles, and the endless night, and the din of the children swimming above and around us.\n\n\"Our new home will prevail. We have all we need. Just have to hold out young 'un, and wait for the storm to end.\"\n\n\"Tell me a story,\" I said.\n\n\"It's time for sleep,\" he said. I folded my arms crossly, and he knew I'd not let up until he gave me a story.\n\n\"Oh alright.\"\n\n\"The one about the armies!\"\n\n\"Ah, yes.\"\n\nThen he put his arm around me, and knelt beside my splintery bed.",
+        "\"The year was 2743. It was a promising age, when the stone first came to us. This concerns your great great great great great great great great Uncle Sloop. By all accounts he had a thin and measly head of hair, which he liked to conceal beneath a leafy hat. He lived in the autumn hills of Karem, just up from the first bend of the river, where the water breaks white and violent at the weir. Where the river Karem rakes across the valley, and thins up towards the Pintins in the north.\"\n\n\"But Grandpa they aren't there any more.\"\n\n\"Hush! They are, in my mind's eye. Anyway, your Uncle Sloop had no job, but roamed the foothills, living off the land. But the winters were hard, so he'd come down off the slopes into Karem to seek work. One year, there were murmurings of war, both sides wanting the Atlas in the Kioki mountains. Lucky for Uncle, the army was conscripting, so he joined up. He was a fine shot, and he knew the slopes as good as any. He was at one with nature, see, but the other men couldn't stand him. Sloop always worked best alone.\"\n\n\"Once the barber had taken his unruly beard down to a fine bristle, they set him off with a scout's provisions, up into the forest, where he would be most at home. He hiked upstream, where the river narrows enough to cross.\n\n\"It was there he spied the Pinnish camps, their ponchos and fur hats dotting the far shore. It was by his rapid return and advice, that the entire Karem brigade appeared opposite two days later. They made themselves known on the lower bank, patrolling proudly under the Karem flag. At their hip were pistols, and at their feet cannons dragged by mules.\"",
+        "\"The Pin trained their weapons upon the adversary across the narrow gulch. The order from their side was to wait. Hands twitched on triggers. Cannons were jiggled and primed..\n\nIt was your Uncle Sloop that cause it. He had a strange sense of humour, and at the moment when all were most expectant as to what the other might do, he stood upon a rock, put his hands to his mouth and made the sound of a gun with his cheeks.\n\nA wide-eyed Pinnish soldier responded wildly. He lit his cannon fuse, and its aim being unrehearsed, blasted the ball across the gully and into a tall tree. The tree teetered before falling a distance from the men beneath.\"\n\n\"What happened next?\"\n\n\"Well, since all but the silly soldier knew it was Sloop upon the rock who made the noise, a bout of laughter began to echo around the gully, and soon both sides were hysterical. Since none were hurt, no harm was done. Both sides conversed by means of bellowing across the roar of the wier, and agreed they should make peace that day, and resume fighting on the morrow.\n\nBut there was to be no fighting, since the Empress of Ishgiru, having heard of the dispute, resolved to form the Unity by which the three states of Karem, Ishgiru and Pin would then be known.\"\n\n\"So, my Uncle Sloop brought the peace?\"\n\n\"Yes he did, in his own sort of way.\""
+      ]
+    }
+  },
   {
     "itemTypeID":"steamInvBundle-xmas_present",
     "height":2,
