@@ -3,6 +3,11 @@ using NetCoreServer;
 using WorldsAdriftServer.Handlers.Authentication;
 using WorldsAdriftServer.Handlers.CharacterScreen;
 using WorldsAdriftServer.Handlers.ServerStatus;
+using WorldsAdriftServer.Handlers.SocialScreen;
+using WorldsAdriftServer.Handlers.SocialScreen.Alliance;
+using WorldsAdriftServer.Handlers.SocialScreen.Alliance.Rank;
+using WorldsAdriftServer.Handlers.SocialScreen.Crew;
+using WorldsAdriftServer.Helper.Data;
 
 namespace WorldsAdriftServer.Handlers
 {
@@ -20,32 +25,18 @@ namespace WorldsAdriftServer.Handlers
         // NOTE: OnReceivedRequest is only called once a complete request has been constructed inside HttpRequest's _cache.
         protected override void OnReceivedRequest( HttpRequest request )
         {
-            if(request != null)
+            try
             {
-                if(request.Method == "POST" && request.Url == "/authenticate")
+                foreach (Handler handler in Handlers)
                 {
-                    SteamAuthenticationHandler.HandleAuthRequest(this, request, "Jim Hawkins");
+                    if (handler.TryHandle(this, request))
+                    { break; }
                 }
-                else if (request.Method == "GET" && request.Url.Contains("/characterList/") && request.Url.Contains("/steam/1234"))
-                {
-                    CharacterListHandler.HandleCharacterListRequest(this, request, "community_server");
-                }
-                else if (request.Method == "POST" && request.Url.Contains("/reserveCharacterSlot/") && request.Url.Contains("/steam/1234"))
-                {
-                    // no need to handle this as we provide the needed data in HandleCharacterListRequest()
-                }
-                else if(request.Method == "GET" && request.Url == "/deploymentStatus")
-                {
-                    DeploymentStatusHandler.HandleDeploymentStatusRequest(this, request, "awesome community server", "community_server", 0);
-                }
-                else if(request.Method == "GET" && request.Url == "/authorizeCharacter")
-                {
-                    CharacterAuthHandler.HandleCharacterAuth(this, request);
-                }
-                else if(request.Method == "POST" && request.Url.Contains("/character/") && request.Url.Contains("/steam/1234/"))
-                {
-                    CharacterSaveHandler.HandleCharacterSave(this, request);
-                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                SendData.Error(this, request);
             }
         }
 
@@ -58,5 +49,48 @@ namespace WorldsAdriftServer.Handlers
         {
             Console.WriteLine("Socket error: " + error.ToString());
         }
+
+        internal static List<Handler> Handlers { get; } = new()
+        {
+            new CharacterAuthHandler(),
+            new ReserveNameHandler(),
+            new SteamAuthenticationHandler(),
+            new CharacterCreateHandler(),
+            new CharacterDeleteHandler(),
+            new CharacterListHandler(),
+            new CharacterSaveHandler(),
+            new DeploymentStatusHandler(),
+            new AcceptInviteHandler(),
+            new CancelInviteHandler(),
+            new CharacterMembershipsHandler(),
+            new CharacterSearchHandler(),
+            new InvitesAndApplicationsForPlayerHandler(),
+            new RejectInviteHandler(),
+            new SendInviteHandler(),
+            new AllianceBatchRequestHandler(),
+            new AllianceSearchHandler(),
+            new ApplyToAllianceHandler(),
+            new CreateAllianceHandler(),
+            new DeleteAllianceMembershipHandler(),
+            new DisbandAllianceHandler(),
+            new GetAllianceForCharacterHandler(),
+            new GetAllianceHandler(),
+            new GetInvitesAndApplicationsForAllianceHandler(),
+            new ListAlliancesHandler(),
+            new ListMembersByAllianceHandler(),
+            new UpdateAllianceInfoHandler(),
+            new UpdatePlayerMembershipHandler(),
+            new CreateRankHandler(),
+            new DeleteRankHandler(),
+            new GetAllRanksForAllianceHandler(),
+            new ModifyRankHandler(),
+            new CreateCrewHandler(),
+            new DeleteCrewMembershipHandler(),
+            new DisbandCrewHandler(),
+            new GetCrewMembersHandler(),
+            new GetMyCrewDataHandler(),
+            new ListCrewInvitesHandler(),
+            new VersionCheckHandler(),
+        };
     }
 }

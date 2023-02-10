@@ -50,6 +50,38 @@ namespace WorldsAdriftReborn.Patching.Dynamic.HookConfig
         }
 
         [HarmonyPatch()]
+        class GetOrDefault_String
+        {
+            [HarmonyTargetMethod]
+            public static MethodBase GetTargetMethod()
+            {
+                return AccessTools.Method(
+                                            AccessTools.TypeByName("WAConfig"),
+                                            "GetOrDefault",
+                                            new Type[]
+                                            {
+                                            typeof(string)
+                                            }).MakeGenericMethod(typeof(string));
+            }
+
+            [HarmonyPrefix]
+            public static bool Get_Prefix( ref string __result, string key )
+            {
+                ModSettings.modConfig.Reload();
+
+                if (key == "Alliances.ServerUrl")
+                {
+                    __result = ModSettings.restServerUrl.Value;
+                    return false;
+                }
+
+                Debug.LogWarning("not touching " + key);
+
+                return true;
+            }
+        }
+
+        [HarmonyPatch()]
         class Get_Bool
         {
             [HarmonyTargetMethod]

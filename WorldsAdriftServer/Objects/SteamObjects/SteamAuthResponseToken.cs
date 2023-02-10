@@ -1,25 +1,33 @@
-﻿namespace WorldsAdriftServer.Objects.SteamObjects
+﻿using Newtonsoft.Json;
+
+namespace WorldsAdriftServer.Objects.SteamObjects
 {
     internal class SteamAuthResponseToken
     {
-        public string token { get; set; }
-        public string playerId { get; set; }
-        public string bossaId { get; set; }
-        public string screenName { get; set; }
-        public string desc { get; set; }
-        public bool success { get; set; }
-
-        public SteamAuthResponseToken( string token,
-                                        string playerId,
-                                        string bossaId,
-                                        bool success )
+        public SteamAuthResponseToken() { }
+        internal SteamAuthResponseToken( string token, bool success )
         {
-            this.token = token;
-            this.playerId = playerId;
-            this.bossaId = bossaId;
-            this.success = success;
-            screenName = string.Empty;
-            desc = string.Empty;
+            Token = token;
+            Success = success;
         }
+
+        [JsonProperty("token")]
+        public string Token { get; set; } = string.Empty;
+
+        [JsonProperty("playerId")]
+        public string PlayerId { get; set; } = Config.PlayerId;
+
+        [JsonProperty("bossaId")]
+        public string BossaId { get; set; } = Config.BossaId;
+
+        [JsonProperty("screenName")]
+        public string ScreenName { get; set; } = string.Empty;
+
+        [JsonProperty("desc")]
+        public string Desc { get; set; } = Config.SteamAuthError;
+
+        [JsonProperty("success")]
+        public bool Success { get; set; } = false;
+
     }
 }

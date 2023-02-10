@@ -1,34 +1,41 @@
 ﻿using NetCoreServer;
 using Newtonsoft.Json.Linq;
+using WorldsAdriftServer.Helper.Data;
+using WorldsAdriftServer.Helper.Token;
+using WorldsAdriftServer.Objects.DataObjects;
 using WorldsAdriftServer.Objects.SteamObjects;
 
 namespace WorldsAdriftServer.Handlers.Authentication
 {
-    internal static class SteamAuthenticationHandler
+    internal class SteamAuthenticationHandler : Handler
     {
-        internal static void HandleAuthRequest(HttpSession session, HttpRequest request, string playerName)
+        internal override string Method { get; } = "POST";
+        internal override string[] URLs { get; } = { "/authenticate" };
+        internal override bool CheckSteamToken { get; } = false;
+        internal override bool CheckCharacterToken { get; } = false;
+        internal override bool Handle( HttpSession httpSession, HttpRequest httpRequest )
         {
-            JObject reqO = JObject.Parse(request.Body);
-            if (reqO != null)
+            SteamAuthRequestToken? steamAuthRequest = JObject.Parse(httpRequest.Body).ToObject<SteamAuthRequestToken>();
+
+            if (steamAuthRequest == null || string.IsNullOrEmpty(steamAuthRequest.BossaCredential.UserKey))
             {
-                SteamAuthRequestToken reqToken = reqO.ToObject<SteamAuthRequestToken>();
-
-                if (reqToken != null)
-                {
-                    SteamAuthResponseToken respToken = new SteamAuthResponseToken("superCoolToken", "777", "999", true);
-                    respToken.screenName = playerName;
-
-                    JObject respO = (JObject)JToken.FromObject(respToken);
-                    if (respO != null)
-                    {
-                        HttpResponse resp = new HttpResponse();
-                        resp.SetBegin(200);
-                        resp.SetBody(respO.ToString());
-
-                        session.SendResponseAsync(resp);
-                    }
-                }
+                SendData.JObject((JObject)JToken.FromObject(new SteamAuthResponseToken()), httpSession);
+                return true;
             }
+
+            if (!DataStore.Instance.PlayerCharacterNameData.TryGetValue(steamAuthRequest.BossaCredential.UserKey, out NameData? nameData))
+            {
+                PlayerData playerData = new(steamAuthRequest.BossaCredential.UserKey);
+                nameData = new(steamAuthRequest.BossaCredential.UserKey, string.Empty, playerData.Guid);
+
+                DataStore.Instance.PlayerDataDictionary.Add(playerData.Guid, playerData);
+                DataStore.Instance.PlayerCharacterNameData.Add(nameData.Name, nameData);
+            }
+
+            if (!GenerateAuthToken.Steam(steamAuthRequest, nameData.PlayerGuid, out SteamAuthResponseToken responseToken))
+            { return false; }
+
+            return SendData.JObject((JObject)JToken.FromObject(responseToken), httpSession);
         }
     }
 }

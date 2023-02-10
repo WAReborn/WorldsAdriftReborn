@@ -1,11 +1,14 @@
 ﻿using NetCoreServer;
 using Newtonsoft.Json.Linq;
-using WorldsAdriftServer.Helper.CharacterSelection;
+using WorldsAdriftServer.Helper.Data;
+using WorldsAdriftServer.Helper.Token;
+using WorldsAdriftServer.Helper;
 using WorldsAdriftServer.Objects.CharacterSelection;
+using WorldsAdriftServer.Objects.DataObjects;
 
 namespace WorldsAdriftServer.Handlers.CharacterScreen
 {
-    internal static class CharacterListHandler
+    internal class CharacterListHandler : Handler
     {
         /*
          * URL: /characterList/{buildNumber}/steam/1234
@@ -13,28 +16,19 @@ namespace WorldsAdriftServer.Handlers.CharacterScreen
          * once the user clicks on the play button the game requests a list of characters.
          * the response also decides whether there is an option to create a new character using the unlockedSlots field
          */
-        internal static void HandleCharacterListRequest(HttpSession session, HttpRequest request, string serverIdentifier )
+        internal override string Method { get; } = "GET";
+        internal override string[] URLs { get; } = { $"/characterList/{Config.GameVersion}/steam/1234" };
+        internal override bool CheckSteamToken { get; } = true;
+        internal override bool CheckCharacterToken { get; } = false;
+        internal override bool Handle( HttpSession httpSession, HttpRequest httpRequest )
         {
-            List<CharacterCreationData> list = new List<CharacterCreationData>();
+            if (!HttpParsers.HeaderByName("Security", httpRequest, out string steamToken) || !GetGuidFromAuthToken.Steam(steamToken, out string playerGuid))
+            { return false; }
 
-            list.Add(Character.GenerateRandomCharacter(serverIdentifier, "Billy Bones"));
-            list.Add(Character.GenerateRandomCharacter(serverIdentifier, "Long John Silver"));
-            list.Add(Character.GenerateNewCharacter(serverIdentifier, "Jim Hawkins"));
+            PlayerData playerData = DataStore.Instance.PlayerDataDictionary[playerGuid];
+            CharacterListResponse characterListResponse = new(playerData);
 
-            CharacterListResponse characterList = new CharacterListResponse(list);
-            characterList.unlockedSlots = list.Count; // let the player create a new character below the list of existing characters (last provided character above must be a GenerateNewCharacter())
-            characterList.hasMainCharacter = true;
-            characterList.havenFinished = true;
-
-            JObject respO = (JObject)JToken.FromObject(characterList);
-            if (respO != null)
-            {
-                HttpResponse resp = new HttpResponse();
-                resp.SetBegin(200);
-                resp.SetBody(respO.ToString());
-
-                session.SendResponseAsync(resp);
-            }
+            return SendData.JObject(JObject.FromObject(characterListResponse), httpSession);
         }
     }
 }

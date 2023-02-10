@@ -1,28 +1,43 @@
 ﻿using NetCoreServer;
 using Newtonsoft.Json.Linq;
+using WorldsAdriftServer.Helper.Data;
+using WorldsAdriftServer.Helper.Token;
+using WorldsAdriftServer.Helper;
 using WorldsAdriftServer.Objects.CharacterSelection;
+using WorldsAdriftServer.Objects.DataObjects;
+using WorldsAdriftServer.Objects.DeploymentStatus;
 
 namespace WorldsAdriftServer.Handlers.CharacterScreen
 {
-    internal static class CharacterSaveHandler
+    internal class CharacterSaveHandler : Handler
     {
-        internal static void HandleCharacterSave(HttpSession session, HttpRequest request )
+        internal override string Method { get; } = "POST";
+        internal override string[] URLs { get; } = { $"/character/{Config.GameVersion}/steam/1234" };
+        internal override bool CheckSteamToken { get; } = true;
+        internal override bool CheckCharacterToken { get; } = false;
+        internal override bool Handle( HttpSession httpSession, HttpRequest httpRequest )
         {
-            JObject reqO = JObject.Parse(request.Body);
-            if(reqO != null)
+            CharacterCreationData? requestCharacterData = JObject.Parse(httpRequest.Body).ToObject<CharacterCreationData>();
+            if (requestCharacterData == null)
+            { return false; }
+
+            if (!HttpParsers.HeaderByName("Security", httpRequest, out string steamToken) || !GetGuidFromAuthToken.Steam(steamToken, out string playerGuid))
+            { return false; }
+
+            ServerStatusRecord serverStatusRecord = Config.ServerStatusDictionary[requestCharacterData.serverIdentifier];
+            requestCharacterData.Server = serverStatusRecord.DisplayName;
+
+            CharacterData characterData = DataStore.Instance.CharacterDataDictionary[requestCharacterData.characterUid];
+            characterData.characterCreationData = requestCharacterData;
+            characterData.Name = requestCharacterData.Name;
+
+            if (!DataStore.Instance.PlayerCharacterNameData.ContainsKey(requestCharacterData.Name))
             {
-                CharacterCreationData characterData = reqO.ToObject<CharacterCreationData>();
-                if(characterData != null)
-                {
-                    // todo for future: store changes
-                    HttpResponse resp = new HttpResponse();
-
-                    resp.SetBegin(200);
-                    resp.SetBody("{}"); // the game does want to have a valid JObject. Its stored in CharacterSelectionHandler.LastReceivedCharacterList so maybe important to pass valid stuff here in the future
-
-                    session.SendResponseAsync(resp);
-                }
+                NameData nameData = new(requestCharacterData.Name, requestCharacterData.characterUid, playerGuid);
+                DataStore.Instance.PlayerCharacterNameData.Add(nameData.Name, nameData);
             }
+
+            return new CharacterListHandler().Handle(httpSession, httpRequest);
         }
     }
 }
