@@ -10,6 +10,7 @@ namespace WorldsAdriftRebornGameServer.Networking.Singleton
         {
             server = new ENetHostHandle();
             playerState = new Dictionary<ENetPeerHandle, GameState.State>();
+            clientSetupState = new List<ENetPeerHandle>();
         }
         public static PeerManager Instance
         {
@@ -25,6 +26,7 @@ namespace WorldsAdriftRebornGameServer.Networking.Singleton
 
         public ENetHostHandle server { get; set; }
         public Dictionary<ENetPeerHandle, GameState.State> playerState { get; set; }
+        public List<ENetPeerHandle> clientSetupState { get; set; }
 
         public void SetENetHostHandle(ENetHostHandle client )
         {

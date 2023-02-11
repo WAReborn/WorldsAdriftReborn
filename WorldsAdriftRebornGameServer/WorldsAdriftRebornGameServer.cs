@@ -33,7 +33,8 @@ namespace WorldsAdriftRebornGameServer
 
         private static readonly EnetLayer.ENet_Poll_Callback callbackC = new EnetLayer.ENet_Poll_Callback(OnNewClientConnected);
         private static readonly EnetLayer.ENet_Poll_Callback callbackD = new EnetLayer.ENet_Poll_Callback(OnClientDisconnected);
-
+        private static readonly uint[] authoritativeComponents = { 8050, 8051, 6908, 1260, 1097, 1003, 1241};
+        
         static unsafe void Main( string[] args )
         {
             Console.CancelKeyPress += delegate ( object? sender, ConsoleCancelEventArgs e )
@@ -87,54 +88,93 @@ namespace WorldsAdriftRebornGameServer
                             PeerManager.Instance.playerState[keyValuePair.Key] = GameState.State.PLAYER_SPAWNED;
                         }
 
-                        if(packet->channel == (int)EnetLayer.ENetChannel.SendComponentInterest)
+                        if (packet->channel != (int)EnetLayer.ENetChannel.SendComponentInterest) continue;
+
+                        long entityId = 0;
+                        uint interestCount = 0;
+                        bool sendAuthority = false;
+                        Structs.Structs.InterestOverride* interests = (Structs.Structs.InterestOverride * )new IntPtr(0);
+
+                        if (EnetLayer.PB_EXP_SendComponentInterest_Deserialize(packet->data, (int)packet->dataLength, &entityId, &interests, &interestCount))
                         {
-                            long entityId = 0;
-                            uint interestCount = 0;
-                            Structs.Structs.InterestOverride* interests = (Structs.Structs.InterestOverride * )new IntPtr(0);
+                            Console.WriteLine("[info] game requests components for entity id: " + entityId);
+                            List<Structs.Structs.AddComponentOp> serializedComponents = new List<Structs.Structs.AddComponentOp>();
 
-                            if (EnetLayer.PB_EXP_SendComponentInterest_Deserialize(packet->data, (int)packet->dataLength, &entityId, &interests, &interestCount))
+                            for(int i = 0; i < interestCount; i++)
                             {
-                                Console.WriteLine("[info] game requests components for entity id: " + entityId);
-                                List<Structs.Structs.AddComponentOp> serializedComponents = new List<Structs.Structs.AddComponentOp>();
+                                uint len = 0;
+                                byte* buffer;
+                                ComponentsSerializer.InitAndSerialize(interests[i].ComponentId, &buffer, &len);
 
-                                for(int i = 0; i < interestCount; i++)
+                                if (len <= 0) continue;
+
+                                Console.WriteLine("[success] initialized and serialized componentId " + interests[i].ComponentId);
+                                Structs.Structs.AddComponentOp component;
+
+                                component.ComponentId = interests[i].ComponentId;
+                                component.ComponentData = buffer;
+                                component.DataLength = (int)len;
+
+                                serializedComponents.Add(component);
+                            }
+
+                            if (entityId == 1 && !PeerManager.Instance.clientSetupState.Contains(keyValuePair.Key))
+                            {
+                                for (var i = 0; i < authoritativeComponents.Length; i++)
                                 {
                                     uint len = 0;
                                     byte* buffer;
-                                    ComponentsSerializer.InitAndSerialize(interests[i].ComponentId, &buffer, &len);
-
-                                    if(len > 0)
-                                    {
-                                        Console.WriteLine("[success] initialized and serialized componentId " + interests[i].ComponentId);
-                                        Structs.Structs.AddComponentOp component;
-
-                                        component.ComponentId = interests[i].ComponentId;
-                                        component.ComponentData = buffer;
-                                        component.DataLength = (int)len;
-
-                                        serializedComponents.Add(component);
-                                    }
+                                    ComponentsSerializer.InitAndSerialize(authoritativeComponents[i], &buffer, &len);
+                                
+                                    if (len <= 0) continue;
+                                
+                                    Console.WriteLine("[success] initialized and serialized authoritative componentId " + authoritativeComponents[i]);
+                                    Structs.Structs.AddComponentOp component;
+                                
+                                    component.ComponentId = authoritativeComponents[i];
+                                    component.ComponentData = buffer;
+                                    component.DataLength = (int)len;
+                                
+                                    serializedComponents.Add(component);
                                 }
+                                    
+                                sendAuthority = true;
+                                PeerManager.Instance.clientSetupState.Add(keyValuePair.Key);
+                            }
 
-                                fixed (Structs.Structs.AddComponentOp* comps = serializedComponents.ToArray())
+                            fixed (Structs.Structs.AddComponentOp* comps = serializedComponents.ToArray())
+                            {
+                                int len = 0;
+                                void* ptr = EnetLayer.PB_EXP_AddComponentOp_Serialize(entityId, comps, (uint)serializedComponents.Count, &len);
+
+                                if(ptr != null && len > 0)
+                                {
+                                    Console.WriteLine("[success] serialized all requested components, sending them to the game now...");
+
+                                    EnetLayer.ENet_Send(keyValuePair.Key, (int)EnetLayer.ENetChannel.SendComponentInterest, ptr, len, 1);
+                                    EnetLayer.ENet_Flush(server); // for now just send out without waiting for enet's internal sending in ENet_Poll()
+                                }
+                            }
+                                
+                            if (sendAuthority)
+                            {
+                                fixed (Structs.Structs.AuthorityChangeOp* authChangeOps = authoritativeComponents.Select(p => new Structs.Structs.AuthorityChangeOp(p, true)).ToArray())
                                 {
                                     int len = 0;
-                                    void* ptr = EnetLayer.PB_EXP_AddComponentOp_Serialize(entityId, comps, (uint)serializedComponents.Count, &len);
+                                    void* ptr = EnetLayer.PB_EXP_AuthorityChangeOp_Serialize(entityId, authChangeOps, (uint) authoritativeComponents.Length, &len);
 
-                                    if(ptr != null && len > 0)
-                                    {
-                                        Console.WriteLine("[success] serialized all requested components, sending them to the game now...");
+                                    if (ptr == null || len <= 0) continue;
 
-                                        EnetLayer.ENet_Send(keyValuePair.Key, (int)EnetLayer.ENetChannel.SendComponentInterest, ptr, len, 1);
-                                        EnetLayer.ENet_Flush(server); // for now just send out without waiting for enet's internal sending in ENet_Poll()
-                                    }
+                                    Console.WriteLine("[info] serialized all AuthorityRequestOp instructions for authoritative components.");
+
+                                    EnetLayer.ENet_Send(keyValuePair.Key, (int)EnetLayer.ENetChannel.AuthorityChangeOp, ptr, len, 1);
+                                    EnetLayer.ENet_Flush(server);
                                 }
                             }
-                            else
-                            {
-                                Console.WriteLine("[error] failed to parse component interest request from game.");
-                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("[error] failed to parse component interest request from game.");
                         }
                     }
                     EnetLayer.ENet_Destroy_Packet(new IntPtr(packet));
@@ -266,29 +306,7 @@ namespace WorldsAdriftRebornGameServer
                     else if(keyValuePair.Value == GameState.State.PLAYER_SPAWNED)
                     {
                         Console.WriteLine("[info] client ack'ed player spawning instruction (info by sdk, does not mean it truly spawned).");
-                        Console.WriteLine("[info] sending out AuthorityChangeOp and hoping that it arrives before the component requests...");
-
-                        // need to prevent confusion with the games own structs
-                        List<Structs.Structs.AuthorityChangeOp> authorityChangeOp = new List<Structs.Structs.AuthorityChangeOp>()
-                        {
-                            { new Structs.Structs.AuthorityChangeOp(8051, true) }, // 8051 is ToolState which is the Reader for ToolBehaviour
-                            { new Structs.Structs.AuthorityChangeOp(8065, true) } // 8065 is BlueprintData, this is only to test if we can add more than one request here.
-                        };
-
-                        fixed(Structs.Structs.AuthorityChangeOp* authChangeOps = authorityChangeOp.ToArray())
-                        {
-                            int len = 0;
-                            void* ptr = EnetLayer.PB_EXP_AuthorityChangeOp_Serialize(1, authChangeOps, (uint)authorityChangeOp.Count, &len);
-
-                            if(ptr != null && len > 0)
-                            {
-                                Console.WriteLine("[info] serialized all AuthorityRequestOp instructions.");
-
-                                EnetLayer.ENet_Send(keyValuePair.Key, (int)EnetLayer.ENetChannel.AuthorityChangeOp, ptr, len, 1);
-                                EnetLayer.ENet_Flush(server);
-                            }
-                        }
-
+                       
                         PeerManager.Instance.playerState[keyValuePair.Key] = GameState.State.DONE;
                     }
                 }
