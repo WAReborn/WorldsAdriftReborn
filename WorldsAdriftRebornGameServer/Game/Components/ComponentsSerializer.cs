@@ -33,6 +33,7 @@ using Improbable.Worker;
 using Improbable.Worker.Internal;
 using ProtoBuf;
 using Schema.Improbable;
+using WorldsAdriftRebornGameServer.Game.Items;
 using WorldsAdriftRebornGameServer.Networking.Singleton;
 
 namespace WorldsAdriftRebornGameServer.Game.Components

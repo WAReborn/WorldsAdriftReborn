@@ -1,13 +1,17 @@
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using Bossa.Travellers.Inventory;
 using Improbable.Collections;
 
-namespace WorldsAdriftRebornGameServer.Game
+namespace WorldsAdriftRebornGameServer.Game.Items
 {
     public static class ItemHelper
     {
         private static Dictionary<string, ValidItem> _allItems = new Dictionary<string, ValidItem>();
-        private const string ItemPath = @"C:\Users\CHANGEME\WorldsAdriftReborn\WorldsAdriftRebornGameServer\Game\itemData.json";  
+        private static readonly string itemPath = Path.Combine(
+                                                            Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                                                            "Game/Items/Config/itemData.json"
+                                                            );
 
         public class ValidItem
         {
@@ -32,27 +36,11 @@ namespace WorldsAdriftRebornGameServer.Game
             public Map<string, string> Meta( Dictionary<string, string> overrides = null )
             {
                 var m = new Map<string, string>(metadata);
-                if (overrides == null) return m;
-                foreach (var i in overrides) m[i.Key] = i.Value;
+                if (overrides == null)
+                    return m;
+                foreach (var i in overrides)
+                    m[i.Key] = i.Value;
                 return m;
-            }
-
-            public static explicit operator InventoryItemData( ValidItem item )
-            {
-                return new InventoryItemData
-                {
-                    itemTypeId = item.itemTypeID,
-                    name = item.name ?? item.iconName.Split('/').Last().Replace('_', ' '),
-                    iconName = item.iconName,
-                    category = item.category,
-                    stackingMax =
-                        item.stacksize != -1 ? item.stacksize :
-                        item.category == "Metal" || item.category == "Wood" || item.category == "Fuel" ? 99 : 1,
-                    numOfSlotsHeight = item.height,
-                    numOfSlotsWidth = item.width,
-                    equippable = item.equippable,
-                    wearable = (CharacterSlotType)Enum.Parse(typeof(CharacterSlotType), item.characterslot)
-                };
             }
         }
 
@@ -60,14 +48,16 @@ namespace WorldsAdriftRebornGameServer.Game
         {
             get
             {
-                if (_allItems.Count > 0) return _allItems;
-                
+                if (_allItems.Count > 0)
+                    return _allItems;
+
                 _allItems = new Dictionary<string, ValidItem>();
-                var itemList = System.Text.Json.JsonSerializer.Deserialize<System.Collections.Generic.List<ValidItem>>(File.ReadAllText(ItemPath));
+                var itemList = System.Text.Json.JsonSerializer.Deserialize<System.Collections.Generic.List<ValidItem>>(File.ReadAllText(itemPath));
 
                 foreach (ValidItem item in itemList)
                 {
-                    if (string.IsNullOrEmpty(item.itemTypeID)) continue;
+                    if (string.IsNullOrEmpty(item.itemTypeID))
+                        continue;
                     _allItems[item.itemTypeID] = item;
                     // if (!string.IsNullOrEmpty(item.description)) ItemDescriptions.Add(item.itemTypeID, item.description);
                 }
@@ -90,14 +80,18 @@ namespace WorldsAdriftRebornGameServer.Game
         }
 
         public static Improbable.Collections.List<ScalaSlottedInventoryItem> GetStashItems( bool steam = false,
-            bool pioneer = false, bool founders = false, bool dev = false)
+            bool pioneer = false, bool founders = false, bool dev = false )
         {
             var i = new Improbable.Collections.List<ScalaSlottedInventoryItem>();
 
-            if (dev) i.AddRange(DevItems());
-            if (founders) i.AddRange(FoundersItems());
-            if (pioneer) i.AddRange(PioneerItems());
-            if (steam) i.AddRange(SteamItems());
+            if (dev)
+                i.AddRange(DevItems());
+            if (founders)
+                i.AddRange(FoundersItems());
+            if (pioneer)
+                i.AddRange(PioneerItems());
+            if (steam)
+                i.AddRange(SteamItems());
 
             return i;
         }

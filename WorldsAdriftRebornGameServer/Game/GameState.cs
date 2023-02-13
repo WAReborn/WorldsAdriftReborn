@@ -21,5 +21,14 @@ namespace WorldsAdriftRebornGameServer.Game
             PLAYER_SPAWNED,
             DONE
         }
+
+        private GameState instance { get; set; }
+        public GameState Instance
+        {
+            get
+            {
+                return instance ?? (instance = new GameState());
+            }
+        }
     }
 }

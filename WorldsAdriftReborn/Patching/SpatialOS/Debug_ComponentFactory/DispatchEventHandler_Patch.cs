@@ -9,6 +9,7 @@ using Improbable.Entity.Component;
 using Improbable.Unity.Internal;
 using Improbable.Unity.Visualizer;
 using Improbable.Util.Injection;
+using Improbable.Worker;
 using Newtonsoft.Json.Serialization;
 using UnityEngine;
 
@@ -43,6 +44,17 @@ namespace WorldsAdriftReborn.Patching.SpatialOS.Debug_ComponentFactory
                     }),
                     new CodeInstruction(OpCodes.Pop))
                 .InstructionEnumeration();
+        }
+    }
+
+    [HarmonyPatch(typeof(Connection))]
+    internal class Connection_Patch
+    {
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(Connection.SendLogMessage))]
+        public static void SendLogMessage(LogLevel level, string loggerName, string message )
+        {
+            Debug.Log("LOGMSG: " + message);
         }
     }
 }
