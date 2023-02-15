@@ -7,17 +7,23 @@ namespace WorldsAdriftRebornGameServer.DLLCommunication
     {
         public enum ENetChannel
         {
-            AssetLoadRequestOp = 0,
-            AddEntityOp = 1,
-            SendComponentInterest = 2,
-            AuthorityChangeOp = 3
+            ASSET_LOAD_REQUEST_OP = 0,
+            ADD_ENTITY_OP = 1,
+            SEND_COMPONENT_INTEREST = 2,
+            AUTHORITY_CHANGE_OP = 3
+        }
+        public enum ENetPacketFlag
+        {
+            RELIABLE = 0,
+            UNRELIABLE = 1,
+            UNRELIABLE_UNSEQUENCED = 2
         }
         public struct ENetPacket_Wrapper
         {
-            public unsafe byte* data;
-            public long dataLength;
-            public unsafe byte* userData;
-            public int channel;
+            public unsafe byte* Data;
+            public long DataLength;
+            public unsafe byte* UserData;
+            public int Channel;
         }
 
         [DllImport("CoreSdkDll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "ENet_EXP_Initialize")]

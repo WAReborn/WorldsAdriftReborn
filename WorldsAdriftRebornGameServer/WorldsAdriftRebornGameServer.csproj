@@ -27,12 +27,6 @@
     <Reference Include="protobuf-net">
       <HintPath>$(WorldsAdriftGameDir)\UnityClient@Windows_Data\Managed\protobuf-net.dll</HintPath>
     </Reference>
-    <Reference Include="System.Security">
-      <HintPath>$(WorldsAdriftGameDir)\UnityClient@Windows_Data\Managed\System.Security.dll</HintPath>
-    </Reference>
-      <Reference Include="System.Security">
-          <HintPath>$(WorldsAdriftGameDir)\UnityClient@Windows_Data\Managed\Assembly-CSharp.dll</HintPath>
-      </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Update="Game\Items\Config\itemData.json">

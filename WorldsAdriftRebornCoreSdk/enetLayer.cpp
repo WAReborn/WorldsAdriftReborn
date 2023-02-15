@@ -180,7 +180,15 @@ void ENet_Send(ENetPeer* peer, int channel, const void* data, long len, int flag
         return;
     }
 
-    ENetPacket* packet = enet_packet_create(data, len, flag);
+    enet_uint32 pf = ENET_PACKET_FLAG_RELIABLE;
+    if (flag == 1) {
+        pf = ENET_PACKET_FLAG_UNRELIABLE_FRAGMENT;
+    }
+    else if (flag == 2) {
+        pf = ENET_PACKET_FLAG_UNSEQUENCED | ENET_PACKET_FLAG_UNRELIABLE_FRAGMENT;
+    }
+
+    ENetPacket* packet = enet_packet_create(data, len, pf);
     enet_peer_send(peer, channel, packet);
 }
 
