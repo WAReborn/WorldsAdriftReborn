@@ -22,25 +22,20 @@ namespace WorldsAdriftReborn.Config
         public static ConfigEntry<string> localAssetPath { get; set; }
         public static ConfigEntry<string> gameServerHost { get; set; }
 
-        private static string GetCustomNamedFolder(string bepInExPluginDirectory)
-        {
-            //Because the folder under BepInEx\\plugins directory can be a custom name as per YT setup tutorial
-            var directories = Directory.GetDirectories(bepInExPluginDirectory);
-
-            if(directories !=null && directories.Count() == 0)
-            {
-                throw new Exception("BepInEx file structure not setup correctly, expected BepInEx\\plugins\\YOUR_MOD_FOLDER_HERE");
-            }
-
-            string modFolder = directories.First();
-            return modFolder;
-        }
-
         public static void InitConfig()
         {
-            string warConfigDirectory = GetCustomNamedFolder($"{Directory.GetCurrentDirectory()}\\BepInEx\\plugins") + "\\Config\\WARConfig.json";
+            string warConfigDirectory = $"{Directory.GetCurrentDirectory()}\\BepInEx\\plugins\\WAR\\Config\\WARConfig.json";
+            bool warDirectoryExists = Directory.Exists(warConfigDirectory);
+            
+            if (!warDirectoryExists)
+            {
+                string errorMsg = "BepInEx file structure not setup correctly, expected BepInEx\\plugins\\WAR\\Config\\WARConfig.json";
+                Debug.LogError(errorMsg);
+                throw new Exception(errorMsg);
+            }
+            
+            Debug.Log($"WAR config directory -> {warConfigDirectory}");
             JObject warJson;
-
             using (StreamReader file = File.OpenText(warConfigDirectory))
             {
                 using (JsonTextReader reader = new JsonTextReader(file))
