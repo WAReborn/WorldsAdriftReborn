@@ -1,4 +1,4 @@
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using Bossa.Travellers.Inventory;
 using Improbable.Collections;
 
@@ -7,7 +7,7 @@ namespace WorldsAdriftRebornGameServer.Game
     public static class ItemHelper
     {
         private static Dictionary<string, ValidItem> _allItems = new Dictionary<string, ValidItem>();
-        private const string ItemPath = @"C:\Users\CHANGEME\WorldsAdriftReborn\WorldsAdriftRebornGameServer\Game\itemData.json";  
+        private const string ItemPath = @"Game\Items\Config\itemData.json";  
 
         public class ValidItem
         {
