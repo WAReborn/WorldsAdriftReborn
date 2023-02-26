@@ -38,7 +38,7 @@ namespace WorldsAdriftServer.Objects.UnityObjects
             return objectType == typeof(UnityColor);
         }
     }
-    internal struct UnityColor
+    public struct UnityColor
     {
         public float a { get; set; }
         public float b { get; set; }
