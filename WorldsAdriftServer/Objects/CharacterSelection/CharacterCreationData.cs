@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using WorldsAdriftServer.Objects.UnityObjects;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace WorldsAdriftServer.Objects.CharacterSelection
 {
