@@ -19,7 +19,7 @@ namespace WorldsAdriftServer.Objects.CharacterSelection
         Pet
     }
 
-    internal struct ColorProperties
+    public struct ColorProperties
     {
         public ColorProperties( UnityColor primary, UnityColor secondary )
         {
@@ -42,7 +42,7 @@ namespace WorldsAdriftServer.Objects.CharacterSelection
         public UnityColor SpecColor;
     }
 
-    internal struct CharacterUniversalColors
+    public struct CharacterUniversalColors
     {
         [JsonConverter(typeof(UnityObjects.ColorConverter))]
         public UnityColor HairColor;
@@ -54,7 +54,7 @@ namespace WorldsAdriftServer.Objects.CharacterSelection
         public UnityColor LipColor;
     }
 
-    internal class ItemData
+    public class ItemData
     {
         public override string ToString()
         {
@@ -78,7 +78,11 @@ namespace WorldsAdriftServer.Objects.CharacterSelection
         }
     }
 
-    internal class CharacterCreationData
+
+    /// <summary>
+    /// Data object used by the game
+    /// </summary>
+    public class CharacterCreationData
     {
         public int Id { get; set; }
         public string characterUid { get; set; }
@@ -91,10 +95,10 @@ namespace WorldsAdriftServer.Objects.CharacterSelection
         public bool seenIntro { get; set; }
         public bool skippedTutorial { get; set; }
 
-        public CharacterCreationData(int id, string characterUid, string name, string server, string serverIdentifier, Dictionary<CharacterSlotType, ItemData> cosmetics, CharacterUniversalColors universalColors, bool isMale, bool seenIntro, bool skippedTutorial )
+        public CharacterCreationData(int id, string characterId, string name, string server, string serverIdentifier, Dictionary<CharacterSlotType, ItemData> cosmetics, CharacterUniversalColors universalColors, bool isMale, bool seenIntro, bool skippedTutorial )
         {
             Id = id;
-            this.characterUid = characterUid;
+            characterUid = characterId;
             Name = name;
             Server = server;
             this.serverIdentifier = serverIdentifier;
@@ -103,6 +107,37 @@ namespace WorldsAdriftServer.Objects.CharacterSelection
             this.isMale = isMale;
             this.seenIntro = seenIntro;
             this.skippedTutorial = skippedTutorial;
+        }
+
+    }
+
+
+    /// <summary>
+    /// Character Data for storing inside a database.
+    /// </summary>
+    public class CharacterDataDTO
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Server { get; set; }
+        public string serverIdentifier { get; set; }
+        public string Cosmetics { get; set; }
+        public string UniversalColors { get; set; }
+        public bool IsMale { get; set; }
+        public bool SeenIntro { get; set; }
+        public bool SkippedTutorial { get; set; }
+
+        public CharacterDataDTO( Guid id, string name, string server, string serverIdentifier, string cosmetics, string universalColors, bool isMale, bool seenIntro, bool skippedTutorial )
+        {
+            Id = id;
+            Name = name;
+            Server = server;
+            this.serverIdentifier = serverIdentifier;
+            Cosmetics = cosmetics;
+            UniversalColors = universalColors;
+            IsMale = isMale;
+            SeenIntro = seenIntro;
+            SkippedTutorial = skippedTutorial;
         }
     }
 }

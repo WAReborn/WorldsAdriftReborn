@@ -24,7 +24,7 @@ namespace WorldsAdriftServer.Handlers
             {
                 if(request.Method == "POST" && request.Url == "/authenticate")
                 {
-                    SteamAuthenticationHandler.HandleAuthRequest(this, request, "Jim Hawkins");
+                    SteamAuthenticationHandler.HandleAuthRequest(this, request, "Jeffsey");
                 }
                 else if (request.Method == "GET" && request.Url.Contains("/characterList/") && request.Url.Contains("/steam/1234"))
                 {
