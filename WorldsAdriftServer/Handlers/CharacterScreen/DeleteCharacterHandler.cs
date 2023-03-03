@@ -35,6 +35,7 @@ namespace WorldsAdriftServer.Handlers.CharacterScreen
                 respO.SetBegin(404);
                 respO.SetBody("character does not exist");
             }
+            db.Dispose();
             session.SendResponseAsync(respO);
         }
     }
