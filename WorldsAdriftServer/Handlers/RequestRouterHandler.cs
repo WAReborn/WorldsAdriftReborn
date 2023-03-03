@@ -46,6 +46,11 @@ namespace WorldsAdriftServer.Handlers
                 {
                     CharacterSaveHandler.HandleCharacterSave(this, request);
                 }
+                else if (request.Method == "POST" && request.Url == "/player/reserveName")
+                {
+                    Console.WriteLine("Received RESERVE NAME");
+                    ReserveNameHandler.HandleCharacterReserveName(this, request);
+                }
             }
         }
 
