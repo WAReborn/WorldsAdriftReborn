@@ -72,7 +72,7 @@ namespace WorldsAdriftServer.Helper.CharacterSelection
             return new CharacterCreationData(id, Guid.NewGuid().ToString(), characterName, "awesome community server", serverIdentifier, null, colors, true, false, false);
         }
 
-        internal static List<CharacterCreationData> GetCharacterList( GameContext dbContext, string serverIdentifier )
+        internal static List<CharacterCreationData> GetCharacterList( GameContext dbContext )
         {
             var charactersList = dbContext.Characters.ToListAsync().GetAwaiter().GetResult();
 
@@ -84,7 +84,7 @@ namespace WorldsAdriftServer.Helper.CharacterSelection
                     characters.Add(new CharacterCreationData(character.index + 1, character.value.Id.ToString(), character.value.Name, character.value.Server, character.value.serverIdentifier, JsonConvert.DeserializeObject<Dictionary<CharacterSlotType, ItemData>>(character.value.Cosmetics), JsonConvert.DeserializeObject<CharacterUniversalColors>(character.value.UniversalColors), character.value.IsMale, character.value.SeenIntro, character.value.SkippedTutorial));
                 }
             }
-            characters.Add(Character.GenerateNewCharacter(characters.Count + 1, serverIdentifier, "")); //Add GenerateNewCharacter() to end of list
+            characters.Add(Character.GenerateNewCharacter(characters.Count + 1, "", "")); //Add GenerateNewCharacter() to end of list
             return characters;
         }
     }

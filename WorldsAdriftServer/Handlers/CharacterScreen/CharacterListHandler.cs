@@ -20,7 +20,7 @@ namespace WorldsAdriftServer.Handlers.CharacterScreen
         {
             GameContext db = new GameContext();
 
-            List<CharacterCreationData> characters = Character.GetCharacterList(db, serverIdentifier);
+            List<CharacterCreationData> characters = Character.GetCharacterList(db);
             CharacterListResponse characterList = new CharacterListResponse(characters);
             characterList.unlockedSlots = characters.Count; // let the player create a new character below the list of existing characters (last provided character above must be a GenerateNewCharacter())
             characterList.hasMainCharacter = true;

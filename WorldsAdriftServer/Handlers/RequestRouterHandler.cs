@@ -48,8 +48,12 @@ namespace WorldsAdriftServer.Handlers
                 }
                 else if (request.Method == "POST" && request.Url == "/player/reserveName")
                 {
-                    Console.WriteLine("Received RESERVE NAME");
                     ReserveNameHandler.HandleCharacterReserveName(this, request);
+                }
+                else if(request.Method == "DELETE" && request.Url.StartsWith("/character/"))
+                {
+                    string cId = request.Url.Split('/').Last();
+                    DeleteCharacterHandler.HandleCharacterDelete(this, request, cId);
                 }
             }
         }
