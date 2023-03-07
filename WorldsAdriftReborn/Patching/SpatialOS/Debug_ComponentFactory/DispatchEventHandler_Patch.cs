@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
+using Bossa.Travellers.Inventory;
+using Bossa.Travellers.Misc;
 using Bossa.Travellers.Player;
+using Bossa.Travellers.Scanning;
+using Bossa.Travellers.Visualisers.Profile;
 using HarmonyLib;
 using Improbable;
 using Improbable.Entity.Component;
@@ -44,17 +48,6 @@ namespace WorldsAdriftReborn.Patching.SpatialOS.Debug_ComponentFactory
                     }),
                     new CodeInstruction(OpCodes.Pop))
                 .InstructionEnumeration();
-        }
-    }
-
-    [HarmonyPatch(typeof(Connection))]
-    internal class Connection_Patch
-    {
-        [HarmonyPrefix]
-        [HarmonyPatch(nameof(Connection.SendLogMessage))]
-        public static void SendLogMessage(LogLevel level, string loggerName, string message )
-        {
-            Debug.Log("LOGMSG: " + message);
         }
     }
 }

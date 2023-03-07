@@ -75,7 +75,7 @@ namespace WorldsAdriftRebornGameServer
             Console.WriteLine("[info] successfully initialized networking, now waiting for connections and data.");
             PeerManager.Instance.SetENetHostHandle(server);
 
-            // define initial world state
+            // define initial world state for first chunk
             GameState.Instance.WorldState[0] = new List<SyncStep>()
             {
                 new SyncStep(GameState.NextStateRequirement.ASSET_LOADED_RESPONSE, new Action<object>((object o) =>
@@ -178,25 +178,6 @@ namespace WorldsAdriftRebornGameServer
                             Console.WriteLine("[info] game requests components for entity id: " + entityId);
                             List<Structs.Structs.AddComponentOp> serializedComponents = new List<Structs.Structs.AddComponentOp>();
 
-                            for (int i = 0; i < interestCount; i++)
-                            {
-                                uint len = 0;
-                                byte* buffer;
-                                ComponentsSerializer.InitAndSerialize(interests[i].ComponentId, &buffer, &len);
-
-                                if (len <= 0)
-                                    continue;
-
-                                Console.WriteLine("[success] initialized and serialized componentId " + interests[i].ComponentId);
-                                Structs.Structs.AddComponentOp component;
-
-                                component.ComponentId = interests[i].ComponentId;
-                                component.ComponentData = buffer;
-                                component.DataLength = (int)len;
-
-                                serializedComponents.Add(component);
-                            }
-
                             if (entityId == 1 && !PeerManager.Instance.clientSetupState.Contains(keyValuePair.Key))
                             {
                                 for (var i = 0; i < authoritativeComponents.Length; i++)
@@ -222,6 +203,45 @@ namespace WorldsAdriftRebornGameServer
                                 PeerManager.Instance.clientSetupState.Add(keyValuePair.Key);
                             }
 
+                            if (sendAuthority)
+                            {
+                                // for some reason the game does not always request component 1080 (SchematicsLearnerGSimState), but its reader is required in InventoryVisualiser
+                                uint len = 0;
+                                byte* buffer;
+                                ComponentsSerializer.InitAndSerialize(1080, &buffer, &len);
+
+                                if (len <= 0)
+                                    continue;
+
+                                Console.WriteLine("[success] initialized and serialized componentId 1080");
+                                Structs.Structs.AddComponentOp component;
+
+                                component.ComponentId = 1080;
+                                component.ComponentData = buffer;
+                                component.DataLength = (int)len;
+
+                                serializedComponents.Add(component);
+                            }
+
+                            for (int i = 0; i < interestCount; i++)
+                            {
+                                uint len = 0;
+                                byte* buffer;
+                                ComponentsSerializer.InitAndSerialize(interests[i].ComponentId, &buffer, &len);
+
+                                if (len <= 0)
+                                    continue;
+
+                                Console.WriteLine("[success] initialized and serialized componentId " + interests[i].ComponentId);
+                                Structs.Structs.AddComponentOp component;
+
+                                component.ComponentId = interests[i].ComponentId;
+                                component.ComponentData = buffer;
+                                component.DataLength = (int)len;
+
+                                serializedComponents.Add(component);
+                            }
+
                             fixed (Structs.Structs.AddComponentOp* comps = serializedComponents.ToArray())
                             {
                                 int len = 0;
@@ -232,9 +252,10 @@ namespace WorldsAdriftRebornGameServer
                                     Console.WriteLine("[success] serialized all requested components, sending them to the game now...");
 
                                     EnetLayer.ENet_Send(keyValuePair.Key, (int)EnetLayer.ENetChannel.SEND_COMPONENT_INTEREST, ptr, len, (int)ENetPacketFlag.RELIABLE);
+                                    EnetLayer.ENet_Flush(server);
                                 }
                             }
-
+                            
                             if (sendAuthority)
                             {
                                 fixed (Structs.Structs.AuthorityChangeOp* authChangeOps = authoritativeComponents.Select(p => new Structs.Structs.AuthorityChangeOp(p, true)).ToArray())
@@ -248,6 +269,8 @@ namespace WorldsAdriftRebornGameServer
                                     Console.WriteLine("[info] serialized all AuthorityRequestOp instructions for authoritative components.");
 
                                     EnetLayer.ENet_Send(keyValuePair.Key, (int)EnetLayer.ENetChannel.AUTHORITY_CHANGE_OP, ptr, len, (int)ENetPacketFlag.RELIABLE);
+                                    EnetLayer.ENet_Flush(server);
+                                    Thread.Sleep(1000);
                                 }
                             }
                         }
