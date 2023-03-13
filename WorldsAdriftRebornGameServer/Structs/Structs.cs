@@ -25,6 +25,7 @@ namespace WorldsAdriftRebornGameServer.Structs
         }
         public struct InterestOverride
         {
+            public InterestOverride(uint ComponentId, byte IsInterested) { this.ComponentId = ComponentId; this.IsInterested = IsInterested; }
             public uint ComponentId;
             public byte IsInterested;
         }

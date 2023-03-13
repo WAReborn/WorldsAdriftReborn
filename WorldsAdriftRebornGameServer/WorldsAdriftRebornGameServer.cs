@@ -37,7 +37,8 @@ namespace WorldsAdriftRebornGameServer
 
         private static readonly EnetLayer.ENet_Poll_Callback callbackC = new EnetLayer.ENet_Poll_Callback(OnNewClientConnected);
         private static readonly EnetLayer.ENet_Poll_Callback callbackD = new EnetLayer.ENet_Poll_Callback(OnClientDisconnected);
-        private static readonly uint[] authoritativeComponents = { 8050, 8051, 6908, 1260, 1097, 1003, 1241};
+        private static readonly List<uint> authoritativeComponents = new List<uint>{ 8050, 8051, 6908, 1260, 1097, 1003, 1241};
+        private static List<long> playerEntityIDs = new List<long>();
 
         private static long nextEntityId = 0;
         public static long NextEntityId
@@ -88,7 +89,7 @@ namespace WorldsAdriftRebornGameServer
                     }
                     else
                     {
-                        Console.WriteLine("[info] failed to serialize and queue AssetLoadRequestOp.");
+                        Console.WriteLine("[error] failed to serialize and queue AssetLoadRequestOp.");
                     }
                 })),
                 new SyncStep(GameState.NextStateRequirement.ASSET_LOADED_RESPONSE, new Action<object>((object o) =>
@@ -101,7 +102,7 @@ namespace WorldsAdriftRebornGameServer
                     }
                     else
                     {
-                        Console.WriteLine("[info] failed to serialize and queue AssetLoadRequestOp.");
+                        Console.WriteLine("[error] failed to serialize and queue AssetLoadRequestOp.");
                     }
                 })),
                 new SyncStep(GameState.NextStateRequirement.ADDED_ENTITY_RESPONSE, new Action<object>((object o) =>
@@ -114,20 +115,21 @@ namespace WorldsAdriftRebornGameServer
                     }
                     else
                     {
-                        Console.WriteLine("[info] failed to serialize and queue AddEntityOp.");
+                        Console.WriteLine("[error] failed to serialize and queue AddEntityOp.");
                     }
                 })),
                 new SyncStep(GameState.NextStateRequirement.ADDED_ENTITY_RESPONSE, new Action<object>((object o) =>
                 {
                     Console.WriteLine("[info] client ack'ed island spawning instruction (info by sdk, does not mean it truly spawned). requesting to spawn player...");
 
-                    if(SendOPHelper.SendAddEntityOP((ENetPeerHandle)o, NextEntityId, "Traveller", "Player"))
+                    playerEntityIDs.Add(NextEntityId);
+                    if(SendOPHelper.SendAddEntityOP((ENetPeerHandle)o, playerEntityIDs.Last<long>(), "Traveller", "Player"))
                     {
                         Console.WriteLine("[info] successfully serialized and queued AddEntityOp.");
                     }
                     else
                     {
-                        Console.WriteLine("[info] failed to serialize and queue AddEntityOp.");
+                        Console.WriteLine("[error] failed to serialize and queue AddEntityOp.");
                     }
                 }))
             };
@@ -165,118 +167,62 @@ namespace WorldsAdriftRebornGameServer
                     // work on packets that are not relevant for progress of sync state but need processing for any player
                     foreach (KeyValuePair<ENetPeerHandle, Dictionary<int, PlayerSyncStatus>> keyValuePair in PeerManager.Instance.playerState)
                     {
-                        if (packet->Channel != (int)EnetLayer.ENetChannel.SEND_COMPONENT_INTEREST)
-                            continue;
-
-                        long entityId = 0;
-                        uint interestCount = 0;
-                        bool sendAuthority = false;
-                        Structs.Structs.InterestOverride* interests = (Structs.Structs.InterestOverride*)new IntPtr(0);
-
-                        if (EnetLayer.PB_EXP_SendComponentInterest_Deserialize(packet->Data, (int)packet->DataLength, &entityId, &interests, &interestCount))
+                        if (packet->Channel == (int)EnetLayer.ENetChannel.SEND_COMPONENT_INTEREST)
                         {
-                            Console.WriteLine("[info] game requests components for entity id: " + entityId);
-                            List<Structs.Structs.AddComponentOp> serializedComponents = new List<Structs.Structs.AddComponentOp>();
+                            long entityId = 0;
+                            uint interestCount = 0;
+                            Structs.Structs.InterestOverride* interests = (Structs.Structs.InterestOverride*)new IntPtr(0);
 
-                            if (entityId == 1 && !PeerManager.Instance.clientSetupState.Contains(keyValuePair.Key))
+                            if (EnetLayer.PB_EXP_SendComponentInterest_Deserialize(packet->Data, (int)packet->DataLength, &entityId, &interests, &interestCount))
                             {
-                                for (var i = 0; i < authoritativeComponents.Length; i++)
-                                {
-                                    uint len = 0;
-                                    byte* buffer;
-                                    ComponentsSerializer.InitAndSerialize(authoritativeComponents[i], &buffer, &len);
+                                Console.WriteLine("[info] game requests components for entity id: " + entityId);
 
-                                    if (len <= 0)
+                                if(playerEntityIDs.Contains(entityId) && !PeerManager.Instance.clientSetupState.Contains(keyValuePair.Key))
+                                {
+                                    // a player entity requests components for the first time, we need to setup a few things to make him work properly
+                                    // some of this might not be needd anymore in the future once we sorted out a few things.
+                                    //
+                                    // we can make use of the fact that the game requests components for players in two stages, where the second one will terminate the loading screen of the client.
+                                    // the second stage needs a few components setup properly, for this we need to inject one component and call auth changed for a few others once.
+
+                                    // first send what the game requested
+                                    if(!SendOPHelper.SendAddComponentOp(keyValuePair.Key, entityId, interests, interestCount, true))
+                                    {
                                         continue;
+                                    }
 
-                                    Console.WriteLine("[success] initialized and serialized authoritative componentId " + authoritativeComponents[i]);
-                                    Structs.Structs.AddComponentOp component;
+                                    // for some reason the game does not always request component 1080 (SchematicsLearnerGSimState), but its reader is required in InventoryVisualiser
+                                    List<Structs.Structs.InterestOverride> injected = new List<Structs.Structs.InterestOverride> { new Structs.Structs.InterestOverride(1080, 1) };
+                                    // also inject other required components for the inventory
+                                    injected.AddRange(authoritativeComponents.Select(p => new Structs.Structs.InterestOverride(p, 1)));
 
-                                    component.ComponentId = authoritativeComponents[i];
-                                    component.ComponentData = buffer;
-                                    component.DataLength = (int)len;
-
-                                    serializedComponents.Add(component);
-                                }
-
-                                sendAuthority = true;
-                                PeerManager.Instance.clientSetupState.Add(keyValuePair.Key);
-                            }
-
-                            if (sendAuthority)
-                            {
-                                // for some reason the game does not always request component 1080 (SchematicsLearnerGSimState), but its reader is required in InventoryVisualiser
-                                uint len = 0;
-                                byte* buffer;
-                                ComponentsSerializer.InitAndSerialize(1080, &buffer, &len);
-
-                                if (len <= 0)
-                                    continue;
-
-                                Console.WriteLine("[success] initialized and serialized componentId 1080");
-                                Structs.Structs.AddComponentOp component;
-
-                                component.ComponentId = 1080;
-                                component.ComponentData = buffer;
-                                component.DataLength = (int)len;
-
-                                serializedComponents.Add(component);
-                            }
-
-                            for (int i = 0; i < interestCount; i++)
-                            {
-                                uint len = 0;
-                                byte* buffer;
-                                ComponentsSerializer.InitAndSerialize(interests[i].ComponentId, &buffer, &len);
-
-                                if (len <= 0)
-                                    continue;
-
-                                Console.WriteLine("[success] initialized and serialized componentId " + interests[i].ComponentId);
-                                Structs.Structs.AddComponentOp component;
-
-                                component.ComponentId = interests[i].ComponentId;
-                                component.ComponentData = buffer;
-                                component.DataLength = (int)len;
-
-                                serializedComponents.Add(component);
-                            }
-
-                            fixed (Structs.Structs.AddComponentOp* comps = serializedComponents.ToArray())
-                            {
-                                int len = 0;
-                                void* ptr = EnetLayer.PB_EXP_AddComponentOp_Serialize(entityId, comps, (uint)serializedComponents.Count, &len);
-
-                                if (ptr != null && len > 0)
-                                {
-                                    Console.WriteLine("[success] serialized all requested components, sending them to the game now...");
-
-                                    EnetLayer.ENet_Send(keyValuePair.Key, (int)EnetLayer.ENetChannel.SEND_COMPONENT_INTEREST, ptr, len, (int)ENetPacketFlag.RELIABLE);
-                                    EnetLayer.ENet_Flush(server);
-                                }
-                            }
-                            
-                            if (sendAuthority)
-                            {
-                                fixed (Structs.Structs.AuthorityChangeOp* authChangeOps = authoritativeComponents.Select(p => new Structs.Structs.AuthorityChangeOp(p, true)).ToArray())
-                                {
-                                    int len = 0;
-                                    void* ptr = EnetLayer.PB_EXP_AuthorityChangeOp_Serialize(entityId, authChangeOps, (uint)authoritativeComponents.Length, &len);
-
-                                    if (ptr == null || len <= 0)
+                                    if (!SendOPHelper.SendAddComponentOp(keyValuePair.Key, entityId, injected, true))
+                                    {
                                         continue;
+                                    }
 
-                                    Console.WriteLine("[info] serialized all AuthorityRequestOp instructions for authoritative components.");
+                                    // now send auth change
+                                    if(!SendOPHelper.SendAuthorityChangeOp(keyValuePair.Key, entityId, authoritativeComponents))
+                                    {
+                                        continue;
+                                    }
 
-                                    EnetLayer.ENet_Send(keyValuePair.Key, (int)EnetLayer.ENetChannel.AUTHORITY_CHANGE_OP, ptr, len, (int)ENetPacketFlag.RELIABLE);
-                                    EnetLayer.ENet_Flush(server);
-                                    Thread.Sleep(1000);
+                                    // now add player to clientSetupState
+                                    PeerManager.Instance.clientSetupState.Add(keyValuePair.Key);
+                                }
+                                else
+                                {
+                                    // player already setup or another entity requested components, so just process them
+                                    if (!SendOPHelper.SendAddComponentOp(keyValuePair.Key, entityId, interests, interestCount, true))
+                                    {
+                                        continue;
+                                    }
                                 }
                             }
-                        }
-                        else
-                        {
-                            Console.WriteLine("[error] failed to parse component interest request from game.");
+                            else
+                            {
+                                Console.WriteLine("[error] failed to deserialize ComponentInterest message from game.");
+                            }
                         }
                     }
 
