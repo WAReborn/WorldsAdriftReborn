@@ -78,7 +78,7 @@ namespace WorldsAdriftRebornGameServer.Networking.Wrapper
             {
                 uint len = 0;
                 byte* buffer;
-                ComponentsSerializer.InitAndSerialize(interests[i].ComponentId, &buffer, &len);
+                ComponentsSerializer.InitAndSerialize(destination, entityId, interests[i].ComponentId, &buffer, &len);
 
                 if (len <= 0)
                 {
@@ -111,6 +111,26 @@ namespace WorldsAdriftRebornGameServer.Networking.Wrapper
                     Console.WriteLine("[success] serialized all requested components, sending them to the game now...");
 
                     EnetLayer.ENet_Send(destination, (int)EnetLayer.ENetChannel.SEND_COMPONENT_INTEREST, ptr, len, (int)ENetPacketFlag.RELIABLE);
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static unsafe bool SendComponentUpdateOp(ENetPeerHandle destination, long entityId, List<Structs.Structs.ComponentUpdateOp> updates )
+        {
+            fixed(Structs.Structs.ComponentUpdateOp* u = updates.ToArray())
+            {
+                int len = 0;
+                void* ptr = EnetLayer.PB_EXP_ComponentUpdateOp_Serialize(entityId, u, (uint)updates.Count, &len);
+
+                if(ptr != null && len > 0)
+                {
+                    Console.WriteLine("[success] serialized ComponentUpdateOp message for client.");
+
+                    EnetLayer.ENet_Send(destination, (int)EnetLayer.ENetChannel.COMPONENT_UPDATE_OP, ptr, len, (int)ENetPacketFlag.RELIABLE);
 
                     return true;
                 }

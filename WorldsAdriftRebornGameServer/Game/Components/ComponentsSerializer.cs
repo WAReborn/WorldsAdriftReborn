@@ -29,18 +29,17 @@ using Improbable.Corelibrary.Math;
 using Improbable.Corelibrary.Transforms;
 using Improbable.Corelibrary.Transforms.Global;
 using Improbable.Math;
-using Improbable.Worker;
 using Improbable.Worker.Internal;
-using ProtoBuf;
-using Schema.Improbable;
+using WorldsAdriftRebornGameServer.DLLCommunication;
 using WorldsAdriftRebornGameServer.Game.Items;
 using WorldsAdriftRebornGameServer.Networking.Singleton;
+using WorldsAdriftRebornGameServer.Networking.Wrapper;
 
 namespace WorldsAdriftRebornGameServer.Game.Components
 {
     internal class ComponentsSerializer
     {
-        public unsafe static void InitAndSerialize(uint componentId, byte** buffer, uint* length)
+        public unsafe static void InitAndSerialize(ENetPeerHandle player, long entityId, uint componentId, byte** buffer, uint* length)
         {
             for(int i = 0; i < ComponentsManager.Instance.ClientComponentVtables.Length; i++)
             {
@@ -469,16 +468,124 @@ namespace WorldsAdriftRebornGameServer.Game.Components
 
                     if (obj != null)
                     {
-                        // optimize this later as this will grow in size for each serialized component
                         refId = ClientObjects.Instance.CreateReference(obj);
                         ComponentProtocol.ClientObject wrapper = new ComponentProtocol.ClientObject();
                         wrapper.Reference = refId;
 
                         ComponentProtocol.ClientSerialize serialize = Marshal.GetDelegateForFunctionPointer<ComponentProtocol.ClientSerialize>(ComponentsManager.Instance.ClientComponentVtables[i].Serialize);
                         serialize(componentId, 2, &wrapper, buffer, length);
+
+                        // store refId for player and component as we need this to access the component later
+                        // this needs to change in the future, we need to make use of the games structures.
+                        // noone wants to work with this triple dictionary >.>
+                        if (!GameState.Instance.ComponentMap.ContainsKey(player))
+                        {
+                            GameState.Instance.ComponentMap.Add(player, new Dictionary<long, Dictionary<uint, ulong>> {
+                                { entityId, new Dictionary<uint, ulong> {
+                                    {
+                                        componentId, refId
+                                    }
+                                } }
+                            });
+                        }
+                        else
+                        {
+                            if (GameState.Instance.ComponentMap[player].ContainsKey(entityId))
+                            {
+                                if (GameState.Instance.ComponentMap[player][entityId].ContainsKey(componentId))
+                                {
+                                    // here we need to decide if we want to update the existing refId with the new one or drop the creation above.
+                                    // this case should only happen if the same component is added multiple times to the same entityId and player
+                                    GameState.Instance.ComponentMap[player][entityId][componentId] = refId;
+                                }
+                                else
+                                {
+                                    GameState.Instance.ComponentMap[player][entityId].Add(componentId, refId);
+                                }
+                            }
+                            else
+                            {
+                                GameState.Instance.ComponentMap[player].Add(entityId, new Dictionary<uint, ulong> { { componentId, refId } });
+                            }
+                        }
                     }
                 }
             }
+        }
+        public unsafe static void ComponentUpdateApply( ENetPeerHandle player, long entityId, uint componentId, byte* buffer, uint length )
+        {
+            for (int i = 0; i < ComponentsManager.Instance.ClientComponentVtables.Length; i++)
+            {
+                if (ComponentsManager.Instance.ClientComponentVtables[i].ComponentId == componentId)
+                {
+                    if(GameState.Instance.ComponentMap.ContainsKey(player) && GameState.Instance.ComponentMap[player].ContainsKey(entityId) && GameState.Instance.ComponentMap[player][entityId].ContainsKey(componentId))
+                    {
+                        ComponentProtocol.ClientObject* wrapper = ClientObjects.ObjectAlloc();
+                        ComponentProtocol.ClientDeserialize deserialize = Marshal.GetDelegateForFunctionPointer<ComponentProtocol.ClientDeserialize>(ComponentsManager.Instance.ClientComponentVtables[i].Deserialize);
+                        ComponentProtocol.ClientSerialize serialize = Marshal.GetDelegateForFunctionPointer<ComponentProtocol.ClientSerialize>(ComponentsManager.Instance.ClientComponentVtables[i].Serialize);
+
+                        if (deserialize(componentId, 1, buffer, length, &wrapper))
+                        {
+                            // now we got a reference to the deserialized component, we can use it to update the component that we already have for the player.
+                            object storedComponent = ClientObjects.Instance.Dereference(GameState.Instance.ComponentMap[player][entityId][componentId]);
+                            object newComponent = ClientObjects.Instance.Dereference(wrapper->Reference);
+
+                            if (storedComponent != null && newComponent != null)
+                            {
+                                Console.WriteLine("[success] wow, we should be able to do something now!");
+
+                                // this is testing code, opening the inventory triggers this
+                                if(componentId == 1003)
+                                {
+                                    // apply update
+                                    ((PlayerCraftingInteractionState.Update)newComponent).ApplyTo((PlayerCraftingInteractionState.Data)storedComponent);
+
+                                    // serialize stored component after update
+                                    ComponentProtocol.ClientObject* cobj = ClientObjects.ObjectAlloc();
+                                    byte* cbuffer = null;
+                                    uint len = 0;
+                                    Structs.Structs.ComponentUpdateOp cupdate;
+
+                                    cobj->Reference = GameState.Instance.ComponentMap[player][entityId][componentId];
+                                    // the following throws "System.InvalidCastException: Unable to cast object of type 'Data' to type 'Update'."
+                                    // this is because we only produce the 'Data' part of a component in InitAndSerialize()
+                                    // need to properly implement that first to go further here
+                                    // that will also fix this mad tripple dict
+                                    serialize(componentId, 1, cobj, &cbuffer, &len);
+
+                                    // if success, send it to client
+                                    if (len > 0)
+                                    {
+                                        Console.WriteLine("[success] serialized stored component after update.");
+
+                                        cupdate.ComponentId = componentId;
+                                        cupdate.ComponentData = cbuffer;
+                                        cupdate.DataLength = (int)len;
+
+                                        SendOPHelper.SendComponentUpdateOp(player, entityId, new System.Collections.Generic.List<Structs.Structs.ComponentUpdateOp> { cupdate });
+                                    }
+                                }
+                            }
+
+                            ClientObjects.Instance.DestroyReference(wrapper->Reference);
+                        }
+                        else
+                        {
+                            Console.WriteLine("[error] failed to deserialize component id " + componentId);
+                        }
+
+                        ClientObjects.ObjectFree(componentId, 1, wrapper);
+                    }
+                    else
+                    {
+                        Console.WriteLine("[warning] could not match requested ComponentUpdate with local stored values.");
+                    }
+
+                    return;
+                }
+            }
+
+            Console.WriteLine("[warning] component id " + componentId + " cannot be handled by ComponentUpdate implementation.");
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using WorldsAdriftRebornGameServer.DLLCommunication;
 
 namespace WorldsAdriftRebornGameServer.Game
 {
@@ -35,6 +37,9 @@ namespace WorldsAdriftRebornGameServer.Game
         }
         // each world chunk has a list of actions that needs to be perfomred for every client to sync up to the current state.
         public Dictionary<int, List<SyncStep>> WorldState { get; set; }
+        // we need to store mappings for components for each player to handle updates of them
+        // this crappy dictionary nesting needs to be replaced, we need to make use of the games own structures here, this is only temporary
+        public Dictionary<ENetPeerHandle, Dictionary<long, Dictionary<uint, ulong>>> ComponentMap = new Dictionary<ENetPeerHandle, Dictionary<long, Dictionary<uint, ulong>>>();
 
         private GameState()
         {

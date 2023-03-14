@@ -10,7 +10,8 @@ namespace WorldsAdriftRebornGameServer.DLLCommunication
             ASSET_LOAD_REQUEST_OP = 0,
             ADD_ENTITY_OP = 1,
             SEND_COMPONENT_INTEREST = 2,
-            AUTHORITY_CHANGE_OP = 3
+            AUTHORITY_CHANGE_OP = 3,
+            COMPONENT_UPDATE_OP = 4
         }
         public enum ENetPacketFlag
         {
@@ -64,6 +65,12 @@ namespace WorldsAdriftRebornGameServer.DLLCommunication
 
         [DllImport("CoreSdkDll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "PB_EXP_AuthorityChangeOp_Serialize")]
         public static unsafe extern void* PB_EXP_AuthorityChangeOp_Serialize( long entityId, AuthorityChangeOp* authorityChangeOp, uint authorityChangeOp_count, int* len );
+
+        [DllImport("CoreSdkDll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "PB_EXP_ComponentUpdateOp_Serialize")]
+        public static unsafe extern void* PB_EXP_ComponentUpdateOp_Serialize( long entityId, ComponentUpdateOp* componentUpdateOp, uint componentUpdateOp_count, int* len );
+
+        [DllImport("CoreSdkDll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "PB_EXP_ComponentUpdateOp_Deserialize")]
+        public static unsafe extern bool PB_EXP_ComponentUpdateOp_Deserialize( void* data, int len, long* entityId, ComponentUpdateOp** componentUpdateOp, uint* componentUpdateOp_count );
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public unsafe delegate void ENet_Poll_Callback( IntPtr peer );

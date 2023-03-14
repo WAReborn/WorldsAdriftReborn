@@ -63,7 +63,7 @@ namespace WorldsAdriftRebornGameServer
             }
 
             Console.WriteLine("[info] successfully initialized ENet.");
-            ENetHostHandle server = EnetLayer.ENet_Create_Host(7777, 1, 4, 0, 0);
+            ENetHostHandle server = EnetLayer.ENet_Create_Host(7777, 1, 5, 0, 0);
 
             if (server.IsInvalid)
             {
@@ -222,6 +222,26 @@ namespace WorldsAdriftRebornGameServer
                             else
                             {
                                 Console.WriteLine("[error] failed to deserialize ComponentInterest message from game.");
+                            }
+                        }
+                        else if(packet->Channel == (int)EnetLayer.ENetChannel.COMPONENT_UPDATE_OP)
+                        {
+                            long entityId = 0;
+                            uint updateCount = 0;
+                            Structs.Structs.ComponentUpdateOp* update = (Structs.Structs.ComponentUpdateOp*)new IntPtr(0);
+
+                            if (EnetLayer.PB_EXP_ComponentUpdateOp_Deserialize(packet->Data, (int)packet->DataLength, &entityId, &update, &updateCount) && updateCount > 0)
+                            {
+                                Console.WriteLine("[info] game requests " + updateCount + " ComponentUpdate's for entity id " + entityId);
+
+                                for(int i = 0; i < updateCount; i++)
+                                {
+                                    ComponentsSerializer.ComponentUpdateApply(keyValuePair.Key, entityId, update[i].ComponentId, update[i].ComponentData, (uint)update[i].DataLength);
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("[error] failed to deserialize ComponentUpdate message from game, or empty message.");
                             }
                         }
                     }

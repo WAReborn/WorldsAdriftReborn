@@ -82,7 +82,7 @@ void __cdecl WorkerProtocol_Dispatcher_RegisterAuthorityChangeCallback(Dispatche
 }
 void __cdecl WorkerProtocol_Dispatcher_RegisterComponentUpdateCallback(Dispatcher* dispatcher, void* data, ComponentUpdateCallback callback) {
     hook("WorkerProtocol_Dispatcher_RegisterComponentUpdateCallback");
-    // TODO: Add method RegisterComponentUpdateCallback to dispatcher and call it here
+    dispatcher->RegisterComponentUpdateCallback(callback, data);
 }
 void __cdecl WorkerProtocol_Dispatcher_RegisterCommandRequestCallback(Dispatcher* dispatcher, void* data, CommandRequestCallback callback) {
     hook("WorkerProtocol_Dispatcher_RegisterCommandRequestCallback");
@@ -176,7 +176,7 @@ unsigned int __cdecl WorkerProtocol_Connection_SendEntityQueryRequest(Connection
 }
 void __cdecl WorkerProtocol_Connection_SendComponentUpdate(Connection* connection, long entity_id, ComponentObject* component_update, unsigned char legacy_callback_semantics) {
     hook("WorkerProtocol_Connection_SendComponentUpdate");
-    // TODO: Add method SendComponentUpdate to connection and call it here
+    connection->SendComponentUpdate(entity_id, component_update);
 }
 unsigned int __cdecl WorkerProtocol_Connection_SendCommandRequest(Connection* connection, long entity_id, ComponentObject* request, unsigned int command_id, unsigned int* timeout_millis, CommandParameters* parameters) {
     hook("WorkerProtocol_Connection_SendCommandRequest");

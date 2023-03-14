@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package WorldsAdriftRebornCoreSdk;
+
+message ComponentUpdateOp{
+    optional int64 EntityId = 1;
+    repeated ComponentData_ComponentUpdate Components = 2;
+}
+
+message ComponentData_ComponentUpdate{
+    optional uint32 ComponentId = 1;
+    optional bytes Data = 2;
+    optional int32 DataLength = 3;
+}

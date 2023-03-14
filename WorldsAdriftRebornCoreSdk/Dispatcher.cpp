@@ -7,6 +7,7 @@ void Dispatcher::RegisterAddEntityCallback(AddEntityCallback callback, void* GCH
 void Dispatcher::RegisterAssetLoadRequestCallback(AssetLoadRequestCallback callback, void* GCHandle) { this->assetLoadRequestCallback = callback; this->GCHandle = GCHandle; }
 void Dispatcher::RegisterAddComponentCallback(AddComponentCallback callback, void* GCHandle) { this->addComponentCallback = callback; this->GCHandle = GCHandle; }
 void Dispatcher::RegisterAuthorityChangeCallback(AuthorityChangeCallback callback, void* GCHandle) { this->authorityChangeCallback = callback; this->GCHandle = GCHandle; }
+void Dispatcher::RegisterComponentUpdateCallback(ComponentUpdateCallback callback, void* GCHandle) { this->componentUpdateCallback = callback; this->GCHandle = GCHandle; }
 
 void Dispatcher::Process(OpList* op_list) {
     if (op_list != nullptr && op_list->addEntityOp != nullptr) {
@@ -42,6 +43,17 @@ void Dispatcher::Process(OpList* op_list) {
             op->HasAuthority = op_list->authorityChangeOp[i].HasAuthority;
 
             this->authorityChangeCallback(this->GCHandle, op);
+
+            delete op;
+        }
+    }
+    if (op_list != nullptr && op_list->componentUpdateOp != nullptr) {
+        for (int i = 0; i < op_list->componentUpdateOpLen; i++) {
+            ComponentUpdateOp* op = new ComponentUpdateOp();
+            op->EntityId = op_list->componentUpdateOp[i].EntityId;
+            op->Update = op_list->componentUpdateOp[i].Update;
+
+            this->componentUpdateCallback(this->GCHandle, op);
 
             delete op;
         }
