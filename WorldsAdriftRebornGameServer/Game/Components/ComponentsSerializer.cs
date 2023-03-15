@@ -540,17 +540,24 @@ namespace WorldsAdriftRebornGameServer.Game.Components
                                     // apply update
                                     ((PlayerCraftingInteractionState.Update)newComponent).ApplyTo((PlayerCraftingInteractionState.Data)storedComponent);
 
+                                    // create update object from data
+                                    PlayerCraftingInteractionState.Update storedUpdate = (PlayerCraftingInteractionState.Update)((PlayerCraftingInteractionState.Data)storedComponent).ToUpdate();
+
+                                    ulong refId = ClientObjects.Instance.CreateReference(storedUpdate);
+
                                     // serialize stored component after update
                                     ComponentProtocol.ClientObject* cobj = ClientObjects.ObjectAlloc();
                                     byte* cbuffer = null;
                                     uint len = 0;
                                     Structs.Structs.ComponentUpdateOp cupdate;
 
-                                    cobj->Reference = GameState.Instance.ComponentMap[player][entityId][componentId];
+                                    cobj->Reference = refId;
                                     // the following throws "System.InvalidCastException: Unable to cast object of type 'Data' to type 'Update'."
                                     // this is because we only produce the 'Data' part of a component in InitAndSerialize()
                                     // need to properly implement that first to go further here
                                     // that will also fix this mad tripple dict
+                                    // ----
+                                    // small update, seems like we can create an Update from Data, maybe this works too for now.
                                     serialize(componentId, 1, cobj, &cbuffer, &len);
 
                                     // if success, send it to client
@@ -564,6 +571,9 @@ namespace WorldsAdriftRebornGameServer.Game.Components
 
                                         SendOPHelper.SendComponentUpdateOp(player, entityId, new System.Collections.Generic.List<Structs.Structs.ComponentUpdateOp> { cupdate });
                                     }
+
+                                    ClientObjects.Instance.DestroyReference(refId);
+                                    // free cobj here too?
                                 }
                             }
 
