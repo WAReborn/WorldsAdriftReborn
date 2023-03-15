@@ -998,6 +998,22 @@
     }
   },
   {
+    "itemTypeID": "glider",
+    "height": 4,
+    "width": 3,
+    "craftTime": 5,
+    "name": "Glider",
+    "description": "A personal glider you can deploy by pressing Spacebar while in the air.",
+    "category": "Equipment",
+    "iconName": "crafted items/3x4_glider",
+    "equippable": true,
+    "characterSlot": "Utility",
+    "metadata": {
+      "totalHealth": "100",
+      "health": "100"
+    }
+  },
+  {
     "itemTypeID": "marauder_guitar",
     "height": 2,
     "width": 6,

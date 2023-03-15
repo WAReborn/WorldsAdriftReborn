@@ -105,7 +105,8 @@ namespace WorldsAdriftRebornGameServer.Game.Items
                 MakeItem(2, "gauntlet_repair", -1, -1, hotBarSlot: 1),
                 MakeItem(3, "gauntlet_build", -1, -1, hotBarSlot: 2),
                 MakeItem(4, "gauntlet_scanner", -1, -1, hotBarSlot: 3),
-                MakeItem(1100, "gold", 2, 3, 40, 9)
+                MakeItem(1100, "gold", 2, 3, 40, 9),
+                MakeItem(1101, "glider", 2, 5)
             };
         }
 
