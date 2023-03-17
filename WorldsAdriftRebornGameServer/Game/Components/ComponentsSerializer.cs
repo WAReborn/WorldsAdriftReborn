@@ -164,6 +164,12 @@ namespace WorldsAdriftRebornGameServer.Game.Components
 
                         obj = imData;
                     }
+                    else if(componentId == 1087)
+                    {
+                        PlayerPermissionsState.Data ppData = new PlayerPermissionsState.Data(Role.NonAdmin);
+
+                        obj = ppData;
+                    }
                     else if(componentId == 4444)
                     {
                         MountedGunShotState.Data mgData = new MountedGunShotState.Data();
@@ -461,6 +467,12 @@ namespace WorldsAdriftRebornGameServer.Game.Components
 
                         obj = susData;
                     }
+                    else if(componentId == 1109)
+                    {
+                        PilotState.Data pd = new PilotState.Data(new PilotStateData(new EntityId(10), new EntityId(10), ControlVehicleType.None));
+
+                        obj = pd;
+                    }
                     else
                     {
                         Console.WriteLine("[ToDo] unhandled component id needs investigation: " + componentId);
@@ -563,7 +575,7 @@ namespace WorldsAdriftRebornGameServer.Game.Components
                                     // if success, send it to client
                                     if (len > 0)
                                     {
-                                        Console.WriteLine("[success] serialized stored component after update.");
+                                        Console.WriteLine("[success] serialized stored component after update. " + componentId + ")");
 
                                         cupdate.ComponentId = componentId;
                                         cupdate.ComponentData = cbuffer;
@@ -574,6 +586,95 @@ namespace WorldsAdriftRebornGameServer.Game.Components
 
                                     ClientObjects.Instance.DestroyReference(refId);
                                     // free cobj here too?
+                                }
+                                else if(componentId == 1082)
+                                {
+                                    ((InventoryModificationState.Update)newComponent).ApplyTo((InventoryModificationState.Data)storedComponent);
+                                    InventoryModificationState.Update storedUpdate = (InventoryModificationState.Update)((InventoryModificationState.Data)storedComponent).ToUpdate();
+
+                                    for(int j = 0; j < ((InventoryModificationState.Update)newComponent).equipWearable.Count; j++)
+                                    {
+                                        Console.WriteLine("[info] game wants to equip a wearable");
+                                        Console.WriteLine("[info] id: " + ((InventoryModificationState.Update)newComponent).equipWearable[j].itemId);
+                                        Console.WriteLine("[info] slot: " + ((InventoryModificationState.Update)newComponent).equipWearable[j].slotId);
+                                        Console.WriteLine("[info] lockbox: " + ((InventoryModificationState.Update)newComponent).equipWearable[j].isLockboxItem);
+                                    }
+                                    for (int j = 0; j < ((InventoryModificationState.Update)newComponent).equipTool.Count; j++)
+                                    {
+                                        Console.WriteLine("[info] game wants to equip a tool");
+                                        Console.WriteLine("[info] id: " + ((InventoryModificationState.Update)newComponent).equipTool[j].itemId);
+                                    }
+                                    for (int j = 0; j < ((InventoryModificationState.Update)newComponent).craftItem.Count; j++)
+                                    {
+                                        Console.WriteLine("[info] game wants to craft an item");
+                                        Console.WriteLine("[info] inventoryEntityId: " + ((InventoryModificationState.Update)newComponent).craftItem[j].inventoryEntityId);
+                                        Console.WriteLine("[info] itemTypeId: " + ((InventoryModificationState.Update)newComponent).craftItem[j].itemTypeId);
+                                        Console.WriteLine("[info] amount: " + ((InventoryModificationState.Update)newComponent).craftItem[j].amount);
+                                    }
+                                    for (int j = 0; j < ((InventoryModificationState.Update)newComponent).crossInventoryMoveItem.Count; j++)
+                                    {
+                                        Console.WriteLine("[info] game wants to cross inventory move item");
+                                        Console.WriteLine("[info] srcItemId: " + ((InventoryModificationState.Update)newComponent).crossInventoryMoveItem[j].srcItemId);
+                                        Console.WriteLine("[info] xPos: " + ((InventoryModificationState.Update)newComponent).crossInventoryMoveItem[j].xPos);
+                                        Console.WriteLine("[info] yPos: " + ((InventoryModificationState.Update)newComponent).crossInventoryMoveItem[j].yPos);
+                                        Console.WriteLine("[info] rotate: " + ((InventoryModificationState.Update)newComponent).crossInventoryMoveItem[j].rotate);
+                                        Console.WriteLine("[info] srcInventoryEntityId: " + ((InventoryModificationState.Update)newComponent).crossInventoryMoveItem[j].srcInventoryEntityId);
+                                        Console.WriteLine("[info] destInventoryItemId: " + ((InventoryModificationState.Update)newComponent).crossInventoryMoveItem[j].destInventoryEntityId);
+                                        Console.WriteLine("[info] isLockBoxItem: " + ((InventoryModificationState.Update)newComponent).crossInventoryMoveItem[j].isLockboxItem);
+                                    }
+                                    for (int j = 0; j < ((InventoryModificationState.Update)newComponent).moveItem.Count; j++)
+                                    {
+                                        Console.WriteLine("[info] game wants to move an inventory item");
+                                        Console.WriteLine("[info] inventoryEntityId: " + ((InventoryModificationState.Update)newComponent).moveItem[j].inventoryEntityId);
+                                        Console.WriteLine("[info] itemId: " + ((InventoryModificationState.Update)newComponent).moveItem[j].itemId);
+                                        Console.WriteLine("[info] xPos: " + ((InventoryModificationState.Update)newComponent).moveItem[j].xPos);
+                                        Console.WriteLine("[info] yPos: " + ((InventoryModificationState.Update)newComponent).moveItem[j].yPos);
+                                        Console.WriteLine("[info] rotate: " + ((InventoryModificationState.Update)newComponent).moveItem[j].rotate);
+                                        Console.WriteLine("[info] isLockboxItem: " + ((InventoryModificationState.Update)newComponent).moveItem[j].isLockboxItem);
+                                    }
+                                    for (int j = 0; j < ((InventoryModificationState.Update)newComponent).removeFromHotBar.Count; j++)
+                                    {
+                                        Console.WriteLine("[info] game wants to remove from hotbar");
+                                        Console.WriteLine("[info] slotIndex: " + ((InventoryModificationState.Update)newComponent).removeFromHotBar[j].slotIndex);
+                                        Console.WriteLine("[info] isLockboxItem: " + ((InventoryModificationState.Update)newComponent).removeFromHotBar[j].isLockboxItem);
+                                    }
+                                    for (int j = 0; j < ((InventoryModificationState.Update)newComponent).assignToHotBar.Count; j++)
+                                    {
+                                        Console.WriteLine("[info] game wants to assign to hotbar");
+                                        Console.WriteLine("[info] itemId: " + ((InventoryModificationState.Update)newComponent).assignToHotBar[j].itemId);
+                                        Console.WriteLine("[info] slotIndex: " + ((InventoryModificationState.Update)newComponent).assignToHotBar[j].slotIndex);
+                                        Console.WriteLine("[info] isLockboxItem: " + ((InventoryModificationState.Update)newComponent).assignToHotBar[j].isLockboxItem);
+                                    }
+
+                                    storedUpdate.assignToHotBar.Add(new AssignToHotBar(1101, 4, false));
+
+                                    ulong refId = ClientObjects.Instance.CreateReference(storedUpdate);
+
+                                    ComponentProtocol.ClientObject* cobj = ClientObjects.ObjectAlloc();
+                                    byte* cbuffer = null;
+                                    uint len = 0;
+                                    Structs.Structs.ComponentUpdateOp cupdate;
+
+                                    cobj->Reference = refId;
+
+                                    serialize(componentId, 1, cobj, &cbuffer, &len);
+
+                                    if(len > 0)
+                                    {
+                                        Console.WriteLine("[success] serialized stored component after update. (" + componentId + ")");
+
+                                        cupdate.ComponentId = componentId;
+                                        cupdate.ComponentData = cbuffer;
+                                        cupdate.DataLength = (int)len;
+
+                                        SendOPHelper.SendComponentUpdateOp(player, entityId, new System.Collections.Generic.List<Structs.Structs.ComponentUpdateOp> { cupdate });
+                                    }
+
+                                    ClientObjects.Instance.DestroyReference(refId);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("[ToDO] unhandled ComponentUpdate for component " + componentId);
                                 }
                             }
 
@@ -588,7 +689,7 @@ namespace WorldsAdriftRebornGameServer.Game.Components
                     }
                     else
                     {
-                        Console.WriteLine("[warning] could not match requested ComponentUpdate with local stored values.");
+                        Console.WriteLine("[warning] could not match requested ComponentUpdate with local stored values. (" + componentId + ")");
                     }
 
                     return;

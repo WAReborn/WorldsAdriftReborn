@@ -37,7 +37,7 @@ namespace WorldsAdriftRebornGameServer
 
         private static readonly EnetLayer.ENet_Poll_Callback callbackC = new EnetLayer.ENet_Poll_Callback(OnNewClientConnected);
         private static readonly EnetLayer.ENet_Poll_Callback callbackD = new EnetLayer.ENet_Poll_Callback(OnClientDisconnected);
-        private static readonly List<uint> authoritativeComponents = new List<uint>{ 8050, 8051, 6908, 1260, 1097, 1003, 1241};
+        private static readonly List<uint> authoritativeComponents = new List<uint>{ 8050, 8051, 6908, 1260, 1097, 1003, 1241, 1082};
         private static List<long> playerEntityIDs = new List<long>();
 
         private static long nextEntityId = 0;
@@ -185,8 +185,17 @@ namespace WorldsAdriftRebornGameServer
                                     // we can make use of the fact that the game requests components for players in two stages, where the second one will terminate the loading screen of the client.
                                     // the second stage needs a few components setup properly, for this we need to inject one component and call auth changed for a few others once.
 
-                                    // first send what the game requested
-                                    if(!SendOPHelper.SendAddComponentOp(keyValuePair.Key, entityId, interests, interestCount, true))
+                                    // some components are needed in the first stage and need to be injected.
+                                    // we also need PilotState since schematics for glider where added, as the game nullrefs in PlayerExternalDataVisualizer.IsDriving() now (1109)
+                                    List<Structs.Structs.InterestOverride> injectedEarly = new List<Structs.Structs.InterestOverride> { new Structs.Structs.InterestOverride(1109, 1) };
+
+                                    if (!SendOPHelper.SendAddComponentOp(keyValuePair.Key, entityId, injectedEarly, true))
+                                    {
+                                        continue;
+                                    }
+
+                                    // then send what the game requested
+                                    if (!SendOPHelper.SendAddComponentOp(keyValuePair.Key, entityId, interests, interestCount, true))
                                     {
                                         continue;
                                     }
