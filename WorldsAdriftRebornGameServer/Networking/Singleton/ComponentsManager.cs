@@ -1,4 +1,5 @@
-﻿using Improbable.Worker;
+﻿using System.Runtime.InteropServices;
+using Improbable.Worker;
 using Improbable.Worker.Internal;
 
 namespace WorldsAdriftRebornGameServer.Networking.Singleton
@@ -31,6 +32,20 @@ namespace WorldsAdriftRebornGameServer.Networking.Singleton
                 array[num++] = keyValuePair.Value.Vtable;
             }
             return array;
+        }
+        public ComponentProtocol.ClientSerialize GetSerializerForComponent(uint componentId )
+        {
+            for(int i = 0; i < ClientComponentVtables.Length; i++)
+            {
+                if (ClientComponentVtables[i].ComponentId == componentId)
+                {
+                    return Marshal.GetDelegateForFunctionPointer<ComponentProtocol.ClientSerialize>(ClientComponentVtables[i].Serialize);
+                }
+            }
+
+            Console.WriteLine("[error] failed to find the correct serializer for component id " + componentId + ", returning the first in the list.");
+            Console.WriteLine("[error] this is not what you wanted, following code will most likely fail.");
+            return Marshal.GetDelegateForFunctionPointer<ComponentProtocol.ClientSerialize>(ClientComponentVtables[0].Serialize);
         }
     }
 }

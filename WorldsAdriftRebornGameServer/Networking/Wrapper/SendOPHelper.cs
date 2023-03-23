@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
-using Improbable;
+using System.ComponentModel;
+using Improbable.Worker.Internal;
 using WorldsAdriftRebornGameServer.DLLCommunication;
 using WorldsAdriftRebornGameServer.Game.Components;
+using WorldsAdriftRebornGameServer.Networking.Singleton;
 using static WorldsAdriftRebornGameServer.DLLCommunication.EnetLayer;
 
 namespace WorldsAdriftRebornGameServer.Networking.Wrapper
@@ -119,9 +121,45 @@ namespace WorldsAdriftRebornGameServer.Networking.Wrapper
             return false;
         }
 
-        public static unsafe bool SendComponentUpdateOp(ENetPeerHandle destination, long entityId, List<Structs.Structs.ComponentUpdateOp> updates )
+        public static unsafe bool SendComponentUpdateOp(ENetPeerHandle destination, long entityId, List<uint> componentId, List<object> updates )
         {
-            fixed(Structs.Structs.ComponentUpdateOp* u = updates.ToArray())
+            if(componentId.Count != updates.Count)
+            {
+                Console.WriteLine("[error] SendComponentUpdateOp: component id's and update count must match.");
+                return false;
+            }
+
+            List<Structs.Structs.ComponentUpdateOp> cupdates = new List<Structs.Structs.ComponentUpdateOp>();
+
+            for(int i = 0; i < updates.Count; i++)
+            {
+                ComponentProtocol.ClientSerialize serializer = ComponentsManager.Instance.GetSerializerForComponent(componentId[i]);
+                ulong refId = ClientObjects.Instance.CreateReference(updates[i]);
+
+                ComponentProtocol.ClientObject* cobj = ClientObjects.ObjectAlloc();
+                byte* cbuffer = null;
+                uint len = 0;
+                Structs.Structs.ComponentUpdateOp cupdate;
+
+                cobj->Reference = refId;
+                serializer(componentId[i], 1, cobj, &cbuffer, &len);
+
+                if(len > 0)
+                {
+                    Console.WriteLine("[success] serialized stored component after update. " + componentId[i] + ")");
+
+                    cupdate.ComponentId = componentId[i];
+                    cupdate.ComponentData = cbuffer;
+                    cupdate.DataLength = (int)len;
+
+                    cupdates.Add(cupdate);
+                }
+
+                ClientObjects.Instance.DestroyReference(cobj->Reference);
+                ClientObjects.ObjectFree(componentId[i], 1, cobj);
+            }
+
+            fixed (Structs.Structs.ComponentUpdateOp* u = cupdates.ToArray())
             {
                 int len = 0;
                 void* ptr = EnetLayer.PB_EXP_ComponentUpdateOp_Serialize(entityId, u, (uint)updates.Count, &len);

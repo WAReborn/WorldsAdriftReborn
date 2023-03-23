@@ -555,37 +555,7 @@ namespace WorldsAdriftRebornGameServer.Game.Components
                                     // create update object from data
                                     PlayerCraftingInteractionState.Update storedUpdate = (PlayerCraftingInteractionState.Update)((PlayerCraftingInteractionState.Data)storedComponent).ToUpdate();
 
-                                    ulong refId = ClientObjects.Instance.CreateReference(storedUpdate);
-
-                                    // serialize stored component after update
-                                    ComponentProtocol.ClientObject* cobj = ClientObjects.ObjectAlloc();
-                                    byte* cbuffer = null;
-                                    uint len = 0;
-                                    Structs.Structs.ComponentUpdateOp cupdate;
-
-                                    cobj->Reference = refId;
-                                    // the following throws "System.InvalidCastException: Unable to cast object of type 'Data' to type 'Update'."
-                                    // this is because we only produce the 'Data' part of a component in InitAndSerialize()
-                                    // need to properly implement that first to go further here
-                                    // that will also fix this mad tripple dict
-                                    // ----
-                                    // small update, seems like we can create an Update from Data, maybe this works too for now.
-                                    serialize(componentId, 1, cobj, &cbuffer, &len);
-
-                                    // if success, send it to client
-                                    if (len > 0)
-                                    {
-                                        Console.WriteLine("[success] serialized stored component after update. " + componentId + ")");
-
-                                        cupdate.ComponentId = componentId;
-                                        cupdate.ComponentData = cbuffer;
-                                        cupdate.DataLength = (int)len;
-
-                                        SendOPHelper.SendComponentUpdateOp(player, entityId, new System.Collections.Generic.List<Structs.Structs.ComponentUpdateOp> { cupdate });
-                                    }
-
-                                    ClientObjects.Instance.DestroyReference(refId);
-                                    // free cobj here too?
+                                    SendOPHelper.SendComponentUpdateOp(player, entityId, new System.Collections.Generic.List<uint> { componentId }, new System.Collections.Generic.List<object> { storedUpdate });
                                 }
                                 else if(componentId == 1082)
                                 {
@@ -598,6 +568,28 @@ namespace WorldsAdriftRebornGameServer.Game.Components
                                         Console.WriteLine("[info] id: " + ((InventoryModificationState.Update)newComponent).equipWearable[j].itemId);
                                         Console.WriteLine("[info] slot: " + ((InventoryModificationState.Update)newComponent).equipWearable[j].slotId);
                                         Console.WriteLine("[info] lockbox: " + ((InventoryModificationState.Update)newComponent).equipWearable[j].isLockboxItem);
+
+                                        // send updates to equip the wearables
+                                        WearableUtilsState.Update storedWearableUtilsState = (WearableUtilsState.Update)((WearableUtilsState.Data)ClientObjects.Instance.Dereference(GameState.Instance.ComponentMap[player][entityId][1280])).ToUpdate();
+                                        PlayerPropertiesState.Update storedPlayerPropertiesState = (PlayerPropertiesState.Update)((PlayerPropertiesState.Data)ClientObjects.Instance.Dereference(GameState.Instance.ComponentMap[player][entityId][1088])).ToUpdate();
+                                        InventoryState.Update storedInventoryState = (InventoryState.Update)((InventoryState.Data)ClientObjects.Instance.Dereference(GameState.Instance.ComponentMap[player][entityId][1081])).ToUpdate();
+
+                                        storedWearableUtilsState.SetItemIds(new Improbable.Collections.List<int> { ((InventoryModificationState.Update)newComponent).equipWearable[j].itemId }).SetHealths(new Improbable.Collections.List<float> { 100f }).SetActive(new Improbable.Collections.List<bool> { true });
+                                        for(int k = 0; k < storedInventoryState.inventoryList.Value.Count; k++)
+                                        {
+                                            if (storedInventoryState.inventoryList.Value[k].itemId == ((InventoryModificationState.Update)newComponent).equipWearable[j].itemId)
+                                            {
+                                                ScalaSlottedInventoryItem modifiedItem = storedInventoryState.inventoryList.Value[k];
+                                                //modifiedItem.slotType = ItemHelper.GetItem(storedInventoryState.inventoryList.Value[k].itemTypeId).characterslot;
+                                                modifiedItem.slotType = "Utility"; // this tells the game that the glider is equipped
+                                                Console.WriteLine("[debug] setting to " + modifiedItem.slotType);
+
+                                                storedInventoryState.inventoryList.Value[k] = modifiedItem;
+                                            }
+                                        }
+
+                                        // NOTE: its absolutely crucial to send 1081 before 1088, this is because 1081 sets the item slotType to something meaningfull while 1088 expects some meaningful value if it should be equipped
+                                        SendOPHelper.SendComponentUpdateOp(player, entityId, new System.Collections.Generic.List<uint> { 1280, 1081, 1088 }, new System.Collections.Generic.List<object> { storedWearableUtilsState, storedInventoryState, storedPlayerPropertiesState });
                                     }
                                     for (int j = 0; j < ((InventoryModificationState.Update)newComponent).equipTool.Count; j++)
                                     {
@@ -646,31 +638,7 @@ namespace WorldsAdriftRebornGameServer.Game.Components
                                         Console.WriteLine("[info] isLockboxItem: " + ((InventoryModificationState.Update)newComponent).assignToHotBar[j].isLockboxItem);
                                     }
 
-                                    storedUpdate.assignToHotBar.Add(new AssignToHotBar(1101, 4, false));
-
-                                    ulong refId = ClientObjects.Instance.CreateReference(storedUpdate);
-
-                                    ComponentProtocol.ClientObject* cobj = ClientObjects.ObjectAlloc();
-                                    byte* cbuffer = null;
-                                    uint len = 0;
-                                    Structs.Structs.ComponentUpdateOp cupdate;
-
-                                    cobj->Reference = refId;
-
-                                    serialize(componentId, 1, cobj, &cbuffer, &len);
-
-                                    if(len > 0)
-                                    {
-                                        Console.WriteLine("[success] serialized stored component after update. (" + componentId + ")");
-
-                                        cupdate.ComponentId = componentId;
-                                        cupdate.ComponentData = cbuffer;
-                                        cupdate.DataLength = (int)len;
-
-                                        SendOPHelper.SendComponentUpdateOp(player, entityId, new System.Collections.Generic.List<Structs.Structs.ComponentUpdateOp> { cupdate });
-                                    }
-
-                                    ClientObjects.Instance.DestroyReference(refId);
+                                    SendOPHelper.SendComponentUpdateOp(player, entityId, new System.Collections.Generic.List<uint> { componentId }, new System.Collections.Generic.List<object> { storedUpdate });
                                 }
                                 else
                                 {
