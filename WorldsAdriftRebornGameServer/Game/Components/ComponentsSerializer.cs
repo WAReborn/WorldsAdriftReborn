@@ -363,7 +363,7 @@ namespace WorldsAdriftRebornGameServer.Game.Components
                     }
                     else if(componentId == 1139)
                     {
-                        WeatherCellState.Data wcData = new WeatherCellState.Data(new WeatherCellStateData(200f, new Vector3f(10f, 10f, 10f)));
+                        WeatherCellState.Data wcData = new WeatherCellState.Data(new WeatherCellStateData(1f, new Vector3f(0f, 00f, 00f)));
 
                         obj = wcData;
                     }
