@@ -580,8 +580,7 @@ namespace WorldsAdriftRebornGameServer.Game.Components
                                             if (storedInventoryState.inventoryList.Value[k].itemId == ((InventoryModificationState.Update)newComponent).equipWearable[j].itemId)
                                             {
                                                 ScalaSlottedInventoryItem modifiedItem = storedInventoryState.inventoryList.Value[k];
-                                                //modifiedItem.slotType = ItemHelper.GetItem(storedInventoryState.inventoryList.Value[k].itemTypeId).characterslot;
-                                                modifiedItem.slotType = "Utility"; // this tells the game that the glider is equipped
+                                                modifiedItem.slotType = ItemHelper.GetItem(storedInventoryState.inventoryList.Value[k].itemTypeId).characterSlot;
                                                 Console.WriteLine("[debug] setting to " + modifiedItem.slotType);
 
                                                 storedInventoryState.inventoryList.Value[k] = modifiedItem;

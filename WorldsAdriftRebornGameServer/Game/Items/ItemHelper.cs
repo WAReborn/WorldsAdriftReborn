@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using System.Text.Json.Serialization;
 using Bossa.Travellers.Inventory;
 using Improbable.Collections;
 
@@ -22,7 +23,7 @@ namespace WorldsAdriftRebornGameServer.Game.Items
             public int stacksize { get; set; } = -1;
             public string iconName { get; set; }
             public bool equippable { get; set; }
-            public string characterslot { get; set; } = "None";
+            public string characterSlot { get; set; } = "None";
             public string category { get; set; } = "";
             public string description { get; set; } = "";
             public int rarity { get; set; } = 0;
@@ -72,10 +73,10 @@ namespace WorldsAdriftRebornGameServer.Game.Items
 
         public static ScalaSlottedInventoryItem MakeItem( int itemId, string itemTypeId, int x = 0, int y = 0,
             int amount = 1, int quality = 0, bool stashItem = false, int hotBarSlot = -1,
-            Dictionary<string, string> metaOverrides = null )
+            Dictionary<string, string> metaOverrides = null, bool slotted = false)
         {
             var item = GetItem(itemTypeId);
-            return new ScalaSlottedInventoryItem(itemId, itemTypeId, amount, item.characterslot, -1, x, y, false,
+            return new ScalaSlottedInventoryItem(itemId, itemTypeId, amount,  !slotted ? "None" : item.characterSlot, -1, x, y, false,
                 hotBarSlot, 0, quality, stashItem, item.Meta(metaOverrides), item.GetRarity());
         }
 
@@ -105,8 +106,10 @@ namespace WorldsAdriftRebornGameServer.Game.Items
                 MakeItem(2, "gauntlet_repair", -1, -1, hotBarSlot: 1),
                 MakeItem(3, "gauntlet_build", -1, -1, hotBarSlot: 2),
                 MakeItem(4, "gauntlet_scanner", -1, -1, hotBarSlot: 3),
-                MakeItem(1100, "gold", 2, 3, 40, 9),
-                MakeItem(1101, "glider", 2, 5)
+                //MakeItem(1100, "gold", 2, 3, 40, 9),
+                MakeItem(1101, "glider"),
+                MakeItem(1102, "torso_poncho", 0, 4),
+                MakeItem(1103, "head_devhat", 3, 0)
             };
         }
 
@@ -115,7 +118,7 @@ namespace WorldsAdriftRebornGameServer.Game.Items
             return new System.Collections.Generic.List<ScalaSlottedInventoryItem>
             {
                 MakeItem(6, "head_olk", stashItem: true),
-                MakeItem(7, "head_devcap", stashItem: true),
+                MakeItem(7, "head_devhat", stashItem: true),
                 MakeItem(8, "torso_devjacket", stashItem: true)
             };
         }
