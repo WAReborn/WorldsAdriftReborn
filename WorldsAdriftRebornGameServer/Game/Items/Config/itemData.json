@@ -1255,7 +1255,7 @@
     "name":"Elm Wood",
     "description": "Medium weight with no outstanding strengths or vulnerabilities.",
     "category":"Wood",
-    "iconName":"woods/Wood_Chestnut",
+    "iconName":"woods/Wood_Elm",
     "equippable":false,
     "characterSlot":"None",
     "metadata":{
@@ -3875,7 +3875,7 @@
     ]
   },
   {
-    "itemTypeID": "head_devcap",
+    "itemTypeID": "head_devhat",
     "height": 2,
     "width": 2,
     "name": "Developer's Cap",
@@ -3890,7 +3890,7 @@
     }
   },
   {
-    "itemTypeID": "head_drissiancowl",
+    "itemTypeID": "head_pioneer",
     "height": 2,
     "width": 2,
     "name": "Drissian Cowl",
@@ -3905,7 +3905,7 @@
     }
   },
   {
-    "itemTypeID": "head_olk",
+    "itemTypeID": "head_goatmask",
     "height": 2,
     "width": 2,
     "category": "-",
@@ -4004,7 +4004,7 @@
     ]
   },
   {
-    "itemTypeID": "head_mask_natiq",
+    "itemTypeID": "head_christmas_2018",
     "name": "Natiq Mask",
     "category": "Steam Items",
     "height": 2,
@@ -4041,7 +4041,7 @@
     ]
   },
   {
-    "itemTypeID": "female_torso_tribal_skeleton",
+    "itemTypeID": "",
     "height": 3,
     "width": 2,
     "category": "Founder's Pack",
@@ -4090,7 +4090,7 @@
     }
   },
   {
-    "itemTypeID": "torso_kahi",
+    "itemTypeID": "torso_christmas_2018",
     "name": "Kahi Ceremony Parka",
     "category": "Steam Items",
     "height": 3,
@@ -4105,7 +4105,7 @@
     }
   },
   {
-    "itemTypeID": "torso_tamoe",
+    "itemTypeID": "torso_tribal_tamoe",
     "name": "Tamoe War Belt",
     "category": "Steam Items",
     "height": 3,
@@ -4120,7 +4120,7 @@
     }
   },
   {
-    "itemTypeID": "torso_tamoe_female",
+    "itemTypeID": "",
     "name": "Tamoe War Belt",
     "category": "Steam Items",
     "height": 3,
@@ -4135,7 +4135,7 @@
     }
   },
   {
-    "itemTypeID": "torso_vinicoti",
+    "itemTypeID": "torso_summer_male",
     "name": "Vinicoti Holiday Beads",
     "category": "Steam Items",
     "height": 3,
@@ -4150,7 +4150,7 @@
     }
   },
   {
-    "itemTypeID": "torso_vinicoti_female",
+    "itemTypeID": "",
     "name": "Vinicoti Holiday Beads",
     "category": "Steam Items",
     "height": 3,
@@ -4186,7 +4186,7 @@
     ]
   },
   {
-    "itemTypeID": "female_legs_tribal_skeleton",
+    "itemTypeID": "",
     "height": 4,
     "width": 2,
     "name": "Barguan Skeleton Skirt",
@@ -4201,7 +4201,7 @@
     }
   },
   {
-    "itemTypeID": "legs_kahi",
+    "itemTypeID": "legs_christmas_2018",
     "name": "Kahi Ceremony Leggings",
     "category": "Steam Items",
     "height": 4,
@@ -4216,7 +4216,7 @@
     }
   },
   {
-    "itemTypeID": "legs_kahi_female",
+    "itemTypeID": "",
     "name": "Kahi Ceremony Leggings",
     "category": "Steam Items",
     "height": 4,
@@ -4231,7 +4231,7 @@
     }
   },
   {
-    "itemTypeID": "legs_tamoe",
+    "itemTypeID": "legs_tribal_tamoe",
     "name": "Tamoe Skirt",
     "category": "Steam Items",
     "height": 4,
@@ -4246,7 +4246,7 @@
     }
   },
   {
-    "itemTypeID": "legs_tamoe_female",
+    "itemTypeID": "",
     "name": "Tamoe Skirt",
     "category": "Steam Items",
     "height": 4,
@@ -4261,7 +4261,7 @@
     }
   },
   {
-    "itemTypeID": "legs_vinicoti",
+    "itemTypeID": "legs_summer",
     "name": "Vinicoti Holiday Wrap",
     "category": "Steam Items",
     "height": 4,
@@ -4276,7 +4276,7 @@
     }
   },
   {
-    "itemTypeID": "legs_vinicoti_female",
+    "itemTypeID": "",
     "name": "Vinicoti Holiday Wrap",
     "category": "Steam Items",
     "height": 4,
@@ -4291,7 +4291,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_scarf",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_scarf_male",
@@ -4304,7 +4304,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_bandana",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_bandana_male",
@@ -4317,7 +4317,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torse_squireVariantA",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_squireVariantA_male",
@@ -4343,7 +4343,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_ponchoVariantB",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_ponchoVariantB_male",
@@ -4369,7 +4369,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_engineer",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_engineer_male",
@@ -4395,7 +4395,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_wanderer",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_wanderer_male",
@@ -4421,7 +4421,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "legs_boots",
     "height": 4,
     "width": 2,
     "iconName": "clothing/legs/2x4_legs_boots_male",
@@ -4447,7 +4447,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "legs_shorts",
     "height": 4,
     "width": 2,
     "iconName": "clothing/legs/2x4_legs_shorts_male",
@@ -4473,7 +4473,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "legs_wrap",
     "height": 4,
     "width": 2,
     "iconName": "clothing/legs/2x4_legs_wrap_male",
@@ -4499,7 +4499,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "legs_belts",
     "height": 4,
     "width": 2,
     "iconName": "clothing/legs/2x4_legs_belts_male",
@@ -4525,7 +4525,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_turban",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_turban_male",
@@ -4538,7 +4538,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_banditmask",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_banditmask_male",
@@ -4551,7 +4551,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_banditmaskpekoe",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_banditmaskpekoe_male",
@@ -4564,7 +4564,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_kitsunemask",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_kitsunemask_male",
@@ -4577,7 +4577,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_lallarahelm",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_lallarahelm_male",
@@ -4590,7 +4590,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_bandages_ninja",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_bandages_ninja_male",
@@ -4616,7 +4616,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_bandages_scales",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_bandages_scales_male",
@@ -4642,7 +4642,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "legs_goner",
     "height": 4,
     "width": 2,
     "iconName": "clothing/legs/2x4_legs_goner_male",
@@ -4668,7 +4668,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_metal",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_metal_male",
@@ -4681,7 +4681,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_artisan",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_artisan_male",
@@ -4694,7 +4694,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_gogglecap",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_gogglecap_male",
@@ -4707,7 +4707,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_hawkhelm",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_hawkhelm_male",
@@ -4720,7 +4720,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_owl",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_owl_male",
@@ -4733,7 +4733,7 @@
     }
   },
   {
-    "itemTypeID": "head_horns",
+    "itemTypeID": "head_horned",
     "height": 2,
     "width": 4,
     "category": "",
@@ -4748,7 +4748,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_merchant",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_merchant_male",
@@ -4761,7 +4761,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_ishgiruan_pilot",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_ishgiruan_pilot_male",
@@ -4774,7 +4774,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_navigator",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_navigator_male",
@@ -4787,7 +4787,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_moebius",
     "height": 3,
     "width": 2,
     "iconName": "clothing/heads/2x3_head_moebius_male",
@@ -4800,7 +4800,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_rogue",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_rogue_male",
@@ -4813,7 +4813,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_pilotcap",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_pilotcap_male",
@@ -4826,7 +4826,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_scales",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_scales_male",
@@ -4852,7 +4852,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_engineerVariantA",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_engineerVariantA_male",
@@ -4878,7 +4878,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_ishgiruan_pilot",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_ishgiruan_pilot_male",
@@ -4904,7 +4904,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_combo",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_combo_male",
@@ -4930,7 +4930,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_ishgiruan_pilot_variantA",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_ishgiruan_pilot_variantA_male",
@@ -4956,7 +4956,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_ishgiruan_pilot_variantB",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_ishgiruan_pilot_variantB_male",
@@ -4982,7 +4982,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_ponchoB",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_ponchoB_male",
@@ -5008,7 +5008,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_ponchoBVariantA",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_ponchoBVariantA_male",
@@ -5034,7 +5034,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_neckguard",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_neckguard_male",
@@ -5060,7 +5060,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_squire",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_squire_male",
@@ -5086,7 +5086,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_pirate",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_pirate_male",
@@ -5112,7 +5112,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_pirateVariantA",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_pirateVariantA_male",
@@ -5138,7 +5138,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_roman",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_roman_male",
@@ -5164,7 +5164,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_cape",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_cape_male",
@@ -5190,7 +5190,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "legs_baggy",
     "height": 4,
     "width": 2,
     "iconName": "clothing/legs/2x4_legs_baggy_male",
@@ -5216,7 +5216,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_hunterwide",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_hunterwide_male",
@@ -5229,7 +5229,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_featherhat",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_featherhat_male",
@@ -5242,7 +5242,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_godhand",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_godhand_male",
@@ -5255,7 +5255,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_hoodcap",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_hoodcap_male",
@@ -5268,7 +5268,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_circlemask",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_circlemask_male",
@@ -5281,7 +5281,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_tank",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_tank_male",
@@ -5294,7 +5294,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_skullcap",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_skullcap_male",
@@ -5307,7 +5307,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_scarfhood",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_scarfhood_male",
@@ -5320,7 +5320,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_godhand_hood",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_godhand_hood_male",
@@ -5333,7 +5333,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_saborianmask_chevron",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_saborianmask_chevron_male",
@@ -5346,7 +5346,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_saborianmask_diamond",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_saborianmask_diamond_male",
@@ -5359,7 +5359,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_saborianmask_eyes",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_saborianmask_eyes_male",
@@ -5372,7 +5372,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_saborianmask_sharp_scarf",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_saborianmask_sharp_scarf_male",
@@ -5385,7 +5385,7 @@
     }
   },
   {
-    "itemTypeID": "head_saborianhood",
+    "itemTypeID": "head_saborianmask_hoodscarf",
     "height": 2,
     "width": 2,
     "name": "Saborian Hood",
@@ -5400,7 +5400,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_hood",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_hood_male",
@@ -5413,7 +5413,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_wrap",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_wrap_male",
@@ -5426,7 +5426,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_wandererVariantA",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_wandererVariantA_male",
@@ -5452,7 +5452,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_ponchoVariantA",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_ponchoVariantA_male",
@@ -5478,7 +5478,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_saborianuniform_godhand",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_saborianuniform_godhand_male",
@@ -5504,7 +5504,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_bandages",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_bandages_male",
@@ -5575,7 +5575,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_comboB",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_comboB_male",
@@ -5601,7 +5601,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_saborianuniform_3pip",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_saborianuniform_3pip_male",
@@ -5627,7 +5627,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_saborianuniform_2pip",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_saborianuniform_2pip_male",
@@ -5653,7 +5653,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_saborianuniform_1pip",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_saborianuniform_1pip_male",
@@ -5679,7 +5679,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_wrap",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_wrap_male",
@@ -5705,7 +5705,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "legs_saborianuniform",
     "height": 4,
     "width": 2,
     "iconName": "clothing/legs/2x4_legs_saborianuniform_male",
@@ -5718,7 +5718,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "legs_saborianuniform_stripe",
     "height": 4,
     "width": 2,
     "iconName": "clothing/legs/2x4_legs_saborianuniform_stripe_male",
@@ -5731,7 +5731,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "legs_shinpads",
     "height": 4,
     "width": 2,
     "iconName": "clothing/legs/2x4_legs_shinpads_male",
@@ -5744,7 +5744,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "legs_shortsVariantA",
     "height": 4,
     "width": 2,
     "iconName": "clothing/legs/2x4_legs_shortsVariantA_male",
@@ -5757,7 +5757,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_reaver_raiderB",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_reaver_raiderB_male",
@@ -5770,7 +5770,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_reaver_bandage",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_reaver_bandage_male",
@@ -5783,7 +5783,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_reaver_porcupineVariantB",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_reaver_porcupineVariantB_male",
@@ -5796,7 +5796,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_reaver_raider",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_reaver_raider_male",
@@ -5809,7 +5809,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_reaverscarf",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_reaverscarf_male",
@@ -5822,7 +5822,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_reaver",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_reaver_male",
@@ -5835,7 +5835,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_reaver_shark",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_reaver_shark_male",
@@ -5848,7 +5848,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_reaver_porcupine",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_reaver_porcupine_male",
@@ -5861,7 +5861,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_reaverscarf_VariantB",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_reaverscarf_VariantB_male",
@@ -5874,7 +5874,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_reaver_paddedvariantC",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_reaver_paddedvariantC_male",
@@ -5900,7 +5900,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_reaver_paddedvariantB",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_reaver_paddedvariantB_male",
@@ -5926,7 +5926,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_reaver_paddedvariantA",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_reaver_paddedvariantA_male",
@@ -5952,7 +5952,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_reaver_jacket",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_reaver_jacket_male",
@@ -5978,7 +5978,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_reaver_jacket_variantB",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_reaver_jacket_VariantB_male",
@@ -6004,7 +6004,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_reaver_bandage",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_reaver_bandage_male",
@@ -6030,7 +6030,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "legs_reaver_paddedVariantB",
     "height": 4,
     "width": 2,
     "iconName": "clothing/legs/2x4_legs_reaver_paddedVariantB_male",
@@ -6056,7 +6056,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "legs_reaver_paddedVariantA",
     "height": 4,
     "width": 2,
     "iconName": "clothing/legs/2x4_legs_reaver_paddedVariantA_male",
