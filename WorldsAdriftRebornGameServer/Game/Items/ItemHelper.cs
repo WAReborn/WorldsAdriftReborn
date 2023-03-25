@@ -1,6 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using System.Text.Json.Serialization;
+using System.Text.Json;
 using Bossa.Travellers.Inventory;
 using Improbable.Collections;
 
