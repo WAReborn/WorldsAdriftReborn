@@ -70,7 +70,6 @@ namespace WorldsAdriftRebornGameServer.Game.Items
 
         public static ValidItem GetItem( string itemTypeId ) => AllItems[itemTypeId];
 
-
         public static ScalaSlottedInventoryItem MakeItem( int itemId, string itemTypeId, int x = 0, int y = 0,
             int amount = 1, int quality = 0, bool stashItem = false, int hotBarSlot = -1,
             Dictionary<string, string> metaOverrides = null, bool slotted = false)
@@ -79,6 +78,44 @@ namespace WorldsAdriftRebornGameServer.Game.Items
             return new ScalaSlottedInventoryItem(itemId, itemTypeId, amount,  !slotted ? "None" : item.characterSlot, -1, x, y, false,
                 hotBarSlot, 0, quality, stashItem, item.Meta(metaOverrides), item.GetRarity());
         }
+        
+                public static string GetReferenceItems()
+        {
+            System.Collections.Generic.List<object> o = new();
+            foreach (ValidItem v in AllItems.Values)
+                o.Add(new
+                {
+                    itemTypeId = v.itemTypeID,
+                    v.name,
+                    v.category,
+                    v.iconName,
+                    stackingMax = v.stacksize,
+                    numOfSlotsWidth = v.width,
+                    numOfSlotsHeight = v.height,
+                    v.equippable,
+                    wearable = v.characterSlot
+                });
+            return JsonSerializer.Serialize(o);
+        }
+
+        public static Map<string, string> GetDescriptions(bool resources = false)
+        {
+            Map<string, string> map = new();
+            foreach (ValidItem item in AllItems.Values)
+            {
+                bool isResource = item.category == "Fuel" || item.category == "Metal" || item.category == "Wood";
+                if ((resources && !isResource) || (!resources && isResource))
+                {
+                    continue;
+                }
+
+                map.Add(item.itemTypeID, item.description);
+            }
+
+            return map;
+        }
+
+        public static Map<string, string> BundleDescriptions() => new() { { "steamInvBundle-xmas_present", AllItems["steamInvBundle-xmas_present"].description } };
 
         public static Improbable.Collections.List<ScalaSlottedInventoryItem> GetStashItems( bool steam = false,
             bool pioneer = false, bool founders = false, bool dev = false )
