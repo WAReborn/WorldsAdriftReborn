@@ -9,6 +9,7 @@ using WorldsAdriftRebornGameServer.Game.Components.Update.Handlers;
 using WorldsAdriftRebornGameServer.Networking.Singleton;
 using Bossa.Travellers.Inventory;
 using Bossa.Travellers.Craftingstation;
+using Bossa.Travellers.Refdata;
 
 namespace WorldsAdriftRebornGameServer.Game.Components.Update
 {
@@ -142,6 +143,10 @@ namespace WorldsAdriftRebornGameServer.Game.Components.Update
                             if(componentId == 1003)
                             {
                                 hash = GetHash<PlayerCraftingInteractionState.Data>();
+                            }
+                            else if (componentId == 6908)
+                            {
+                                hash = GetHash<ReferenceDataRequestState.Data>();
                             }
                             else
                             {

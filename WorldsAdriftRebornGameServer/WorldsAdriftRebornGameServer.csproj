@@ -29,7 +29,7 @@
       <HintPath>$(WorldsAdriftGameDir)\UnityClient@Windows_Data\Managed\Improbable.WorkerSdkCsharp.dll</HintPath>
     </Reference>
     <Reference Include="Improbable.WorkerSdkCsharp.Framework">
-      <HintPath>..\..\..\..\Downloads\depot_322783\UnityClient@Windows_Data\Managed\Improbable.WorkerSdkCsharp.Framework.dll</HintPath>
+      <HintPath>$(WorldsAdriftGameDir)\UnityClient@Windows_Data\Managed\Improbable.WorkerSdkCsharp.Framework.dll</HintPath>
     </Reference>
     <Reference Include="protobuf-net">
       <HintPath>$(WorldsAdriftGameDir)\UnityClient@Windows_Data\Managed\protobuf-net.dll</HintPath>
