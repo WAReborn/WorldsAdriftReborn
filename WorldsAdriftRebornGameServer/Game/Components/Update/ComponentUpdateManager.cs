@@ -33,7 +33,7 @@ namespace WorldsAdriftRebornGameServer.Game.Components.Update
         private readonly Dictionary<ulong, RegisterDelegate> _handlers = new Dictionary<ulong, RegisterDelegate>();
 
         //FNV-1 64 bit hash
-        protected virtual ulong GetHash<T>()
+        public ulong GetHash<T>()
         {
             if (HashCache<T>.Initialized)
             {
@@ -83,12 +83,11 @@ namespace WorldsAdriftRebornGameServer.Game.Components.Update
 
             foreach(Type type in definedHandlers)
             {
-                if(IsSubclassOfRawGeneric(typeof(IComponentUpdateHandler<,>), type))
+                if(IsSubclassOfRawGeneric(typeof(IComponentUpdateHandler<,,>), type))
                 {
-                    Type type_clientComponentUpdate = type.BaseType.GetGenericArguments()[0];
-                    Type type_serverComponentData = type.BaseType.GetGenericArguments()[1];
-
-                    Console.WriteLine("[info] trying to register ComponentUpdate handler for types " + type_clientComponentUpdate + " " + type_serverComponentData);
+                    Type type_baseComponentUpdate = type.BaseType.GetGenericArguments()[0];
+                    Type type_clientComponentUpdate = type.BaseType.GetGenericArguments()[1];
+                    Type type_serverComponentData = type.BaseType.GetGenericArguments()[2];
 
                     // dynamically create instance of handler
                     Type handlerMethodArgTypes = typeof(Action<,,,>).MakeGenericType(typeof(ENetPeerHandle), typeof(long), type_clientComponentUpdate, type_serverComponentData);
@@ -96,16 +95,16 @@ namespace WorldsAdriftRebornGameServer.Game.Components.Update
                     Delegate handlerMethod = Delegate.CreateDelegate(handlerMethodArgTypes, handler, type.GetMethod("HandleUpdate", new Type[] { typeof(ENetPeerHandle), typeof(long), type_clientComponentUpdate, type_serverComponentData }));
 
                     // register created handler
-                    MethodInfo genericRegisterComponent = registerMethod.MakeGenericMethod(type_clientComponentUpdate, type_serverComponentData);
+                    MethodInfo genericRegisterComponent = registerMethod.MakeGenericMethod(type_baseComponentUpdate, type_clientComponentUpdate, type_serverComponentData);
                     genericRegisterComponent.Invoke(this, new object[] { handlerMethod });
 
-                    Console.WriteLine("[success] registered ComponentUpdate handler for types " + type_clientComponentUpdate + " " + type_serverComponentData);
+                    Console.WriteLine("[success] registered ComponentUpdate handler for type " + type_baseComponentUpdate);
                 }
             }
         }
-        public void RegisterComponentUpdateHandler<TClient, TServer>(Action<ENetPeerHandle, long, TClient, TServer> onProcess)
+        public void RegisterComponentUpdateHandler<TBase, TClient, TServer>(Action<ENetPeerHandle, long, TClient, TServer> onProcess)
         {
-            ulong hash = GetHash<TServer>();
+            ulong hash = GetHash<TBase>();
             if (!_handlers.ContainsKey(hash))
             {
                 _handlers.Add(hash, null);
@@ -138,19 +137,21 @@ namespace WorldsAdriftRebornGameServer.Game.Components.Update
                             object storedComponent = ClientObjects.Instance.Dereference(GameState.Instance.ComponentMap[player][entityId][componentId]);
                             object newComponent = ClientObjects.Instance.Dereference(wrapper->Reference);
 
-                            // todo: remove this increasing if else with something cleaner
                             ulong hash = 0;
-                            if(componentId == 1003)
+                            MethodInfo genericGetHash = this.GetType().GetMethods()
+                            .Where(m => m.Name == nameof(GetHash))
+                            .Where(m => m.IsGenericMethod)
+                            .FirstOrDefault();
+
+                            foreach (IComponentMetaclass componentMetaclass in ComponentDatabase.MetaclassMap.Values)
                             {
-                                hash = GetHash<PlayerCraftingInteractionState.Data>();
-                            }
-                            else if (componentId == 6908)
-                            {
-                                hash = GetHash<ReferenceDataRequestState.Data>();
-                            }
-                            else
-                            {
-                                hash = GetHash<InventoryModificationState.Data>();
+                                IComponentFactory componentFactory = componentMetaclass as IComponentFactory;
+                                if(componentFactory != null && genericGetHash != null && componentFactory.ComponentId == componentId)
+                                {
+                                    MethodInfo getHash = genericGetHash.MakeGenericMethod(componentFactory.GetType());
+                                    hash = (ulong)getHash.Invoke(this, new object[] { });
+                                    break;
+                                }
                             }
 
                             if(_handlers.TryGetValue(hash, out RegisterDelegate handler))

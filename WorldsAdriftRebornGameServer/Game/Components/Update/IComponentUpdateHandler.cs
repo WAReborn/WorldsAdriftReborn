@@ -9,12 +9,10 @@ using WorldsAdriftRebornGameServer.DLLCommunication;
 
 namespace WorldsAdriftRebornGameServer.Game.Components.Update
 {
-    internal abstract class IComponentUpdateHandler<T, H>
+    internal abstract class IComponentUpdateHandler<T, H, C>
     {
         public uint ComponentId { get; protected set; }
-        public Type DataType { get; protected set; }
-        public Type UpdateType { get; protected set; }
-        protected abstract void Init(uint ComponentId, Type UpdateType, Type DataType);
-        public abstract void HandleUpdate(ENetPeerHandle player, long entityId, T clientComponentUpdate, H serverComponentData);
+        protected abstract void Init( uint ComponentId );
+        public abstract void HandleUpdate(ENetPeerHandle player, long entityId, H clientComponentUpdate, C serverComponentData);
     }
 }

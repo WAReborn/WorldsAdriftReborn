@@ -9,19 +9,13 @@ using WorldsAdriftRebornGameServer.Networking.Wrapper;
 namespace WorldsAdriftRebornGameServer.Game.Components.Update.Handlers
 {
     [RegisterComponentUpdateHandler]
-    internal class InventoryModificationState_Handler : IComponentUpdateHandler<InventoryModificationState.Update, InventoryModificationState.Data>
+    internal class InventoryModificationState_Handler : IComponentUpdateHandler<InventoryModificationState, InventoryModificationState.Update, InventoryModificationState.Data>
     {
-        public InventoryModificationState_Handler()
-        {
-            Init(1082, typeof(InventoryModificationState.Update), typeof(InventoryModificationState.Data));
-        }
-        protected override void Init( uint ComponentId, Type UpdateType, Type DataType )
+        public InventoryModificationState_Handler() { Init(1082); }
+        protected override void Init( uint ComponentId )
         {
             this.ComponentId = ComponentId;
-            this.DataType = DataType;
-            this.UpdateType = UpdateType;
         }
-
         public override void HandleUpdate( ENetPeerHandle player, long entityId, InventoryModificationState.Update clientComponentUpdate, InventoryModificationState.Data serverComponentData)
         {
             clientComponentUpdate.ApplyTo(serverComponentData);

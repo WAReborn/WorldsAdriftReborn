@@ -1,4 +1,4 @@
-using System.IO.Compression;
+﻿using System.IO.Compression;
 using System.Text;
 using System.Text.Json;
 using Bossa.Travellers.Refdata;
@@ -10,21 +10,13 @@ using WorldsAdriftRebornGameServer.Networking.Wrapper;
 namespace WorldsAdriftRebornGameServer.Game.Components.Update.Handlers
 {
     [RegisterComponentUpdateHandler]
-    internal class ReferenceDataRequestState_Handler : IComponentUpdateHandler<ReferenceDataRequestState.Update, ReferenceDataRequestState.Data>
+    internal class ReferenceDataRequestState_Handler : IComponentUpdateHandler<ReferenceDataRequestState, ReferenceDataRequestState.Update, ReferenceDataRequestState.Data>
     {
-        public ReferenceDataRequestState_Handler()
-        {
-            Init(6908, typeof(ReferenceDataRequestState.Update), typeof(ReferenceDataRequestState.Data));
-            // Init(6908);
-        }
-        
-        protected override void Init( uint ComponentId, Type UpdateType, Type DataType )
+        public ReferenceDataRequestState_Handler() { Init(6908); }
+        protected override void Init( uint ComponentId )
         {
             this.ComponentId = ComponentId;
-            this.DataType = DataType;
-            this.UpdateType = UpdateType;
         }
-        
         private static byte[] Compress(string input)
         {
             byte[] data = Encoding.ASCII.GetBytes(input);
