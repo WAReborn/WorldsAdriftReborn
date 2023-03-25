@@ -6,6 +6,7 @@ using Improbable.Worker;
 using WorldsAdriftRebornGameServer.DLLCommunication;
 using WorldsAdriftRebornGameServer.Game;
 using WorldsAdriftRebornGameServer.Game.Components;
+using WorldsAdriftRebornGameServer.Game.Components.Update;
 using WorldsAdriftRebornGameServer.Networking.Singleton;
 using WorldsAdriftRebornGameServer.Networking.Wrapper;
 using static WorldsAdriftRebornGameServer.DLLCommunication.EnetLayer;
@@ -245,7 +246,7 @@ namespace WorldsAdriftRebornGameServer
 
                                 for(int i = 0; i < updateCount; i++)
                                 {
-                                    ComponentsSerializer.ComponentUpdateApply(keyValuePair.Key, entityId, update[i].ComponentId, update[i].ComponentData, (uint)update[i].DataLength);
+                                    ComponentUpdateManager.Instance.HandleComponentUpdate(keyValuePair.Key, entityId, update[i].ComponentId, update[i].ComponentData, update[i].DataLength);
                                 }
                             }
                             else

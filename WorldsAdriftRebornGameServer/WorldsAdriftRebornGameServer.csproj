@@ -10,6 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0-preview.2.23128.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\WorldsAdriftRebornCoreSdk\WorldsAdriftRebornCoreSdk.vcxproj">
       <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
       <OutputItemType>Content</OutputItemType>
@@ -23,6 +27,9 @@
     </Reference>
     <Reference Include="Improbable.WorkerSdkCsharp">
       <HintPath>$(WorldsAdriftGameDir)\UnityClient@Windows_Data\Managed\Improbable.WorkerSdkCsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Improbable.WorkerSdkCsharp.Framework">
+      <HintPath>..\..\..\..\Downloads\depot_322783\UnityClient@Windows_Data\Managed\Improbable.WorkerSdkCsharp.Framework.dll</HintPath>
     </Reference>
     <Reference Include="protobuf-net">
       <HintPath>$(WorldsAdriftGameDir)\UnityClient@Windows_Data\Managed\protobuf-net.dll</HintPath>
