@@ -41,7 +41,6 @@ namespace WorldsAdriftRebornGameServer.Game.Components.Update.Handlers
                     {
                         ScalaSlottedInventoryItem modifiedItem = storedInventoryState.inventoryList.Value[k];
                         modifiedItem.slotType = ItemHelper.GetItem(storedInventoryState.inventoryList.Value[k].itemTypeId).characterSlot;
-                        Console.WriteLine("[debug] setting to " + modifiedItem.slotType);
 
                         storedInventoryState.inventoryList.Value[k] = modifiedItem;
                     }
