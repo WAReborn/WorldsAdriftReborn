@@ -1223,89 +1223,2591 @@
     "metadata": {}
   },
   {
-    "itemTypeID": "birch",
-    "height": 2,
-    "width": 3,
-    "name": "Birch Wood",
-    "category": "Wood",
-    "iconName": "woods/Wood_Birch",
-    "equippable": false,
-    "characterSlot": "None",
-    "metadata": {
+    "itemTypeID":"cedar",
+    "height":2,
+    "width":3,
+    "name":"Cedar Wood",
+    "description": "Extremely light and soft, cannot withstand much damage.",
+    "category":"Wood",
+    "iconName":"woods/Wood_Cedar",
+    "equippable":false,
+    "characterSlot":"None",
+    "metadata":{
+
     }
   },
   {
-    "itemTypeID": "fuel",
-    "height": 2,
-    "width": 2,
-    "name": "Fuel",
-    "category": "Fuel",
-    "iconName": "misc craft materials/2x2_Fuel_container",
-    "equippable": false,
-    "characterSlot": "None",
-    "metadata": {
+    "itemTypeID":"hemlock",
+    "height":2,
+    "width":3,
+    "name":"Hemlock Wood",
+    "description": "Very light but durable enough to be used in certain scenarios.",
+    "category":"Wood",
+    "iconName":"woods/Wood_Hemlock",
+    "equippable":false,
+    "characterSlot":"None",
+    "metadata":{
+
     }
   },
   {
-    "itemTypeID": "torch",
-    "height": 4,
-    "width": 1,
-    "name": "Torch",
-    "category": "",
-    "iconName": "crafted items/1x4_Torch",
-    "equippable": false,
-    "characterSlot": "None",
-    "metadata": {
-      "totalHealth": "100",
+    "itemTypeID":"chestnut",
+    "height":2,
+    "width":3,
+    "name":"Chestnut Wood",
+    "description": "Lightweight but nevertheless versatile timber.",
+    "category":"Wood",
+    "iconName":"woods/Wood_Chestnut",
+    "equippable":false,
+    "characterSlot":"None",
+    "metadata":{
+
+    }
+  },
+  {
+    "itemTypeID":"elm",
+    "height":2,
+    "width":3,
+    "name":"Elm Wood",
+    "description": "Medium weight with no outstanding strengths or vulnerabilities.",
+    "category":"Wood",
+    "iconName":"woods/Wood_Elm",
+    "equippable":false,
+    "characterSlot":"None",
+    "metadata":{
+
+    }
+  },
+  {
+    "itemTypeID":"birch",
+    "height":2,
+    "width":3,
+    "name":"Birch Wood",
+    "description": "Soft but otherwise high performance for it's weight.",
+    "category":"Wood",
+    "iconName":"woods/Wood_Birch",
+    "equippable":false,
+    "characterSlot":"None",
+    "metadata":{
+
+    }
+  },
+  {
+    "itemTypeID":"ash",
+    "height":2,
+    "width":3,
+    "name":"Ash Wood",
+    "description": "Extremely flexible all-rounder but heavy for timber.",
+    "category":"Wood",
+    "iconName":"woods/Wood_Ash",
+    "equippable":false,
+    "characterSlot":"None",
+    "metadata":{
+
+    }
+  },
+  {
+    "itemTypeID":"oak",
+    "height":2,
+    "width":3,
+    "name":"Oak Wood",
+    "description": "Durable and versatile but heavy for wood.",
+    "category":"Wood",
+    "iconName":"woods/Wood_Oak",
+    "equippable":false,
+    "characterSlot":"None",
+    "metadata":{
+
+    }
+  },
+  {
+    "itemTypeID":"palm",
+    "height":2,
+    "width":3,
+    "name":"Palm Wood",
+    "description": "The heaviest but also most useful wood.",
+    "category":"Wood",
+    "iconName":"woods/Wood_palm",
+    "equippable":false,
+    "characterSlot":"None",
+    "metadata":{
+
+    }
+  },
+  {
+    "itemTypeID":"fuel",
+    "height":2,
+    "width":2,
+    "name":"Fuel",
+    "category":"Fuel",
+    "iconName":"misc craft materials/2x2_Fuel_container",
+    "equippable":false,
+    "characterSlot":"None",
+    "metadata":{
+
+    }
+  },
+  {
+    "itemTypeID":"torch",
+    "height":4,
+    "width":1,
+    "name":"Torch",
+    "category":"",
+    "iconName":"crafted items/1x4_Torch",
+    "equippable":false,
+    "characterSlot":"None",
+    "metadata":{
+      "totalHealth":"100",
       "health": "100"
     }
   },
   {
-    "itemTypeID": "gauntlet_salvage",
-    "height": 0,
-    "width": 0,
-    "name": "Salvage Item",
-    "category": "",
-    "iconName": "Gauntlet_Salvage",
-    "equippable": true,
-    "characterSlot": "Tool",
-    "metadata": {
+    "itemTypeID":"gauntlet_salvage",
+    "height":0,
+    "width":0,
+    "name":"Salvage Item",
+    "category":"",
+    "iconName":"Gauntlet_Salvage",
+    "equippable":true,
+    "characterSlot":"Tool",
+    "metadata":{
+
     }
   },
   {
-    "itemTypeID": "gauntlet_repair",
-    "height": 0,
-    "width": 0,
-    "name": "Repair Item",
-    "category": "",
-    "iconName": "Gauntlet_Repair",
-    "equippable": true,
-    "characterSlot": "Tool",
-    "metadata": {
+    "itemTypeID":"gauntlet_repair",
+    "height":0,
+    "width":0,
+    "name":"Repair Item",
+    "category":"",
+    "iconName":"Gauntlet_Repair",
+    "equippable":true,
+    "characterSlot":"Tool",
+    "metadata":{
+
     }
   },
   {
-    "itemTypeID": "gauntlet_build",
-    "height": 0,
-    "width": 0,
-    "name": "Build Item",
-    "category": "",
-    "iconName": "Gauntlet_Build",
-    "equippable": true,
-    "characterSlot": "Tool",
-    "metadata": {
+    "itemTypeID":"gauntlet_build",
+    "height":0,
+    "width":0,
+    "name":"Build Item",
+    "category":"",
+    "iconName":"Gauntlet_Build",
+    "equippable":true,
+    "characterSlot":"Tool",
+    "metadata":{
+
     }
   },
   {
-    "itemTypeID": "gauntlet_scanner",
-    "height": 0,
-    "width": 0,
-    "name": "Scanner Item",
-    "category": "",
-    "iconName": "Scanner_Scan",
-    "equippable": true,
-    "characterSlot": "Tool",
+    "itemTypeID":"gauntlet_scanner",
+    "height":0,
+    "width":0,
+    "name":"Scanner Item",
+    "category":"",
+    "iconName":"Scanner_Scan",
+    "equippable":true,
+    "characterSlot":"Tool",
+    "metadata":{
+
+    }
+  },
+  {
+    "itemTypeID":"scrapItem-Founder's Tome",
+    "height":2,
+    "width":2,
+    "name":"Founder's Tome",
+    "category":"Founder's Pack",
+    "iconName":"scrap items/2x2.Book.Of.Entitlement",
+    "equippable":false,
+    "characterSlot":"None",
+    "metadata":{
+      "FoundersTomePlayerName":""
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-badgeofoldage",
+    "height": 1,
+    "width": 1,
+    "name": "Badge of the Elderly",
+    "category": "Salvage",
+    "iconName": "scrap items/1x1_Badge_ofOld_Age",
+    "equippable": false,
+    "characterSlot": "None",
     "metadata": {
+      "title": "Badge of the Elderly",
+      "description": "A badge to mark out the selfish cowards living beyond the time of ascent."
+    },
+    "rewards": {
+        "3": {"a": 80, "q": 6, "item": "titanium"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-bandiniancurrency",
+    "height": 1,
+    "width": 1,
+    "name": "Bandinian Currency",
+    "category": "Salvage",
+    "iconName": "scrap items/1x1_Bandinian_Currency",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Bandinian Currency",
+      "description": "Imperfect coinage, adjorned with the faded outline of a popel shield."
+    },
+    "rewards": {
+        "1": {"a": 60, "q": 4, "item": "copper"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-luckydonkey",
+    "height": 1,
+    "width": 1,
+    "name": "Lucky Donkey Hoof",
+    "category": "Salvage",
+    "iconName": "scrap items/1x1_Lucky_Donkey",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Lucky Donkey Hoof",
+      "description": "A dismal keepsake, best put to better use."
+    },
+    "rewards": {
+        "4": {"a": 110, "q": 9, "item": "cedar"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-mouseeffigy",
+    "height": 1,
+    "width": 1,
+    "name": "Mouse Effigy",
+    "category": "Salvage",
+    "iconName": "scrap items/1x1_Mouse_Effigy",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Mouse Effigy",
+      "description": "Used in witchcraft and warlockery."
+    },
+    "rewards": {
+        "4": {"a": 75, "q": 7, "item": "lead"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-saboriandemarcatebadge",
+    "height": 1,
+    "width": 1,
+    "name": "Saborian Demarcate Badge",
+    "category": "Salvage",
+    "iconName": "scrap items/1x1_Saborian_demarcate_badge",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Saborian Demarcate Badge",
+      "description": "The winged angel of officialdom."
+    },
+    "rewards": {
+        "3": {"a": 90, "q": 7, "item": "tungsten"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-saborianshoulderclasp",
+    "height": 1,
+    "width": 1,
+    "name": "Saborian Shoulder Clasp",
+    "category": "Salvage",
+    "iconName": "scrap items/1x1_Saborian_Shoulder_Clasp",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Saborian Shoulder Clasp",
+      "description": "Clasps that graced the Saborian cloistra. They held loose garments together."
+    },
+    "rewards": {
+        "1": {"a": 80, "q": 4, "item": "copper"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-ternanuantoggle",
+    "height": 1,
+    "width": 1,
+    "name": "Ternanuan Thread Spool",
+    "category": "Salvage",
+    "iconName": "scrap items/1x1_Ternanuan_Toggle",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Ternanuan Thread Spool",
+      "description": "A spool for wrapping thread."
+    },
+    "rewards": {
+        "4": {"a": 70, "q": 8, "item": "titanium"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-ternanuantoggle2",
+    "height": 1,
+    "width": 1,
+    "name": "Ternanuan Toggle",
+    "category": "Salvage",
+    "iconName": "scrap items/1x1_Ternanuan_Toggle2",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Ternanuan Toggle",
+      "description": "A clip for holding garments together."
+    },
+    "rewards": {
+        "1": {"a": 60, "q": 7, "item": "titanium"},
+        "4": {"a": 60, "q": 8, "item": "titanium"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-tonkingpuck",
+    "height": 1,
+    "width": 1,
+    "name": "Tonking Puck",
+    "category": "Salvage",
+    "iconName": "scrap items/1x1_Tonking_Punk",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Tonking Puck",
+      "description": "Made to be tonked."
+    },
+    "rewards": {
+        "2": {"a": 45, "q": 6, "item": "aluminium"},
+        "3": {"a": 45, "q": 5, "item": "aluminium"},
+        "4": {"a": 45, "q": 10, "item": "aluminium"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-washer",
+    "height": 1,
+    "width": 1,
+    "name": "Iron Washer",
+    "category": "Salvage",
+    "iconName": "scrap items/1x1_washer",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Iron Washer",
+      "description": "A large washer."
+    },
+    "rewards": {
+        "1": {"a": 85, "q": 6, "item": "iron"},
+        "2": {"a": 85, "q": 8, "item": "iron"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-wolftoken",
+    "height": 1,
+    "width": 1,
+    "name": "Wolf Token",
+    "category": "Salvage",
+    "iconName": "scrap items/1x1_Wolf_token",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Wolf Token",
+      "description": "A spirit token of the Tarrery. A brief flame flickers in her eyes."
+    },
+    "rewards": {
+        "4": {"a": 250, "q": 10, "item": "silver"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-saborianbadgeofstate",
+    "height": 1,
+    "width": 1,
+    "name": "Saborian Badge of State",
+    "category": "Salvage",
+    "iconName": "scrap items/1x1Saborian_Badge_ofState",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Saborian Badge of State",
+      "description": "The winged angel of officialdom."
+    },
+    "rewards": {
+        "2": {"a": 90, "q": 5, "item": "tungsten"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-saborianflyingwings",
+    "height": 1,
+    "width": 1,
+    "name": "Saborian Flying Wings",
+    "category": "Salvage",
+    "iconName": "scrap items/1x1Saborian_FlyingWings",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Saborian Flying Wings",
+      "description": "Every time they threaded the lapel pin, it reminded them of those risen to Aetherium."
+    },
+    "rewards": {
+        "4": {"a": 95, "q": 8, "item": "silver"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-beetlebloodextractiontool",
+    "height": 2,
+    "width": 1,
+    "name": "Beetleblood Extraction Tool",
+    "category": "Salvage",
+    "iconName": "scrap items/1x2_Beetleblood_Extraction_Tool",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Beetleblood Extraction Tool",
+      "description": "Patented dye collector."
+    },
+    "rewards": {
+        "3": {"a": 115, "q": 6, "item": "nickel"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-bonehandlemagnifyingglass",
+    "height": 2,
+    "width": 1,
+    "name": "BoneHandle Magnifying Glass",
+    "category": "Salvage",
+    "iconName": "scrap items/1x2_BoneHandle_Magnifying_Glass",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "BoneHandle Magnifying Glass",
+      "description": "The type Puggibun might once have used."
+    },
+    "rewards": {
+        "4": {"a": 105, "q": 10, "item": "titanium"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-boviarypressurejet",
+    "height": 2,
+    "width": 1,
+    "name": "Boviary Pressure Jet",
+    "category": "Salvage",
+    "iconName": "scrap items/1x2_Boviary_Pressure_Jet2",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Boviary Pressure Jet",
+      "description": "A powerful jet for hosing down livestock."
+    },
+    "rewards": {
+        "1": {"a": 140, "q": 4, "item": "lead"},
+        "2": {"a": 140, "q": 7, "item": "lead"},
+        "3": {"a": 140, "q": 5, "item": "lead"},
+        "4": {"a": 140, "q": 8, "item": "lead"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-candlestick",
+    "height": 2,
+    "width": 1,
+    "name": "Candlestick",
+    "category": "Salvage",
+    "iconName": "scrap items/1x2_Candlestick",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Candlestick",
+      "description": "A candlestick."
+    },
+    "rewards": {
+        "1": {"a": 115, "q": 8, "item": "ash"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-catoNinetails",
+    "height": 2,
+    "width": 1,
+    "name": "Snapped Cat o' Nine-tails",
+    "category": "Salvage",
+    "iconName": "scrap items/1x2_CatoNine-tails",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Snapped Cat o' Nine-tails",
+      "description": "Unwinds into nine cruel, blood-soaked strands. For the whipping of slaves."
+    },
+    "rewards": {
+        "1": {"a": 100, "q": 7, "item": "iron"},
+        "1.1": {"a": 50, "q": 7, "item": "elm"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-crackedminingdrill",
+    "height": 2,
+    "width": 1,
+    "name": "Mangled Mining Drill",
+    "category": "Salvage",
+    "iconName": "scrap items/1x2_cracked_mining_Drill",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Mangled Mining Drill",
+      "description": "A drill used to plumb the hardest rock. It has amalgamated into a lump."
+    },
+    "rewards": {
+        "3": {"a": 125, "q": 5, "item": "bronze"},
+        "3.1": {"a": 40, "q": 0, "item": "fuel"},
+        "4": {"a": 125, "q": 8, "item": "bronze"},
+        "4.1": {"a": 40, "q": 0, "item": "fuel"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-dustylallaraglove",
+    "height": 2,
+    "width": 1,
+    "name": "Dusty Lallara Glove",
+    "category": "Salvage",
+    "iconName": "scrap items/1x2_Dusty_Lallara_Glove",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Dusty Lallara Glove",
+      "description": "A slinging glove, frayed from use, or the passage of time."
+    },
+    "rewards": {
+        "4": {"a": 135, "q": 9, "item": "cedar"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-oldpipe",
+    "height": 2,
+    "width": 1,
+    "name": "Old Pipe",
+    "category": "Salvage",
+    "iconName": "scrap items/1x2_Old_pipe",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Old Pipe",
+      "description": "A smoking pipe with a pronounced bend at the shank."
+    },
+    "rewards": {
+        "1": {"a": 120, "q": 5, "item": "hemlock"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-bentpipe",
+    "height": 2,
+    "width": 1,
+    "name": "Bent Pipe",
+    "category": "Salvage",
+    "iconName": "scrap items/1x2_pipe",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Bent Pipe",
+      "description": "A pipe with a bend."
+    },
+    "rewards": {
+        "1": {"a": 110, "q": 4, "item": "lead"},
+        "2": {"a": 110, "q": 8, "item": "lead"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-saboriandiningtongs",
+    "height": 2,
+    "width": 1,
+    "name": "Saborian Dining Tongs",
+    "category": "Salvage",
+    "iconName": "scrap items/1x2_Saborian_Dining_Tongs",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Saborian Dining Tongs",
+      "description": "They ate everything with tongs."
+    },
+    "rewards": {
+        "4": {"a": 80, "q": 9, "item": "silver"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-swordhilt",
+    "height": 2,
+    "width": 1,
+    "name": "Sword Hilt",
+    "category": "Salvage",
+    "iconName": "scrap items/1x2_Sword_Hilt",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Sword Hilt",
+      "description": "The hilt, pommel and crossguard of an old sword."
+    },
+    "rewards": {
+        "1": {"a": 85, "q": 4, "item": "chestnut"},
+        "2": {"a": 85, "q": 8, "item": "chestnut"},
+        "3": {"a": 85, "q": 8, "item": "chestnut"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-ancientbandiniansword",
+    "height": 3,
+    "width": 1,
+    "name": "Ancient Bandinian Sword",
+    "category": "Salvage",
+    "iconName": "scrap items/1x3_Ancient_Bandinian_Sword",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Ancient Bandinian Sword",
+      "description": "A fragile relic, haunted by the ghosts of Skeleton Pass."
+    },
+    "rewards": {
+        "4": {"a": 250, "q": 8, "item": "steel"},
+        "4.1": {"a": 50, "q": 8, "item": "titanium"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-barbersspoonstick",
+    "height": 3,
+    "width": 1,
+    "name": "Barbers Spoonstick",
+    "category": "Salvage",
+    "iconName": "scrap items/1x3_Barbers_Spoonstick",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Barbers Spoonstick",
+      "description": "A long stick tipped with a sharp metal spoon. Used to shave the body."
+    },
+    "rewards": {
+        "2": {"a": 30, "q": 8, "item": "steel"},
+        "2.1": {"a": 30, "q": 8, "item": "oak"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-boviarycoercionprod",
+    "height": 3,
+    "width": 1,
+    "name": "Boviary Coercion Prod",
+    "category": "Salvage",
+    "iconName": "scrap items/1x3_Boviary_Coercion_prod",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Boviary Coercion Prod",
+      "description": "Get cattle to do what you want. Cruelly."
+    },
+    "rewards": {
+        "2": {"a": 95, "q": 7, "item": "nickel"},
+        "3": {"a": 95, "q": 5, "item": "nickel"},
+        "4": {"a": 95, "q": 8, "item": "nickel"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-crackedsolderingrod",
+    "height": 3,
+    "width": 1,
+    "name": "Cracked Soldering Rod",
+    "category": "Salvage",
+    "iconName": "scrap items/1x3_Cracked_Soldering_Rod",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Cracked Soldering Rod",
+      "description": "A tool for imprinting fine detail on ship bows."
+    },
+    "rewards": {
+        "3": {"a": 135, "q": 6, "item": "bronze"},
+        "4": {"a": 135, "q": 10, "item": "bronze"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-enginecrank",
+    "height": 3,
+    "width": 1,
+    "name": "Engine Crank",
+    "category": "Salvage",
+    "iconName": "scrap items/1x3_engine_crank",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Engine Crank",
+      "description": "A simple crank."
+    },
+    "rewards": {
+        "1": {"a": 80, "q": 8, "item": "iron"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-finecloistrumstrigil",
+    "height": 3,
+    "width": 1,
+    "name": "Fine Cloistrum Strigil",
+    "category": "Salvage",
+    "iconName": "scrap items/1x3_Fine_Cloistrum_Strigil",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Fine Cloistrum Strigil",
+      "description": "A tool for scraping yourself clean at the bathhouse."
+    },
+    "rewards": {
+        "4": {"a": 130, "q": 5, "item": "copper"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-grandfrillshipantenna",
+    "height": 4,
+    "width": 1,
+    "name": "Grand Frillship Antenna",
+    "category": "Salvage",
+    "iconName": "scrap items/1X4_GrandFrillship_Antenna",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Grand Frillship Antenna",
+      "description": "'Captain Reporting, we have had a disturbance aboard involving an artist and a mime.'"
+    },
+    "rewards": {
+        "4": {"a": 60, "q": 10, "item": "aluminium"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-racingstilts",
+    "height": 4,
+    "width": 1,
+    "name": "Pair of Racing Stilts",
+    "category": "Salvage",
+    "iconName": "scrap items/1x4_Racing_stilts",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Pair of Racing Stilts",
+      "description": "Rise above!"
+    },
+    "rewards": {
+        "4": {"a": 145, "q": 8, "item": "elm"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-swordblade",
+    "height": 1,
+    "width": 4,
+    "name": "Sword Blade",
+    "category": "Salvage",
+    "iconName": "scrap items/1x4_Sword_Blade",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Sword Blade",
+      "description": "A fractured blade."
+    },
+    "rewards": {
+        "1": {"a": 90, "q": 7, "item": "bronze"},
+        "2": {"a": 90, "q": 6, "item": "bronze"},
+        "3": {"a": 90, "q": 6, "item": "bronze"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-brokencymbal",
+    "height": 1,
+    "width": 2,
+    "name": "Broken Cymbal",
+    "category": "Salvage",
+    "iconName": "scrap items/2x1_Broken_Cymbol",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Broken Cymbal",
+      "description": "Cymbolic."
+    },
+    "rewards": {
+        "2": {"a": 75, "q": 7, "item": "silver"},
+        "3": {"a": 75, "q": 6, "item": "silver"},
+        "4": {"a": 75, "q": 10, "item": "silver"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-crackedbinoculars",
+    "height": 1,
+    "width": 2,
+    "name": "Cracked Binoculars",
+    "category": "Salvage",
+    "iconName": "scrap items/2x1_Cracked_Binoculars",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Cracked Binoculars",
+      "description": "You can just about see the Malagawny waterspout from Molina."
+    },
+    "rewards": {
+        "4": {"a": 75, "q": 6, "item": "bronze"},
+        "4.1": {"a": 50, "q": 6, "item": "steel"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-doorhandle",
+    "height": 1,
+    "width": 2,
+    "name": "Door Handle",
+    "category": "Salvage",
+    "iconName": "scrap items/2x1_Doorhandle",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Door Handle",
+      "description": "Theres no sign of the door."
+    },
+    "rewards": {
+        "2": {"a": 80, "q": 8, "item": "iron"},
+        "3": {"a": 80, "q": 6, "item": "iron"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-marimbiannosepipe",
+    "height": 2,
+    "width": 1,
+    "name": "Marimbian Nosepipe",
+    "category": "Salvage",
+    "iconName": "scrap items/2x1_Marimbian_Nosepipe",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Marimbian Nosepipe",
+      "description": "No, I absolutely refuse to play it like that."
+    },
+    "rewards": {
+        "4": {"a": 50, "q": 9, "item": "aluminium"},
+        "4.1": {"a": 350, "q": 9, "item": "hemlock"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-oldwrench",
+    "height": 1,
+    "width": 2,
+    "name": "Old Wrench",
+    "category": "Salvage",
+    "iconName": "scrap items/2x1_oldWrench",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Old Wrench",
+      "description": "A worn out wrench."
+    },
+    "rewards": {
+        "1": {"a": 45, "q": 7, "item": "steel"},
+        "2": {"a": 45, "q": 7, "item": "steel"},
+        "3": {"a": 45, "q": 6, "item": "steel"},
+        "4": {"a": 45, "q": 8, "item": "steel"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-warlocksilverwhistle",
+    "height": 2,
+    "width": 1,
+    "name": "Warlock's Silver Whistle",
+    "category": "Salvage",
+    "iconName": "scrap items/2x1_Silver_Birds_Whistle",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Warlock's Silver Whistle",
+      "description": "From Oppeetobee, where Warlocks were ordained."
+    },
+    "rewards": {
+        "4": {"a": 400, "q": 7, "item": "silver"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-smashedcymbal",
+    "height": 2,
+    "width": 1,
+    "name": "Smashed Cymbal",
+    "category": "Salvage",
+    "iconName": "scrap items/2x1_Smashed_Cymbal",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Smashed Cymbal",
+      "description": "A relic from happier times."
+    },
+    "rewards": {
+        "2": {"a": 60, "q": 8, "item": "gold"},
+        "3": {"a": 60, "q": 6, "item": "gold"},
+        "4": {"a": 60, "q": 10, "item": "gold"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-bustoftelemon",
+    "height": 2,
+    "width": 2,
+    "name": "Bust Of Telemon",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2.bustOfTelemon",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Bust Of Telemon",
+      "description": "A reproduction of the demagogue, once in common circulation."
+    },
+    "rewards": {
+        "4": {"a": 175, "q": 6, "item": "bronze"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-antiquelamp",
+    "height": 2,
+    "width": 2,
+    "name": "Antique Lamp",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Antique_Lamp",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Antique Lamp",
+      "description": "A table lamp, sheared in two."
+    },
+    "rewards": {
+        "4": {"a": 160, "q": 8, "item": "nickel"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-bandinianbeeswaxtablet",
+    "height": 2,
+    "width": 2,
+    "name": "Bandinian Beeswax Tablet",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Bandinian_Beeswax_Tablet",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Bandinian Beeswax Tablet",
+      "description": "For schooling. The wax has crusted into enamel over the centuries. Primitive but not ancient."
+    },
+    "rewards": {
+        "2": {"a": 150, "q": 6, "item": "chestnut"},
+        "3": {"a": 150, "q": 6, "item": "chestnut"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-bathhousevalve",
+    "height": 2,
+    "width": 2,
+    "name": "Bathhouse Valve",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Bathhouse_Valve2",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Bathhouse Valve",
+      "description": "A valve that controlled the temperature of the various pools."
+    },
+    "rewards": {
+        "2": {"a": 150, "q": 7, "item": "iron"},
+        "4": {"a": 150, "q": 7, "item": "iron"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-boviaryharvester",
+    "height": 2,
+    "width": 2,
+    "name": "Boviary Harvester",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Boviary_Harvester2",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Boviary Harvester",
+      "description": "Ecologically sound, if a little invasive for the animals."
+    },
+    "rewards": {
+        "4": {"a": 100, "q": 10, "item": "copper"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-brokendrum",
+    "height": 2,
+    "width": 2,
+    "name": "Broken Drum",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Broken_Drum",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Broken Drum",
+      "description": "The drum head is punctured through."
+    },
+    "rewards": {
+        "2": {"a": 125, "q": 6, "item": "hemlock"},
+        "3": {"a": 125, "q": 9, "item": "hemlock"},
+        "4": {"a": 125, "q": 7, "item": "hemlock"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-ceramicpot",
+    "height": 2,
+    "width": 2,
+    "name": "Ceramic pot",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Ceramic_pot",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Ceramic pot",
+      "description": "A pentagonal ceramic pot showing signs of wear."
+    },
+    "rewards": {
+        "4": {"a": 95, "q": 8, "item": "silver"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-childsball",
+    "height": 2,
+    "width": 2,
+    "name": "Childs Ball",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Childs_Ball",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Childs Ball",
+      "description": "A deflated ball."
+    },
+    "rewards": {
+        "1": {"a": 75, "q": 7, "item": "palm"},
+        "2": {"a": 75, "q": 8, "item": "palm"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-childskitchenset",
+    "height": 2,
+    "width": 2,
+    "name": "Childs Kitchen Set",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Childs_KitchenSet",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Childs Kitchen Set",
+      "description": "Never designed to hold hot nut-vitties."
+    },
+    "rewards": {
+        "1": {"a": 110, "q": 4, "item": "oak"},
+        "2": {"a": 110, "q": 8, "item": "oak"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-clamp",
+    "height": 2,
+    "width": 2,
+    "name": "Godhand Clamp",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_clamp",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Godhand Clamp",
+      "description": "A shattered clamp, once used by the godhands to secure other vessels."
+    },
+    "rewards": {
+        "3": {"a": 95, "q": 5, "item": "titanium"},
+        "4": {"a": 95, "q": 10, "item": "titanium"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-cookingpot",
+    "height": 2,
+    "width": 2,
+    "name": "Cooking Pot",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Cooking_Pot",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Cooking Pot",
+      "description": "Still has burned-on stains of god-knows-what."
+    },
+    "rewards": {
+        "1": {"a": 125, "q": 6, "item": "bronze"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-coversleeve",
+    "height": 2,
+    "width": 2,
+    "name": "Cover Sleeve",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Cover_sleeve",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Cover Sleeve",
+      "description": "The cover jacket of a play. From the theatrical border town of Chado."
+    },
+    "rewards": {
+        "1": {"a": 140, "q": 7, "item": "birch"},
+        "2": {"a": 140, "q": 4, "item": "birch"},
+        "3": {"a": 140, "q": 5, "item": "birch"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-crackedhydraulicpins",
+    "height": 2,
+    "width": 2,
+    "name": "Cracked Hydraulic Pins",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Cracked_Hydraulic_Pins",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Cracked Hydraulic Pins",
+      "description": "Pins that were part of a hydraulic system."
+    },
+    "rewards": {
+        "1": {"a": 55, "q": 7, "item": "nickel"},
+        "2": {"a": 55, "q": 8, "item": "nickel"},
+        "3": {"a": 55, "q": 9, "item": "nickel"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-diningtrencher",
+    "height": 2,
+    "width": 2,
+    "name": "Dining Trencher",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Dining_Trencher",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Dining Trencher",
+      "description": "The rough and ready dinner tray of a Karemese drifter."
+    },
+    "rewards": {
+        "1": {"a": 90, "q": 4, "item": "tin"},
+        "2": {"a": 90, "q": 7, "item": "tin"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-fountainshards",
+    "height": 2,
+    "width": 2,
+    "name": "Fountain Shards",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Fountain_shards",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Fountain Shards",
+      "description": "Shards of a civic fountain."
+    },
+    "rewards": {
+        "4": {"a": 70, "q": 10, "item": "aluminium"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-handchisel",
+    "height": 2,
+    "width": 2,
+    "name": "Hand Chisel",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Hand_Chisel",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Hand Chisel",
+      "description": "A blunted chisel."
+    },
+    "rewards": {
+        "3": {"a": 75, "q": 5, "item": "steel"},
+        "4": {"a": 75, "q": 9, "item": "steel"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-imperialanimalbell",
+    "height": 2,
+    "width": 2,
+    "name": "Imperial Animal Bell",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Imperial_Animal_Bell",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Imperial Animal Bell",
+      "description": "The sound of ceremony."
+    },
+    "rewards": {
+        "4": {"a": 75, "q": 10, "item": "gold"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-defectiveowlcamera",
+    "height": 2,
+    "width": 2,
+    "name": "Defective Owl Camera",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Ishgiruan_Defective_Owl_Camera",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Defective Owl Camera",
+      "description": "A camera shaped like an owl. With lasers for eyes."
+    },
+    "rewards": {
+        "1": {"a": 155, "q": 4, "item": "titanium"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-jarofmold",
+    "height": 2,
+    "width": 2,
+    "name": "Jar of Mold",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Jar_of_mold",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Jar of Mold",
+      "description": "An unplanned experiment."
+    },
+    "rewards": {
+        "3": {"a": 50, "q": 5, "item": "aluminium"},
+        "4": {"a": 50, "q": 8, "item": "aluminium"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-meltedcanonBall",
+    "height": 2,
+    "width": 2,
+    "name": "Melted CanonBall",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_melted_CanonBall",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Melted CanonBall",
+      "description": "No longer would fit in the barrel."
+    },
+    "rewards": {
+        "2": {"a": 125, "q": 5, "item": "iron"},
+        "3": {"a": 125, "q": 5, "item": "iron"},
+        "4": {"a": 125, "q": 6, "item": "iron"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-metalpot",
+    "height": 2,
+    "width": 2,
+    "name": "Metal Pot",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Metal_Pot",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Metal Pot",
+      "description": "Dented but still intact."
+    },
+    "rewards": {
+        "2": {"a": 75, "q": 8, "item": "tin"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-momorosanfruitplatter",
+    "height": 2,
+    "width": 2,
+    "name": "Momorosan Fruit Platter",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Momorosan_Fruit_Platter2",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Momorosan Fruit Platter",
+      "description": "A shimmering tray, made to bear an abundance of fruit."
+    },
+    "rewards": {
+        "4": {"a": 110, "q": 8, "item": "silver"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-ornatemagnifyingglass",
+    "height": 2,
+    "width": 2,
+    "name": "Ornate Magnifying Glass",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Ornate_Magnifying_Glass",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Ornate Magnifying Glass",
+      "description": "Clearly well made, it now lies broken beyond repair."
+    },
+    "rewards": {
+        "4": {"a": 100, "q": 6, "item": "silver"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-plantpot",
+    "height": 2,
+    "width": 2,
+    "name": "Plant Pot",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Plant_Pot",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Plant Pot",
+      "description": "A plant pot."
+    },
+    "rewards": {
+        "1": {"a": 100, "q": 7, "item": "iron"},
+        "2": {"a": 100, "q": 8, "item": "iron"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-plinth",
+    "height": 2,
+    "width": 2,
+    "name": "Decorative Plinth",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_plinth",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Decorative Plinth",
+      "description": "Formerly used as a space to show sculptures. Standard issue in Saborian habitats."
+    },
+    "rewards": {
+      "3": {"a": 125, "q": 6, "item": "tin"},
+      "4": {"a": 125, "q": 7, "item": "tin"}
+  }
+  },
+  {
+    "itemTypeID": "scrapItem-ruinedhelmet",
+    "height": 2,
+    "width": 2,
+    "name": "Ruined Helmet",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_ruined_Helmet",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Ruined Helmet",
+      "description": "A helmet that has taken a heavy blow."
+    },
+    "rewards": {
+        "2": {"a": 100, "q": 5, "item": "tin"},
+        "4": {"a": 100, "q": 9, "item": "tin"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-rustedmicroscope",
+    "height": 2,
+    "width": 2,
+    "name": "Rusted Microscope",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Rusted_Microscope",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Rusted Microscope",
+      "description": "The smaller moving parts have rusted together."
+    },
+    "rewards": {
+        "4": {"a": 130, "q": 8, "item": "steel"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-publicaddresssystem",
+    "height": 2,
+    "width": 2,
+    "name": "Public Address System",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Saborian_Public_AddressSystem",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Public Address System",
+      "description": "Attention Saborians, your country needs you!"
+    },
+    "rewards": {
+        "3": {"a": 100, "q": 6, "item": "steel"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-shatteredseismometer",
+    "height": 2,
+    "width": 2,
+    "name": "Shattered Seismometer",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Shattered_Seismometer",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Shattered Seismometer",
+      "description": "The needle is stuck fast at 11.0."
+    },
+    "rewards": {
+        "3": {"a": 165, "q": 7, "item": "iron"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-signedphotoofkonstinivaduva",
+    "height": 2,
+    "width": 2,
+    "name": "Signed Photograph of Konstini Vaduva",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Signed_Photo_of_Konstini_Vaduva",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Signed Photograph of Konstini Vaduva",
+      "description": "Framed in bronze. What a lovely moustache."
+    },
+    "rewards": {
+        "4": {"a": 250, "q": 10, "item": "bronze"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-skiwax",
+    "height": 2,
+    "width": 2,
+    "name": "Ski Wax",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_SkiWax",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Ski Wax",
+      "description": "Essesethean beeswax, perfect for coating skis."
+    },
+    "rewards": {
+        "2": {"a": 100, "q": 5, "item": "copper"},
+        "2.1": {"a": 75, "q": 4, "item": "silver"},
+        "4": {"a": 100, "q": 10, "item": "copper"},
+        "4.1": {"a": 75, "q": 10, "item": "silver"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-skullofimhorta",
+    "height": 2,
+    "width": 2,
+    "name": "Skull of Imhorta",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_SkullOfImHorta",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Skull of Imhorta",
+      "description": "Skull of a wolf mother."
+    },
+    "rewards": {
+        "4": {"a": 100, "q": 9, "item": "gold"},
+        "4.1": {"a": 100, "q": 9, "item": "silver"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-skyshipmooringcapstan",
+    "height": 2,
+    "width": 2,
+    "name": "Skyship Mooring Capstan",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Skyship_Mooring_Capstan",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Skyship Mooring Capstan",
+      "description": "A capstan to which skyships would have moored."
+    },
+    "rewards": {
+        "2": {"a": 80, "q": 4, "item": "steel"},
+        "3": {"a": 80, "q": 5, "item": "steel"},
+        "4": {"a": 80, "q": 8, "item": "steel"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-smallplate",
+    "height": 2,
+    "width": 2,
+    "name": "Small Plate",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_SmallPlate",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Small Plate",
+      "description": "A small broken plate."
+    },
+    "rewards": {
+        "1": {"a": 80, "q": 6, "item": "tin"},
+        "4": {"a": 80, "q": 8, "item": "tin"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-tackyornament",
+    "height": 2,
+    "width": 2,
+    "name": "Tacky Ornament",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_TackyOrnament",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Tacky Ornament",
+      "description": "It wasn't even pretty when new."
+    },
+    "rewards": {
+        "1": {"a": 65, "q": 3, "item": "silver"},
+        "2": {"a": 65, "q": 7, "item": "silver"},
+        "4": {"a": 65, "q": 9, "item": "silver"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-tincan",
+    "height": 2,
+    "width": 2,
+    "name": "Tin Can",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_tinCan",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Tin Can",
+      "description": "A tin can."
+    },
+    "rewards": {
+        "1": {"a": 60, "q": 4, "item": "tin"},
+        "2": {"a": 60, "q": 8, "item": "tin"},
+        "3": {"a": 60, "q": 8, "item": "tin"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-watergujimarketawning",
+    "height": 2,
+    "width": 2,
+    "name": "Waterguji Market Awning",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Waterguji_Market_Awning",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Waterguji Market Awning",
+      "description": "Zig-zaggy. Looking at it makes your eyes go funny."
+    },
+    "rewards": {
+        "1": {"a": 300, "q": 4, "item": "cedar"},
+        "2": {"a": 300, "q": 8, "item": "cedar"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-woodenbowl",
+    "height": 2,
+    "width": 2,
+    "name": "Wooden Bowl",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Wooden_bowl",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Wooden Bowl",
+      "description": "A deep bowl."
+    },
+    "rewards": {
+        "1": {"a": 85, "q": 4, "item": "chestnut"},
+        "2": {"a": 85, "q": 8, "item": "chestnut"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-woollenquilt",
+    "height": 2,
+    "width": 2,
+    "name": "Woollen Quilt",
+    "category": "Salvage",
+    "iconName": "scrap items/2x2_Woollen_Quilt",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Woollen Quilt",
+      "description": "A deeply comforting companion on cold nights in the Korchis mountains."
+    },
+    "rewards": {
+        "4": {"a": 140, "q": 9, "item": "ash"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-atlashod",
+    "height": 3,
+    "width": 2,
+    "name": "Atlas Hod",
+    "category": "Salvage",
+    "iconName": "scrap items/2x3_Atlas_Hod",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Atlas Hod",
+      "description": "An instrument of back-breaking labour."
+    },
+    "rewards": {
+        "2": {"a": 60, "q": 6, "item": "iron"},
+        "2.1": {"a": 70, "q": 6, "item": "birch"},
+        "4": {"a": 60, "q": 9, "item": "iron"},
+        "4.1": {"a": 70, "q": 9, "item": "birch"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-bandinanmininghandpick",
+    "height": 3,
+    "width": 2,
+    "name": "Bandinan Mining Handpick",
+    "category": "Salvage",
+    "iconName": "scrap items/2x3_Bandinan_Mining_Handpick",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Bandinan Mining Handpick",
+      "description": "A miserable tool marking a time of forced servitude."
+    },
+    "rewards": {
+        "1": {"a": 100, "q": 7, "item": "iron"},
+        "1.1": {"a": 150, "q": 7, "item": "oak"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-brittlerake",
+    "height": 3,
+    "width": 2,
+    "name": "Brittle Old Rake",
+    "category": "Salvage",
+    "iconName": "scrap items/2x3_Brittle_rake2",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Brittle Old Rake",
+      "description": "A rake with broken tines."
+    },
+    "rewards": {
+        "2": {"a": 110, "q": 7, "item": "birch"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-loomshuttle",
+    "height": 3,
+    "width": 2,
+    "name": "Loom Shuttle",
+    "category": "Salvage",
+    "iconName": "scrap items/2x3_Loom_Shuttle",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Loom Shuttle",
+      "description": "For more traditional textile manufacture."
+    },
+    "rewards": {
+        "4": {"a": 200, "q": 10, "item": "iron"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-saborianblowtorch",
+    "height": 3,
+    "width": 2,
+    "name": "Saborian Blowtorch",
+    "category": "Salvage",
+    "iconName": "scrap items/2x3_Saborian_Blowtorch",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Saborian Blowtorch",
+      "description": "A standard issue blowtorch formerly used by Phlipai mechanics."
+    },
+    "rewards": {
+        "4": {"a": 100, "q": 8, "item": "tin"},
+        "4.1": {"a": 30, "q": 0, "item": "fuel"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-shardofmooncraft",
+    "height": 3,
+    "width": 2,
+    "name": "Shard of a Moon Craft",
+    "category": "Salvage",
+    "iconName": "scrap items/2x3_Shard_Of_Moon_Craft2",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Shard of a Moon Craft",
+      "description": "Part of a failed mission to the little moon Kif, pale green in a sea of stars."
+    },
+    "rewards": {
+        "4": {"a": 85, "q": 8, "item": "aluminium"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-ululatinghornofbargojiu",
+    "height": 3,
+    "width": 2,
+    "name": "Ululating Horn of Bargo Jiu",
+    "category": "Salvage",
+    "iconName": "scrap items/2x3_Ululating_Horn_of_Bargo_Jiu",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Ululating Horn of Bargo Jiu",
+      "description": "A horn with a shrill seaside sound."
+    },
+    "rewards": {
+        "4": {"a": 90, "q": 8, "item": "tungsten"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-cloistrapipework",
+    "height": 3,
+    "width": 2,
+    "name": "Cloistra Pipework",
+    "category": "Salvage",
+    "iconName": "scrap items/2x3Cloistra_pipework",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Cloistra Pipework",
+      "description": "Pipe that fed water to a Saborian bathhouse."
+    },
+    "rewards": {
+        "1": {"a": 100, "q": 6, "item": "lead"},
+        "2": {"a": 100, "q": 7, "item": "lead"},
+        "3": {"a": 100, "q": 7, "item": "lead"}
+    }
+  },
+  
+  {
+    "itemTypeID": "scrapItem-brokenbroom",
+    "height": 4,
+    "width": 2,
+    "name": "Broken Broom",
+    "category": "Salvage",
+    "iconName": "scrap items/2x4_Broom",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Broken Broom",
+      "description": "Shame, it would have been a good broom once."
+    },
+    "rewards": {
+        "1": {"a": 100, "q": 7, "item": "elm"},
+        "2": {"a": 100, "q": 7, "item": "elm"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-mellifluannarghile",
+    "height": 4,
+    "width": 2,
+    "name": "Mellifluan Narghile",
+    "category": "Salvage",
+    "iconName": "scrap items/2x4_Mellifluan_Narghile",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Mellifluan Narghile",
+      "description": "A labyrinthine pipe once used to imbibe scented tobacco."
+    },
+    "rewards": {
+        "3": {"a": 90, "q": 9, "item": "titanium"},
+        "4": {"a": 90, "q": 9, "item": "titanium"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-deconstructedtelescope",
+    "height": 1,
+    "width": 3,
+    "name": "Deconstructed Telescope",
+    "category": "Salvage",
+    "iconName": "scrap items/3x1.Deconstructed_Telescope",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Deconstructed Telescope",
+      "description": "Parts from an old telescope."
+    },
+    "rewards": {
+        "4": {"a": 75, "q": 9, "item": "gold"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-damagedtelescope",
+    "height": 1,
+    "width": 3,
+    "name": "Damaged Telescope",
+    "category": "Salvage",
+    "iconName": "scrap items/3x1_Damaged_Telescope",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Damaged Telescope",
+      "description": "A labyrinthine pipe once used to imbibe scented tobacco."
+    },
+    "rewards": {
+        "1": {"a": 150, "q": 6, "item": "cedar"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-bandinianpopel",
+    "height": 2,
+    "width": 3,
+    "name": "Bandinian Popel",
+    "category": "Salvage",
+    "iconName": "scrap items/3x2_Bandinian_Popel",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Bandinian Popel",
+      "description": "A gloriously underutilized shield. From the capital Darat."
+    },
+    "rewards": {
+        "4": {"a": 100, "q": 7, "item": "silver"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-ferrycrank",
+    "height": 2,
+    "width": 3,
+    "name": "Ferry Hand Crank",
+    "category": "Salvage",
+    "iconName": "scrap items/3x2_ferry_Crank",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Ferry Hand Crank",
+      "description": "'Made in Tomahon.' Must be a ferry to Gall."
+    },
+    "rewards": {
+        "4": {"a": 100, "q": 8, "item": "tin"},
+        "4.1": {"a": 50, "q": 8, "item": "titanium"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-footstool",
+    "height": 2,
+    "width": 3,
+    "name": "Dinky Footstool",
+    "category": "Salvage",
+    "iconName": "scrap items/3x2_Footstool",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Dinky Footstool",
+      "description": "A cute footstool for resting one's feet."
+    },
+    "rewards": {
+        "2": {"a": 130, "q": 7, "item": "elm"},
+        "4": {"a": 130, "q": 9, "item": "elm"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-herderssaddlebag",
+    "height": 2,
+    "width": 3,
+    "name": "Herder's Saddlebag",
+    "category": "Salvage",
+    "iconName": "scrap items/3x2_Herders_Saddlebag",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Herder's Saddlebag",
+      "description": "The thread has since rotted away."
+    },
+    "rewards": {
+        "4": {"a": 110, "q": 9, "item": "chestnut"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-industrialloomparts",
+    "height": 2,
+    "width": 3,
+    "name": "Industrial Loom Parts",
+    "category": "Salvage",
+    "iconName": "scrap items/3x2_Industrial_Loom_Parts",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Industrial Loom Parts",
+      "description": "Used in mass production of Mellifuan textiles."
+    },
+    "rewards": {
+        "1": {"a": 70, "q": 5, "item": "tin"},
+        "2": {"a": 70, "q": 7, "item": "tin"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-ishgiruanhorntrumpet",
+    "height": 2,
+    "width": 3,
+    "name": "Ishgiruan Horn Trumpet",
+    "category": "Salvage",
+    "iconName": "scrap items/3x2_Ishgiruan_Horn_Trumpet",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Ishgiruan Horn Trumpet",
+      "description": "Makes a sort of squawking sound."
+    },
+    "rewards": {
+        "4": {"a": 70, "q": 5, "item": "gold"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-knottedfrillshiphorn",
+    "height": 2,
+    "width": 3,
+    "name": "Knotted Frillship Horn",
+    "category": "Salvage",
+    "iconName": "scrap items/3x2_Knotted_Frillship_Horn",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Knotted Frillship Horn",
+      "description": "A good way to wake someone up."
+    },
+    "rewards": {
+        "2": {"a": 50, "q": 7, "item": "gold"},
+        "4": {"a": 50, "q": 8, "item": "gold"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-lallaragoalhoop",
+    "height": 2,
+    "width": 3,
+    "name": "Lallara Goal Hoop",
+    "category": "Salvage",
+    "iconName": "scrap items/3x2_Lallara_Goal_Hoop",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Lallara Goal Hoop",
+      "description": "Keeping the dreams of Bandini street children alive."
+    },
+    "rewards": {
+        "4": {"a": 100, "q": 10, "item": "nickel"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-ornithologicalbinocularvalise",
+    "height": 2,
+    "width": 3,
+    "name": "Ornithological Binocular Valise",
+    "category": "Salvage",
+    "iconName": "scrap items/3x2_Ornithological_Binocular_Valise",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Ornithological Binocular Valise",
+      "description": "'Property of Omhiron J. Verdamion-Phollo VI'."
+    },
+    "rewards": {
+        "4": {"a": 155, "q": 9, "item": "cedar"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-saborianweights",
+    "height": 2,
+    "width": 3,
+    "name": "Saborian Weights",
+    "category": "Salvage",
+    "iconName": "scrap items/3x2_Saborian_Weights",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Saborian Weights",
+      "description": "Used at the Cloistrum gymnasium."
+    },
+    "rewards": {
+        "2": {"a": 120, "q": 6, "item": "bronze"},
+        "4": {"a": 120, "q": 9, "item": "bronze"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItemselenistswoodenorrery",
+    "height": 2,
+    "width": 3,
+    "name": "Selenists Wooden Orrery",
+    "category": "Salvage",
+    "iconName": "scrap items/3x2_Selenists_Wooden_Orrery",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Selenists Wooden Orrery",
+      "description": "The celestial bodies mapped out on cane poles."
+    },
+    "rewards": {
+        "4": {"a": 140, "q": 10, "item": "palm"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-sewingmachine",
+    "height": 2,
+    "width": 3,
+    "name": "Sewing Machine",
+    "category": "Salvage",
+    "iconName": "scrap items/3x2_Sewing_Machine",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Sewing Machine",
+      "description": "'How I long for a new dress kindly tailor, will you make me one?'"
+    },
+    "rewards": {
+        "4": {"a": 160, "q": 7, "item": "lead"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-shiphandrail",
+    "height": 2,
+    "width": 3,
+    "name": "Ship Handrail",
+    "category": "Salvage",
+    "iconName": "scrap items/3x2_Ship_Handrail",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Ship Handrail",
+      "description": "A mangled hand rail that would have encircled the top deck."
+    },
+    "rewards": {
+        "1": {"a": 90, "q": 3, "item": "nickel"},
+        "4": {"a": 90, "q": 8, "item": "nickel"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-beartrap",
+    "height": 3,
+    "width": 3,
+    "name": "Shattered Bear Trap",
+    "category": "Salvage",
+    "iconName": "scrap items/3x3_BearTrap",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Shattered Bear Trap",
+      "description": "This has seen better days."
+    },
+    "rewards": {
+        "4": {"a": 150, "q": 8, "item": "iron"},
+        "4.1": {"a": 100, "q": 8, "item": "nickel"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-boatsiren",
+    "height": 3,
+    "width": 3,
+    "name": "Boat Siren",
+    "category": "Salvage",
+    "iconName": "scrap items/3x3_Boat_Siren",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Boat Siren",
+      "description": "Busted and battered."
+    },
+    "rewards": {
+        "4": {"a": 90, "q": 10, "item": "copper"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-enginehousing",
+    "height": 3,
+    "width": 3,
+    "name": "Engine Housing",
+    "category": "Salvage",
+    "iconName": "scrap items/3x3_Engine_Housing",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Engine Housing",
+      "description": "Essentially just the shell of an engine."
+    },
+    "rewards": {
+        "3": {"a": 90, "q": 5, "item": "steel"},
+        "3.1": {"a": 30, "q": 0, "item": "fuel"},
+        "4": {"a": 90, "q": 8, "item": "steel"},
+        "4.1": {"a": 30, "q": 0, "item": "fuel"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-farmparts",
+    "height": 3,
+    "width": 3,
+    "name": "Farm Parts",
+    "category": "Salvage",
+    "iconName": "scrap items/3x3_Farm_Parts",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Farm Parts",
+      "description": "Rusted parts of a farmship designed for rustling, and muck spreading."
+    },
+    "rewards": {
+        "1": {"a": 80, "q": 4, "item": "iron"},
+        "2": {"a": 80, "q": 6, "item": "iron"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-farmerscartWheel",
+    "height": 3,
+    "width": 3,
+    "name": "Farmers Cartwheel",
+    "category": "Salvage",
+    "iconName": "scrap items/3x3_Farmers_CartWheel",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Farmers Cartwheel",
+      "description": "A solid wheel for a heavy cart."
+    },
+    "rewards": {
+        "1": {"a": 120, "q": 4, "item": "birch"},
+        "2": {"a": 120, "q": 7, "item": "birch"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-funicularparts",
+    "height": 3,
+    "width": 3,
+    "name": "Funicular Parts",
+    "category": "Salvage",
+    "iconName": "scrap items/3x3_Funicular_Parts",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Funicular Parts",
+      "description": "Part of a Pinnish mountain railway car."
+    },
+    "rewards": {
+        "4": {"a": 100, "q": 5, "item": "nickel"},
+        "4.1": {"a": 60, "q": 5, "item": "steel"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-generator",
+    "height": 3,
+    "width": 3,
+    "name": "Defunct Generator",
+    "category": "Salvage",
+    "iconName": "scrap items/3x3_generator",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Defunct Generator",
+      "description": "The cooling system is missing, among other issues."
+    },
+    "rewards": {
+        "3": {"a": 100, "q": 5, "item": "nickel"},
+        "3.1": {"a": 50, "q": 0, "item": "fuel"},
+        "4": {"a": 100, "q": 9, "item": "nickel"},
+        "4.1": {"a": 50, "q": 0, "item": "fuel"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-godhandcannon",
+    "height": 3,
+    "width": 3,
+    "name": "Godhand Cannon Fragments",
+    "category": "Salvage",
+    "iconName": "scrap items/3x3_Godhand_Cannon_Fragments2",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Godhand Cannon Fragments",
+      "description": "The cannons that 'kept the peace'."
+    },
+    "rewards": {
+        "4": {"a": 195, "q": 6, "item": "lead"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-grandFfrillshipporthole",
+    "height": 3,
+    "width": 3,
+    "name": "Grand Frillship Porthole",
+    "category": "Salvage",
+    "iconName": "scrap items/3x3_GrandFrillship_porthole",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Grand Frillship Porthole",
+      "description": "To see the world without, or the reverie within."
+    },
+    "rewards": {
+        "1": {"a": 155, "q": 10, "item": "iron"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-molinbrandprocessor",
+    "height": 3,
+    "width": 3,
+    "name": "Molin Brand Processor",
+    "category": "Salvage",
+    "iconName": "scrap items/3x3_Molin_Brand_Processor2",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Molin Brand Processor",
+      "description": "Whizz up some Apotheon cake?"
+    },
+    "rewards": {
+        "4": {"a": 150, "q": 9, "item": "lead"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-ornateemptybox",
+    "height": 3,
+    "width": 3,
+    "name": "Ornate Empty Box",
+    "category": "Salvage",
+    "iconName": "scrap items/3x3_Ornate_Empty_Box",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Ornate Empty Box",
+      "description": "A bijou box that would once have held valuables."
+    },
+    "rewards": {
+        "3": {"a": 125, "q": 6, "item": "nickel"},
+        "4": {"a": 125, "q": 7, "item": "nickel"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-steamboatenginescrap",
+    "height": 3,
+    "width": 3,
+    "name": "Steamboat Engine Scrap",
+    "category": "Salvage",
+    "iconName": "scrap items/3x3_Steam_Boat_Engine_Scrap",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Steamboat Engine Scrap",
+      "description": "A masterpiece of engineering used both in the air and on the waters of the river Karem."
+    },
+    "rewards": {
+        "4": {"a": 250, "q": 10, "item": "iron"},
+        "4.1": {"a": 150, "q": 10, "item": "nickel"},
+        "4.2": {"a": 50, "q": 0, "item": "fuel"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-vinylplayer",
+    "height": 3,
+    "width": 3,
+    "name": "Vinyl Player",
+    "category": "Salvage",
+    "iconName": "scrap items/3x3_Vinyl_Player",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Vinyl Player",
+      "description": "The discs are warped, and the player is waterlogged."
+    },
+    "rewards": {
+        "4": {"a": 100, "q": 10, "item": "nickel"},
+        "4.1": {"a": 30, "q": 10, "item": "copper"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-warlockbijouxbureau",
+    "height": 3,
+    "width": 3,
+    "name": "Warlock's Bijoux Bureau",
+    "category": "Salvage",
+    "iconName": "scrap items/3x3_Warlock_Bijoux_Bureau",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Warlock's Bijoux Bureau",
+      "description": "A dinky bureau covered in strange symbols. Filled with curios."
+    },
+    "rewards": {
+        "1": {"a": 15, "q": 7, "item": "oak"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-steamerstack",
+    "height": 4,
+    "width": 3,
+    "name": "Steamer Stack",
+    "category": "Salvage",
+    "iconName": "scrap items/3x4_SteamerStack",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Steamer Stack",
+      "description": "A blackened flue."
+    },
+    "rewards": {
+        "2": {"a": 300, "q": 6, "item": "tin"},
+        "4": {"a": 300, "q": 8, "item": "tin"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-beetlebloodlinen",
+    "height": 2,
+    "width": 4,
+    "name": "Beetle Blood Linen",
+    "category": "Salvage",
+    "iconName": "scrap items/4x2_Beetle_Blood_Linen1",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Beetle Blood Linen",
+      "description": "Smells musty."
+    },
+    "rewards": {
+        "2": {"a": 80, "q": 8, "item": "ash"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-Godhandcagebar",
+    "height": 2,
+    "width": 4,
+    "name": "Godhand Cage Bar",
+    "category": "Salvage",
+    "iconName": "scrap items/4x2_Godhand_Cage_Bar2",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Godhand Cage Bar",
+      "description": "Phantoms of emaciated Bandinians still enswirl it."
+    },
+    "rewards": {
+        "2": {"a": 140, "q": 8, "item": "tin"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-grandmooringrope",
+    "height": 2,
+    "width": 4,
+    "name": "Grand Mooring Rope",
+    "category": "Salvage",
+    "iconName": "scrap items/4x2_saborian_Grand_mooring_rope",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Grand Mooring Rope",
+      "description": "Ropes that once tethered great skyships to their city moorings."
+    },
+    "rewards": {
+        "4": {"a": 160, "q": 8, "item": "palm"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-shelving",
+    "height": 2,
+    "width": 4,
+    "name": "Shelving",
+    "category": "Salvage",
+    "iconName": "scrap items/4x2_Shelving",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Shelving",
+      "description": "Probably used to hold books, but it is cracked down the middle."
+    },
+    "rewards": {
+        "1": {"a": 40, "q": 6, "item": "iron"},
+        "1.1": {"a": 75, "q": 6, "item": "elm"},
+        "2": {"a": 40, "q": 6, "item": "iron"},
+        "2.1": {"a": 75, "q": 8, "item": "elm"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-imperialturret",
+    "height": 3,
+    "width": 4,
+    "name": "Imperial Turret",
+    "category": "Salvage",
+    "iconName": "scrap items/4x3_imperial_turret",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Imperial Turret",
+      "description": "More effort was spent on the decoration than the design."
+    },
+    "rewards": {
+        "4": {"a": 120, "q": 8, "item": "tin"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-knackeredshiphatch",
+    "height": 3,
+    "width": 4,
+    "name": "Knackered Ship Hatch",
+    "category": "Salvage",
+    "iconName": "scrap items/4x3_knackered_Ship_Hatch",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Knackered Ship Hatch",
+      "description": "A ship's hatch that is falling apart."
+    },
+    "rewards": {
+        "2": {"a": 125, "q": 8, "item": "lead"},
+        "4": {"a": 125, "q": 5, "item": "lead"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-miningliftparts",
+    "height": 3,
+    "width": 4,
+    "name": "Mining Lift Parts",
+    "category": "Salvage",
+    "iconName": "scrap items/4x3_Mining_Lift_Parts2",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Mining Lift Parts",
+      "description": "Hitting rock bottom."
+    },
+    "rewards": {
+        "1": {"a": 120, "q": 7, "item": "iron"},
+        "2": {"a": 120, "q": 7, "item": "iron"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-mountedcannon",
+    "height": 3,
+    "width": 4,
+    "name": "Mounted Cannon",
+    "category": "Salvage",
+    "iconName": "scrap items/4x3_Mounted_Canon",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Mounted Cannon",
+      "description": "Rusty, was once covered in pastel paints, which have almost entirely peeled."
+    },
+    "rewards": {
+        "4": {"a": 350, "q": 9, "item": "iron"},
+        "4.1": {"a": 50, "q": 9, "item": "copper"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-saborianhowitzerbits",
+    "height": 3,
+    "width": 4,
+    "name": "Saborian Howitzer Bits",
+    "category": "Salvage",
+    "iconName": "scrap items/4x3_Saborian_Howitzer_Bits2",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Saborian Howitzer Bits",
+      "description": "Once a skyship cannon. Parts still look remarkably potent."
+    },
+    "rewards": {
+        "1": {"a": 145, "q": 6, "item": "lead"},
+        "2": {"a": 145, "q": 4, "item": "lead"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-smalltable",
+    "height": 3,
+    "width": 4,
+    "name": "Small Table",
+    "category": "Salvage",
+    "iconName": "scrap items/4x3_Small_table",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Small Table",
+      "description": "A plain broken table."
+    },
+    "rewards": {
+        "1": {"a": 100, "q": 7, "item": "iron"},
+        "1.1": {"a": 50, "q": 7, "item": "elm"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-tapestry",
+    "height": 3,
+    "width": 4,
+    "name": "Tapestry",
+    "category": "Salvage",
+    "iconName": "scrap items/4x3_Tapestry",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Tapestry",
+      "description": "Depicting yet another right of hedonism. From Strombiu's old town."
+    },
+    "rewards": {
+        "4": {"a": 149, "q": 9, "item": "chestnut"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-dismantledorgan",
+    "height": 4,
+    "width": 4,
+    "name": "Dismantled Organ",
+    "category": "Salvage",
+    "iconName": "scrap items/4x4_Dismantled_Organ",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Dismantled Organ",
+      "description": "From the materially poor city of Driss."
+    },
+    "rewards": {
+        "4": {"a": 150, "q": 7, "item": "oak"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-steamboatwheelblades",
+    "height": 3,
+    "width": 5,
+    "name": "Steamboat Wheel Blades",
+    "category": "Salvage",
+    "iconName": "scrap items/5x3_Steamboat_Wheel_Blades",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Steamboat Wheel Blades",
+      "description": "The spokes of a gargantuan paddle wheel."
+    },
+    "rewards": {
+        "4": {"a": 200, "q": 9, "item": "iron"},
+        "4.1": {"a": 300, "q": 9, "item": "bronze"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-crumpledicebreaker",
+    "height": 3,
+    "width": 4,
+    "name": "Crumpled Icebreaker",
+    "category": "Salvage",
+    "iconName": "scrap items/5x4_Crumpled_Icebreaker",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Crumpled Icebreaker",
+      "description": "A fitting for a maritime ship prow, to navigate the frozen north."
+    },
+    "rewards": {
+        "2": {"a": 300, "q": 4, "item": "titanium"},
+        "2.1": {"a": 150, "q": 4, "item": "steel"}
+    }
+  },
+  {
+    "itemTypeID": "scrapItem-steamboathogchain",
+    "height": 3,
+    "width": 4,
+    "name": "Steamboat Hog Chain",
+    "category": "Salvage",
+    "iconName": "scrap items/6x2_Steamboat_hog_chain",
+    "equippable": false,
+    "characterSlot": "None",
+    "metadata": {
+      "title": "Steamboat Hog Chain",
+      "description": "For steamers not shoats!"
+    },
+    "rewards": {
+        "1": {"a": 100, "q": 3, "item": "copper"},
+        "2": {"a": 100, "q": 5, "item": "copper"},
+        "4": {"a": 100, "q": 8, "item": "copper"}
     }
   },
   {
@@ -1404,7 +3906,7 @@
     }
   },
   {
-    "itemTypeID": "head_drissiancowl",
+    "itemTypeID": "head_pioneer",
     "height": 2,
     "width": 2,
     "name": "Drissian Cowl",
@@ -1419,7 +3921,7 @@
     }
   },
   {
-    "itemTypeID": "head_olk",
+    "itemTypeID": "head_goatmask",
     "height": 2,
     "width": 2,
     "category": "-",
@@ -1518,7 +4020,7 @@
     ]
   },
   {
-    "itemTypeID": "head_mask_natiq",
+    "itemTypeID": "head_christmas_2018",
     "name": "Natiq Mask",
     "category": "Steam Items",
     "height": 2,
@@ -1555,7 +4057,7 @@
     ]
   },
   {
-    "itemTypeID": "female_torso_tribal_skeleton",
+    "itemTypeID": "",
     "height": 3,
     "width": 2,
     "category": "Founder's Pack",
@@ -1604,7 +4106,7 @@
     }
   },
   {
-    "itemTypeID": "torso_kahi",
+    "itemTypeID": "torso_christmas_2018",
     "name": "Kahi Ceremony Parka",
     "category": "Steam Items",
     "height": 3,
@@ -1619,7 +4121,7 @@
     }
   },
   {
-    "itemTypeID": "torso_tamoe",
+    "itemTypeID": "torso_tribal_tamoe",
     "name": "Tamoe War Belt",
     "category": "Steam Items",
     "height": 3,
@@ -1634,7 +4136,7 @@
     }
   },
   {
-    "itemTypeID": "torso_tamoe_female",
+    "itemTypeID": "",
     "name": "Tamoe War Belt",
     "category": "Steam Items",
     "height": 3,
@@ -1649,7 +4151,7 @@
     }
   },
   {
-    "itemTypeID": "torso_vinicoti",
+    "itemTypeID": "torso_summer_male",
     "name": "Vinicoti Holiday Beads",
     "category": "Steam Items",
     "height": 3,
@@ -1664,7 +4166,7 @@
     }
   },
   {
-    "itemTypeID": "torso_vinicoti_female",
+    "itemTypeID": "",
     "name": "Vinicoti Holiday Beads",
     "category": "Steam Items",
     "height": 3,
@@ -1700,7 +4202,7 @@
     ]
   },
   {
-    "itemTypeID": "female_legs_tribal_skeleton",
+    "itemTypeID": "",
     "height": 4,
     "width": 2,
     "name": "Barguan Skeleton Skirt",
@@ -1715,7 +4217,7 @@
     }
   },
   {
-    "itemTypeID": "legs_kahi",
+    "itemTypeID": "legs_christmas_2018",
     "name": "Kahi Ceremony Leggings",
     "category": "Steam Items",
     "height": 4,
@@ -1730,7 +4232,7 @@
     }
   },
   {
-    "itemTypeID": "legs_kahi_female",
+    "itemTypeID": "",
     "name": "Kahi Ceremony Leggings",
     "category": "Steam Items",
     "height": 4,
@@ -1745,7 +4247,7 @@
     }
   },
   {
-    "itemTypeID": "legs_tamoe",
+    "itemTypeID": "legs_tribal_tamoe",
     "name": "Tamoe Skirt",
     "category": "Steam Items",
     "height": 4,
@@ -1760,7 +4262,7 @@
     }
   },
   {
-    "itemTypeID": "legs_tamoe_female",
+    "itemTypeID": "",
     "name": "Tamoe Skirt",
     "category": "Steam Items",
     "height": 4,
@@ -1775,7 +4277,7 @@
     }
   },
   {
-    "itemTypeID": "legs_vinicoti",
+    "itemTypeID": "legs_summer",
     "name": "Vinicoti Holiday Wrap",
     "category": "Steam Items",
     "height": 4,
@@ -1790,7 +4292,7 @@
     }
   },
   {
-    "itemTypeID": "legs_vinicoti_female",
+    "itemTypeID": "",
     "name": "Vinicoti Holiday Wrap",
     "category": "Steam Items",
     "height": 4,
@@ -1805,7 +4307,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_scarf",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_scarf_male",
@@ -1818,7 +4320,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_bandana",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_bandana_male",
@@ -1831,7 +4333,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torse_squireVariantA",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_squireVariantA_male",
@@ -1857,7 +4359,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_ponchoVariantB",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_ponchoVariantB_male",
@@ -1883,7 +4385,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_engineer",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_engineer_male",
@@ -1909,7 +4411,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_wanderer",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_wanderer_male",
@@ -1935,7 +4437,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "legs_boots",
     "height": 4,
     "width": 2,
     "iconName": "clothing/legs/2x4_legs_boots_male",
@@ -1961,7 +4463,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "legs_shorts",
     "height": 4,
     "width": 2,
     "iconName": "clothing/legs/2x4_legs_shorts_male",
@@ -1987,7 +4489,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "legs_wrap",
     "height": 4,
     "width": 2,
     "iconName": "clothing/legs/2x4_legs_wrap_male",
@@ -2013,7 +4515,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "legs_belts",
     "height": 4,
     "width": 2,
     "iconName": "clothing/legs/2x4_legs_belts_male",
@@ -2039,7 +4541,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_turban",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_turban_male",
@@ -2052,7 +4554,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_banditmask",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_banditmask_male",
@@ -2065,7 +4567,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_banditmaskpekoe",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_banditmaskpekoe_male",
@@ -2078,7 +4580,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_kitsunemask",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_kitsunemask_male",
@@ -2091,7 +4593,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_lallarahelm",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_lallarahelm_male",
@@ -2104,7 +4606,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_bandages_ninja",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_bandages_ninja_male",
@@ -2130,7 +4632,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_bandages_scales",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_bandages_scales_male",
@@ -2156,7 +4658,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "legs_goner",
     "height": 4,
     "width": 2,
     "iconName": "clothing/legs/2x4_legs_goner_male",
@@ -2182,7 +4684,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_metal",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_metal_male",
@@ -2195,7 +4697,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_artisan",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_artisan_male",
@@ -2208,7 +4710,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_gogglecap",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_gogglecap_male",
@@ -2221,7 +4723,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_hawkhelm",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_hawkhelm_male",
@@ -2234,7 +4736,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_owl",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_owl_male",
@@ -2247,7 +4749,7 @@
     }
   },
   {
-    "itemTypeID": "head_horns",
+    "itemTypeID": "head_horned",
     "height": 2,
     "width": 4,
     "category": "",
@@ -2262,7 +4764,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_merchant",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_merchant_male",
@@ -2275,7 +4777,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_ishgiruan_pilot",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_ishgiruan_pilot_male",
@@ -2288,7 +4790,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_navigator",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_navigator_male",
@@ -2301,7 +4803,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_moebius",
     "height": 3,
     "width": 2,
     "iconName": "clothing/heads/2x3_head_moebius_male",
@@ -2314,7 +4816,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_rogue",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_rogue_male",
@@ -2327,7 +4829,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_pilotcap",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_pilotcap_male",
@@ -2340,7 +4842,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_scales",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_scales_male",
@@ -2366,7 +4868,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_engineerVariantA",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_engineerVariantA_male",
@@ -2392,7 +4894,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_ishgiruan_pilot",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_ishgiruan_pilot_male",
@@ -2418,7 +4920,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_combo",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_combo_male",
@@ -2444,7 +4946,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_ishgiruan_pilot_variantA",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_ishgiruan_pilot_variantA_male",
@@ -2470,7 +4972,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_ishgiruan_pilot_variantB",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_ishgiruan_pilot_variantB_male",
@@ -2496,7 +4998,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_ponchoB",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_ponchoB_male",
@@ -2522,7 +5024,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_ponchoBVariantA",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_ponchoBVariantA_male",
@@ -2548,7 +5050,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_neckguard",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_neckguard_male",
@@ -2574,7 +5076,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_squire",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_squire_male",
@@ -2600,7 +5102,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_pirate",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_pirate_male",
@@ -2626,7 +5128,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_pirateVariantA",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_pirateVariantA_male",
@@ -2652,7 +5154,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_roman",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_roman_male",
@@ -2678,7 +5180,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_cape",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_cape_male",
@@ -2704,7 +5206,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "legs_baggy",
     "height": 4,
     "width": 2,
     "iconName": "clothing/legs/2x4_legs_baggy_male",
@@ -2730,7 +5232,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_hunterwide",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_hunterwide_male",
@@ -2743,7 +5245,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_featherhat",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_featherhat_male",
@@ -2756,7 +5258,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_godhand",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_godhand_male",
@@ -2769,7 +5271,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_hoodcap",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_hoodcap_male",
@@ -2782,7 +5284,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_circlemask",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_circlemask_male",
@@ -2795,7 +5297,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_tank",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_tank_male",
@@ -2808,7 +5310,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_skullcap",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_skullcap_male",
@@ -2821,7 +5323,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_scarfhood",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_scarfhood_male",
@@ -2834,7 +5336,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_godhand_hood",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_godhand_hood_male",
@@ -2847,7 +5349,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_saborianmask_chevron",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_saborianmask_chevron_male",
@@ -2860,7 +5362,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_saborianmask_diamond",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_saborianmask_diamond_male",
@@ -2873,7 +5375,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_saborianmask_eyes",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_saborianmask_eyes_male",
@@ -2886,7 +5388,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_saborianmask_sharp_scarf",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_saborianmask_sharp_scarf_male",
@@ -2899,7 +5401,7 @@
     }
   },
   {
-    "itemTypeID": "head_saborianhood",
+    "itemTypeID": "head_saborianmask_hoodscarf",
     "height": 2,
     "width": 2,
     "name": "Saborian Hood",
@@ -2914,7 +5416,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_hood",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_hood_male",
@@ -2927,7 +5429,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_wrap",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_wrap_male",
@@ -2940,7 +5442,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_wandererVariantA",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_wandererVariantA_male",
@@ -2966,7 +5468,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_ponchoVariantA",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_ponchoVariantA_male",
@@ -2992,7 +5494,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_saborianuniform_godhand",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_saborianuniform_godhand_male",
@@ -3018,7 +5520,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_bandages",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_bandages_male",
@@ -3089,7 +5591,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_comboB",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_comboB_male",
@@ -3115,7 +5617,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_saborianuniform_3pip",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_saborianuniform_3pip_male",
@@ -3141,7 +5643,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_saborianuniform_2pip",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_saborianuniform_2pip_male",
@@ -3167,7 +5669,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_saborianuniform_1pip",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_saborianuniform_1pip_male",
@@ -3193,7 +5695,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_wrap",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_wrap_male",
@@ -3219,7 +5721,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "legs_saborianuniform",
     "height": 4,
     "width": 2,
     "iconName": "clothing/legs/2x4_legs_saborianuniform_male",
@@ -3232,7 +5734,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "legs_saborianuniform_stripe",
     "height": 4,
     "width": 2,
     "iconName": "clothing/legs/2x4_legs_saborianuniform_stripe_male",
@@ -3245,7 +5747,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "legs_shinpads",
     "height": 4,
     "width": 2,
     "iconName": "clothing/legs/2x4_legs_shinpads_male",
@@ -3258,7 +5760,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "legs_shortsVariantA",
     "height": 4,
     "width": 2,
     "iconName": "clothing/legs/2x4_legs_shortsVariantA_male",
@@ -3271,7 +5773,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_reaver_raiderB",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_reaver_raiderB_male",
@@ -3284,7 +5786,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_reaver_bandage",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_reaver_bandage_male",
@@ -3297,7 +5799,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_reaver_porcupineVariantB",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_reaver_porcupineVariantB_male",
@@ -3310,7 +5812,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_reaver_raider",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_reaver_raider_male",
@@ -3323,7 +5825,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_reaverscarf",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_reaverscarf_male",
@@ -3336,7 +5838,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_reaver",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_reaver_male",
@@ -3349,7 +5851,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_reaver_shark",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_reaver_shark_male",
@@ -3362,7 +5864,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_reaver_porcupine",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_reaver_porcupine_male",
@@ -3375,7 +5877,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "head_reaverscarf_VariantB",
     "height": 2,
     "width": 2,
     "iconName": "clothing/heads/2x2_head_reaverscarf_VariantB_male",
@@ -3388,7 +5890,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_reaver_paddedvariantC",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_reaver_paddedvariantC_male",
@@ -3414,7 +5916,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_reaver_paddedvariantB",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_reaver_paddedvariantB_male",
@@ -3440,7 +5942,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_reaver_paddedvariantA",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_reaver_paddedvariantA_male",
@@ -3466,7 +5968,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_reaver_jacket",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_reaver_jacket_male",
@@ -3492,7 +5994,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_reaver_jacket_variantB",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_reaver_jacket_VariantB_male",
@@ -3518,7 +6020,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "torso_reaver_bandage",
     "height": 3,
     "width": 2,
     "iconName": "clothing/torsos/2x3_torso_reaver_bandage_male",
@@ -3544,7 +6046,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "legs_reaver_paddedVariantB",
     "height": 4,
     "width": 2,
     "iconName": "clothing/legs/2x4_legs_reaver_paddedVariantB_male",
@@ -3570,7 +6072,7 @@
     }
   },
   {
-    "itemTypeID": "",
+    "itemTypeID": "legs_reaver_paddedVariantA",
     "height": 4,
     "width": 2,
     "iconName": "clothing/legs/2x4_legs_reaver_paddedVariantA_male",
