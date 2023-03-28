@@ -7,17 +7,24 @@ namespace WorldsAdriftRebornGameServer.DLLCommunication
     {
         public enum ENetChannel
         {
-            AssetLoadRequestOp = 0,
-            AddEntityOp = 1,
-            SendComponentInterest = 2,
-            AuthorityChangeOp = 3
+            ASSET_LOAD_REQUEST_OP = 0,
+            ADD_ENTITY_OP = 1,
+            SEND_COMPONENT_INTEREST = 2,
+            AUTHORITY_CHANGE_OP = 3,
+            COMPONENT_UPDATE_OP = 4
+        }
+        public enum ENetPacketFlag
+        {
+            RELIABLE = 0,
+            UNRELIABLE = 1,
+            UNRELIABLE_UNSEQUENCED = 2
         }
         public struct ENetPacket_Wrapper
         {
-            public unsafe byte* data;
-            public long dataLength;
-            public unsafe byte* userData;
-            public int channel;
+            public unsafe byte* Data;
+            public long DataLength;
+            public unsafe byte* UserData;
+            public int Channel;
         }
 
         [DllImport("CoreSdkDll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "ENet_EXP_Initialize")]
@@ -58,6 +65,12 @@ namespace WorldsAdriftRebornGameServer.DLLCommunication
 
         [DllImport("CoreSdkDll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "PB_EXP_AuthorityChangeOp_Serialize")]
         public static unsafe extern void* PB_EXP_AuthorityChangeOp_Serialize( long entityId, AuthorityChangeOp* authorityChangeOp, uint authorityChangeOp_count, int* len );
+
+        [DllImport("CoreSdkDll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "PB_EXP_ComponentUpdateOp_Serialize")]
+        public static unsafe extern void* PB_EXP_ComponentUpdateOp_Serialize( long entityId, ComponentUpdateOp* componentUpdateOp, uint componentUpdateOp_count, int* len );
+
+        [DllImport("CoreSdkDll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "PB_EXP_ComponentUpdateOp_Deserialize")]
+        public static unsafe extern bool PB_EXP_ComponentUpdateOp_Deserialize( void* data, int len, long* entityId, ComponentUpdateOp** componentUpdateOp, uint* componentUpdateOp_count );
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public unsafe delegate void ENet_Poll_Callback( IntPtr peer );

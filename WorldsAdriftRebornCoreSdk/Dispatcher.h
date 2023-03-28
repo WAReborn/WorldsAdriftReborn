@@ -9,11 +9,13 @@ private:
     AssetLoadRequestCallback* assetLoadRequestCallback;
     AddComponentCallback* addComponentCallback;
     AuthorityChangeCallback* authorityChangeCallback;
+    ComponentUpdateCallback* componentUpdateCallback;
 public:
     void RegisterAddEntityCallback(AddEntityCallback callback, void* GCHandle);
     void RegisterAssetLoadRequestCallback(AssetLoadRequestCallback callback, void* GCHandle);
     void RegisterAddComponentCallback(AddComponentCallback callback, void* GCHandle);
     void RegisterAuthorityChangeCallback(AuthorityChangeCallback callback, void* GCHandle);
+    void RegisterComponentUpdateCallback(ComponentUpdateCallback callback, void* GCHandle);
 
     void Process(OpList* op_list);
 };

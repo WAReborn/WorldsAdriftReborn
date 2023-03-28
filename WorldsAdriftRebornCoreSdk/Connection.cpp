@@ -7,7 +7,7 @@ Connection::Connection(char* hostname, unsigned short port, ConnectionParameters
 
     if (this->client != NULL && this->hostname != NULL && this->port != 0) {
         Logger::Debug("Trying to connect to game server at " + std::string(this->hostname));
-        this->peer = ENet_Connect(this->hostname, this->port, this->client, 4);
+        this->peer = ENet_Connect(this->hostname, this->port, this->client, 5);
         if (this->peer != NULL) {
             Logger::Debug("SUCCESS!");
         }
@@ -107,6 +107,31 @@ OpList* Connection::GetOpList() {
                     }
                 }
             }
+            else if (packet->channel == CH_ComponentUpdateOp) {
+                PB_ComponentUpdateOp* componentUpdateOp = nullptr;
+                unsigned int componentUpdateOpCount = 0;
+                long entityId = 0;
+                if (!PB_ComponentUpdateOp_Deserialize(packet->data, packet->dataLength, &entityId, &componentUpdateOp, &componentUpdateOpCount)) {
+                    Logger::Debug("failed to deserialize ComponentUpdateOp message from server.");
+                }
+                else {
+                    op_list->componentUpdateOp = new ComponentUpdateOp[componentUpdateOpCount];
+                    op_list->componentUpdateOpLen = componentUpdateOpCount;
+
+                    for (int i = 0; i < componentUpdateOpCount; i++) {
+                        ClientObject* object;
+
+                        if (DeserializeComponent(componentUpdateOp[i].ComponentId, ClientObjectType::Update, componentUpdateOp[i].ComponentData, componentUpdateOp[i].DataLength, &object)) {
+                            Logger::Debug("successfully received ComponentUpdateOp message from server.");
+
+                            op_list->componentUpdateOp[i].EntityId = entityId;
+                            op_list->componentUpdateOp[i].Update.ComponentId = componentUpdateOp[i].ComponentId;
+                            op_list->componentUpdateOp[i].Update.Object = object;
+                        }
+                    }
+                }
+            }
+
             ENet_Destroy_Packet(packet);
         }
     }
@@ -136,4 +161,37 @@ void Connection::SendComponentInterest(long entity_id, InterestOverride* interes
     if (ptr != NULL && len > 0 && this->peer != NULL) {
         ENet_Send(this->peer, CH_SendComponentInterest, ptr, len, ENET_PACKET_FLAG_RELIABLE);
     }
+}
+
+void Connection::SendComponentUpdate(long entityId, ComponentObject* component_update) {
+    unsigned int len = 0;
+    int pb_len = 0;
+    char* buffer = nullptr;
+    PB_ComponentUpdateOp* update = new PB_ComponentUpdateOp();
+
+    if (!this->SerializeComponent(component_update->ComponentId, ClientObjectType::Update, component_update->Object, &buffer, &len)) {
+        Logger::Debug("failed to serialize component that the game wants to send and ComponentUpdate for.");
+
+        delete update;
+        return;
+    }
+
+    update->ComponentId = component_update->ComponentId;
+    update->ComponentData = buffer;
+    update->DataLength = len;
+
+    void* ptr = PB_ComponentUpdateOp_Serialize(entityId, update, 1, &pb_len);
+
+    if (ptr == nullptr || pb_len == 0) {
+        Logger::Debug("failed to serialize ComponentUpdateOp message for server.");
+        
+        delete update;
+        return;
+    }
+
+    if (this->peer != nullptr) {
+        ENet_Send(this->peer, CH_ComponentUpdateOp, ptr, pb_len, ENET_PACKET_FLAG_RELIABLE);
+    }
+
+    delete update;
 }

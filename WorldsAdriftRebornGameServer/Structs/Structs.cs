@@ -25,6 +25,7 @@ namespace WorldsAdriftRebornGameServer.Structs
         }
         public struct InterestOverride
         {
+            public InterestOverride(uint ComponentId, byte IsInterested) { this.ComponentId = ComponentId; this.IsInterested = IsInterested; }
             public uint ComponentId;
             public byte IsInterested;
         }
@@ -39,6 +40,12 @@ namespace WorldsAdriftRebornGameServer.Structs
             public AuthorityChangeOp(uint ComponentId, bool HasAuthority ) { this.ComponentId = ComponentId; this.HasAuthority = (byte)(HasAuthority ? 0x01 : 0x00); }
             public uint ComponentId;
             public byte HasAuthority;
+        }
+        public struct ComponentUpdateOp
+        {
+            public uint ComponentId;
+            public unsafe byte* ComponentData;
+            public int DataLength;
         }
     }
 }

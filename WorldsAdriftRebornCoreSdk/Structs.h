@@ -233,6 +233,12 @@ struct ComponentUpdateOp {
     ComponentObject Update;
 };
 
+struct PB_ComponentUpdateOp {
+    unsigned int ComponentId;
+    char* ComponentData;
+    int DataLength;
+};
+
 struct CommandRequestOp {
     unsigned int RequestId;
     long EntityId;

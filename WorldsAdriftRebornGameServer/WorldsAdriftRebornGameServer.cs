@@ -1,10 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Improbable.Worker;
 using WorldsAdriftRebornGameServer.DLLCommunication;
 using WorldsAdriftRebornGameServer.Game;
 using WorldsAdriftRebornGameServer.Game.Components;
+using WorldsAdriftRebornGameServer.Game.Components.Update;
 using WorldsAdriftRebornGameServer.Networking.Singleton;
+using WorldsAdriftRebornGameServer.Networking.Wrapper;
+using static WorldsAdriftRebornGameServer.DLLCommunication.EnetLayer;
 
 namespace WorldsAdriftRebornGameServer
 {
@@ -18,7 +23,7 @@ namespace WorldsAdriftRebornGameServer
             if (!ePeer.IsInvalid)
             {
                 Console.WriteLine("[info] got a connection.");
-                PeerManager.Instance.playerState.Add(ePeer, Game.GameState.State.NEWLY_CONNECTED);
+                PeerManager.Instance.playerState.Add(ePeer, new Dictionary<int, PlayerSyncStatus> { { 0, new PlayerSyncStatus() } });
             }
         }
         [PInvoke(typeof(EnetLayer.ENet_Poll_Callback))]
@@ -33,7 +38,17 @@ namespace WorldsAdriftRebornGameServer
 
         private static readonly EnetLayer.ENet_Poll_Callback callbackC = new EnetLayer.ENet_Poll_Callback(OnNewClientConnected);
         private static readonly EnetLayer.ENet_Poll_Callback callbackD = new EnetLayer.ENet_Poll_Callback(OnClientDisconnected);
-        private static readonly uint[] authoritativeComponents = { 8050, 8051, 6908, 1260, 1097, 1003, 1241};
+        private static readonly List<uint> authoritativeComponents = new List<uint>{ 8050, 8051, 6908, 1260, 1097, 1003, 1241, 1082};
+        private static List<long> playerEntityIDs = new List<long>();
+
+        private static long nextEntityId = 0;
+        public static long NextEntityId
+        {
+            get
+            {
+                return nextEntityId++;
+            }
+        }
         
         static unsafe void Main( string[] args )
         {
@@ -49,7 +64,7 @@ namespace WorldsAdriftRebornGameServer
             }
 
             Console.WriteLine("[info] successfully initialized ENet.");
-            ENetHostHandle server = EnetLayer.ENet_Create_Host(7777, 1, 4, 0, 0);
+            ENetHostHandle server = EnetLayer.ENet_Create_Host(7777, 1, 5, 0, 0);
 
             if (server.IsInvalid)
             {
@@ -62,252 +77,200 @@ namespace WorldsAdriftRebornGameServer
             Console.WriteLine("[info] successfully initialized networking, now waiting for connections and data.");
             PeerManager.Instance.SetENetHostHandle(server);
 
+            // define initial world state for first chunk
+            GameState.Instance.WorldState[0] = new List<SyncStep>()
+            {
+                new SyncStep(GameState.NextStateRequirement.ASSET_LOADED_RESPONSE, new Action<object>((object o) =>
+                {
+                    Console.WriteLine("[info] requesting the game to load the player asset...");
+
+                    if (SendOPHelper.SendAssetLoadRequestOP((ENetPeerHandle)o, "notNeeded?", "Traveller", "Player"))
+                    {
+                        Console.WriteLine("[info] successfully serialized and queued AssetLoadRequestOp.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("[error] failed to serialize and queue AssetLoadRequestOp.");
+                    }
+                })),
+                new SyncStep(GameState.NextStateRequirement.ASSET_LOADED_RESPONSE, new Action<object>((object o) =>
+                {
+                    Console.WriteLine("[info] requesting the game to load the island from its asset bundles...");
+
+                    if (SendOPHelper.SendAssetLoadRequestOP((ENetPeerHandle)o, "notNeeded?", "949069116@Island", "notNeeded?"))
+                    {
+                        Console.WriteLine("[info] successfully serialized and queued AssetLoadRequestOp.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("[error] failed to serialize and queue AssetLoadRequestOp.");
+                    }
+                })),
+                new SyncStep(GameState.NextStateRequirement.ADDED_ENTITY_RESPONSE, new Action<object>((object o) =>
+                {
+                    Console.WriteLine("[success] island asset loaded. requesting loading of island...");
+
+                    if (SendOPHelper.SendAddEntityOP((ENetPeerHandle)o, NextEntityId, "949069116@Island", "notNeeded?"))
+                    {
+                        Console.WriteLine("[info] successfully serialized and queued AddEntityOp.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("[error] failed to serialize and queue AddEntityOp.");
+                    }
+                })),
+                new SyncStep(GameState.NextStateRequirement.ADDED_ENTITY_RESPONSE, new Action<object>((object o) =>
+                {
+                    Console.WriteLine("[info] client ack'ed island spawning instruction (info by sdk, does not mean it truly spawned). requesting to spawn player...");
+
+                    playerEntityIDs.Add(NextEntityId);
+                    if(SendOPHelper.SendAddEntityOP((ENetPeerHandle)o, playerEntityIDs.Last<long>(), "Traveller", "Player"))
+                    {
+                        Console.WriteLine("[info] successfully serialized and queued AddEntityOp.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("[error] failed to serialize and queue AddEntityOp.");
+                    }
+                }))
+            };
+
             while (keepRunning)
             {
                 EnetLayer.ENetPacket_Wrapper* packet = EnetLayer.ENet_Poll(server, 50, Marshal.GetFunctionPointerForDelegate(callbackC), Marshal.GetFunctionPointerForDelegate(callbackD));
                 if(packet != null)
                 {
-                    foreach (KeyValuePair<ENetPeerHandle, GameState.State> keyValuePair in PeerManager.Instance.playerState)
+                    // work on packets that are relevant to progress in sync state
+                    foreach (KeyValuePair<ENetPeerHandle, Dictionary<int, PlayerSyncStatus>> keyValuePair in PeerManager.Instance.playerState)
                     {
-                        if(packet->channel == (int)EnetLayer.ENetChannel.AssetLoadRequestOp && keyValuePair.Value == GameState.State.NEWLY_CONNECTED_PENDING)
+                        int currentChunkIndex = 0;
+                        int currentPlayerSyncIndex = PeerManager.Instance.playerState[keyValuePair.Key][currentChunkIndex].SyncStepPointer;
+
+                        if (currentPlayerSyncIndex == GameState.Instance.WorldState[currentChunkIndex].Count - 1)
+                        {
+                            // this player is synced
+                            continue;
+                        }
+
+                        GameState.NextStateRequirement nextStateRequirement = GameState.Instance.WorldState[currentChunkIndex][currentPlayerSyncIndex].NextStateRequirement;
+
+                        if(packet->Channel == (int)EnetLayer.ENetChannel.ASSET_LOAD_REQUEST_OP && nextStateRequirement == GameState.NextStateRequirement.ASSET_LOADED_RESPONSE)
                         {
                             // for now set it for every client, but we need to distinguish them by their userData field
-                            PeerManager.Instance.playerState[keyValuePair.Key] = GameState.State.PLAYER_ASSET_LOADED;
+                            PeerManager.Instance.playerState[keyValuePair.Key][currentChunkIndex].SyncStepPointer++;
                         }
-                        else if (packet->channel == (int)EnetLayer.ENetChannel.AssetLoadRequestOp && keyValuePair.Value == GameState.State.ISLAND_LOAD_PENDING)
+                        else if(packet->Channel == (int)EnetLayer.ENetChannel.ADD_ENTITY_OP && nextStateRequirement == GameState.NextStateRequirement.ADDED_ENTITY_RESPONSE)
                         {
-                            // for now set it for every client, but we need to distinguish them by their userData field
-                            PeerManager.Instance.playerState[keyValuePair.Key] = GameState.State.ISLAND_LOADED;
-                        }
-                        else if(packet->channel == (int)EnetLayer.ENetChannel.AddEntityOp && keyValuePair.Value == GameState.State.ISLAND_SPAWN_PENDING)
-                        {
-                            PeerManager.Instance.playerState[keyValuePair.Key] = GameState.State.ISLAND_SPAWNED;
-                        }
-                        else if (packet->channel == (int)EnetLayer.ENetChannel.AddEntityOp && keyValuePair.Value == GameState.State.PLAYER_SPAWN_PENDING)
-                        {
-                            PeerManager.Instance.playerState[keyValuePair.Key] = GameState.State.PLAYER_SPAWNED;
-                        }
-
-                        if (packet->channel != (int)EnetLayer.ENetChannel.SendComponentInterest) continue;
-
-                        long entityId = 0;
-                        uint interestCount = 0;
-                        bool sendAuthority = false;
-                        Structs.Structs.InterestOverride* interests = (Structs.Structs.InterestOverride * )new IntPtr(0);
-
-                        if (EnetLayer.PB_EXP_SendComponentInterest_Deserialize(packet->data, (int)packet->dataLength, &entityId, &interests, &interestCount))
-                        {
-                            Console.WriteLine("[info] game requests components for entity id: " + entityId);
-                            List<Structs.Structs.AddComponentOp> serializedComponents = new List<Structs.Structs.AddComponentOp>();
-
-                            for(int i = 0; i < interestCount; i++)
-                            {
-                                uint len = 0;
-                                byte* buffer;
-                                ComponentsSerializer.InitAndSerialize(interests[i].ComponentId, &buffer, &len);
-
-                                if (len <= 0) continue;
-
-                                Console.WriteLine("[success] initialized and serialized componentId " + interests[i].ComponentId);
-                                Structs.Structs.AddComponentOp component;
-
-                                component.ComponentId = interests[i].ComponentId;
-                                component.ComponentData = buffer;
-                                component.DataLength = (int)len;
-
-                                serializedComponents.Add(component);
-                            }
-
-                            if (entityId == 1 && !PeerManager.Instance.clientSetupState.Contains(keyValuePair.Key))
-                            {
-                                for (var i = 0; i < authoritativeComponents.Length; i++)
-                                {
-                                    uint len = 0;
-                                    byte* buffer;
-                                    ComponentsSerializer.InitAndSerialize(authoritativeComponents[i], &buffer, &len);
-                                
-                                    if (len <= 0) continue;
-                                
-                                    Console.WriteLine("[success] initialized and serialized authoritative componentId " + authoritativeComponents[i]);
-                                    Structs.Structs.AddComponentOp component;
-                                
-                                    component.ComponentId = authoritativeComponents[i];
-                                    component.ComponentData = buffer;
-                                    component.DataLength = (int)len;
-                                
-                                    serializedComponents.Add(component);
-                                }
-                                    
-                                sendAuthority = true;
-                                PeerManager.Instance.clientSetupState.Add(keyValuePair.Key);
-                            }
-
-                            fixed (Structs.Structs.AddComponentOp* comps = serializedComponents.ToArray())
-                            {
-                                int len = 0;
-                                void* ptr = EnetLayer.PB_EXP_AddComponentOp_Serialize(entityId, comps, (uint)serializedComponents.Count, &len);
-
-                                if(ptr != null && len > 0)
-                                {
-                                    Console.WriteLine("[success] serialized all requested components, sending them to the game now...");
-
-                                    EnetLayer.ENet_Send(keyValuePair.Key, (int)EnetLayer.ENetChannel.SendComponentInterest, ptr, len, 1);
-                                    EnetLayer.ENet_Flush(server); // for now just send out without waiting for enet's internal sending in ENet_Poll()
-                                }
-                            }
-                                
-                            if (sendAuthority)
-                            {
-                                fixed (Structs.Structs.AuthorityChangeOp* authChangeOps = authoritativeComponents.Select(p => new Structs.Structs.AuthorityChangeOp(p, true)).ToArray())
-                                {
-                                    int len = 0;
-                                    void* ptr = EnetLayer.PB_EXP_AuthorityChangeOp_Serialize(entityId, authChangeOps, (uint) authoritativeComponents.Length, &len);
-
-                                    if (ptr == null || len <= 0) continue;
-
-                                    Console.WriteLine("[info] serialized all AuthorityRequestOp instructions for authoritative components.");
-
-                                    EnetLayer.ENet_Send(keyValuePair.Key, (int)EnetLayer.ENetChannel.AuthorityChangeOp, ptr, len, 1);
-                                    EnetLayer.ENet_Flush(server);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("[error] failed to parse component interest request from game.");
+                            PeerManager.Instance.playerState[keyValuePair.Key][currentChunkIndex].SyncStepPointer++;
                         }
                     }
+
+                    // work on packets that are not relevant for progress of sync state but need processing for any player
+                    foreach (KeyValuePair<ENetPeerHandle, Dictionary<int, PlayerSyncStatus>> keyValuePair in PeerManager.Instance.playerState)
+                    {
+                        if (packet->Channel == (int)EnetLayer.ENetChannel.SEND_COMPONENT_INTEREST)
+                        {
+                            long entityId = 0;
+                            uint interestCount = 0;
+                            Structs.Structs.InterestOverride* interests = (Structs.Structs.InterestOverride*)new IntPtr(0);
+
+                            if (EnetLayer.PB_EXP_SendComponentInterest_Deserialize(packet->Data, (int)packet->DataLength, &entityId, &interests, &interestCount))
+                            {
+                                Console.WriteLine("[info] game requests components for entity id: " + entityId);
+
+                                if(playerEntityIDs.Contains(entityId) && !PeerManager.Instance.clientSetupState.Contains(keyValuePair.Key))
+                                {
+                                    // a player entity requests components for the first time, we need to setup a few things to make him work properly
+                                    // some of this might not be needd anymore in the future once we sorted out a few things.
+                                    //
+                                    // we can make use of the fact that the game requests components for players in two stages, where the second one will terminate the loading screen of the client.
+                                    // the second stage needs a few components setup properly, for this we need to inject one component and call auth changed for a few others once.
+
+                                    // some components are needed in the first stage and need to be injected.
+                                    // we also need PilotState since schematics for glider where added, as the game nullrefs in PlayerExternalDataVisualizer.IsDriving() now (1109)
+                                    List<Structs.Structs.InterestOverride> injectedEarly = new List<Structs.Structs.InterestOverride> { new Structs.Structs.InterestOverride(1109, 1) };
+
+                                    if (!SendOPHelper.SendAddComponentOp(keyValuePair.Key, entityId, injectedEarly, true))
+                                    {
+                                        continue;
+                                    }
+
+                                    // then send what the game requested
+                                    if (!SendOPHelper.SendAddComponentOp(keyValuePair.Key, entityId, interests, interestCount, true))
+                                    {
+                                        continue;
+                                    }
+
+                                    // for some reason the game does not always request component 1080 (SchematicsLearnerGSimState), but its reader is required in InventoryVisualiser
+                                    List<Structs.Structs.InterestOverride> injected = new List<Structs.Structs.InterestOverride> { new Structs.Structs.InterestOverride(1080, 1) };
+                                    // also inject other required components for the inventory
+                                    injected.AddRange(authoritativeComponents.Select(p => new Structs.Structs.InterestOverride(p, 1)));
+
+                                    if (!SendOPHelper.SendAddComponentOp(keyValuePair.Key, entityId, injected, true))
+                                    {
+                                        continue;
+                                    }
+
+                                    // now send auth change
+                                    if(!SendOPHelper.SendAuthorityChangeOp(keyValuePair.Key, entityId, authoritativeComponents))
+                                    {
+                                        continue;
+                                    }
+
+                                    // now add player to clientSetupState
+                                    PeerManager.Instance.clientSetupState.Add(keyValuePair.Key);
+                                }
+                                else
+                                {
+                                    // player already setup or another entity requested components, so just process them
+                                    if (!SendOPHelper.SendAddComponentOp(keyValuePair.Key, entityId, interests, interestCount, true))
+                                    {
+                                        continue;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("[error] failed to deserialize ComponentInterest message from game.");
+                            }
+                        }
+                        else if(packet->Channel == (int)EnetLayer.ENetChannel.COMPONENT_UPDATE_OP)
+                        {
+                            long entityId = 0;
+                            uint updateCount = 0;
+                            Structs.Structs.ComponentUpdateOp* update = (Structs.Structs.ComponentUpdateOp*)new IntPtr(0);
+
+                            if (EnetLayer.PB_EXP_ComponentUpdateOp_Deserialize(packet->Data, (int)packet->DataLength, &entityId, &update, &updateCount) && updateCount > 0)
+                            {
+                                Console.WriteLine("[info] game requests " + updateCount + " ComponentUpdate's for entity id " + entityId);
+
+                                for(int i = 0; i < updateCount; i++)
+                                {
+                                    ComponentUpdateManager.Instance.HandleComponentUpdate(keyValuePair.Key, entityId, update[i].ComponentId, update[i].ComponentData, update[i].DataLength);
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("[error] failed to deserialize ComponentUpdate message from game, or empty message.");
+                            }
+                        }
+                    }
+
                     EnetLayer.ENet_Destroy_Packet(new IntPtr(packet));
                 }
 
                 // dont wait for GetOplist and then for the Dispatch call as we are the ones who would dispatch the work anyways.
-                foreach (KeyValuePair<ENetPeerHandle, GameState.State> keyValuePair in PeerManager.Instance.playerState)
+                // sync up players
+                foreach (KeyValuePair<ENetPeerHandle, Dictionary<int, PlayerSyncStatus>> keyValuePair in PeerManager.Instance.playerState)
                 {
-                    if(keyValuePair.Value == GameState.State.NEWLY_CONNECTED)
+                    int currentChunkIndex = 0;
+                    PlayerSyncStatus pStatus = keyValuePair.Value[currentChunkIndex];
+                    SyncStep step = GameState.Instance.WorldState[currentChunkIndex][pStatus.SyncStepPointer];
+
+                    if (!pStatus.Performed)
                     {
-                        Console.WriteLine("[info] requesting the game to load the player asset...");
-                        Structs.Structs.AssetLoadRequestOp assetLoadRequestOp;
-
-                        fixed(byte* assetType = Translator.ToUtf8Cstr("notNeeded?"))
-                        {
-                            fixed(byte* name = Translator.ToUtf8Cstr("Traveller"))
-                            {
-                                fixed(byte* context = Translator.ToUtf8Cstr("Player"))
-                                {
-                                    assetLoadRequestOp.AssetType = assetType;
-                                    assetLoadRequestOp.Name = name;
-                                    assetLoadRequestOp.Context = context;
-
-                                    int len = 0;
-
-                                    void* ptr = EnetLayer.PB_AssetLoadRequestOp_Serialize(&assetLoadRequestOp, &len);
-
-                                    if(ptr != null && len != 0)
-                                    {
-                                        Console.WriteLine("[info] successfully serialized AssetLoadRequestOp.");
-
-                                        EnetLayer.ENet_Send(keyValuePair.Key, (int)EnetLayer.ENetChannel.AssetLoadRequestOp, ptr, len, 1);
-                                        EnetLayer.ENet_Flush(server); // for now just send out without waiting for enet's internal sending in ENet_Poll()
-                                    }
-                                }
-                            }
-                        }
-
-                        PeerManager.Instance.playerState[keyValuePair.Key] = GameState.State.NEWLY_CONNECTED_PENDING;
-                    }
-                    else if(keyValuePair.Value == GameState.State.PLAYER_ASSET_LOADED)
-                    {
-                        Console.WriteLine("[info] requesting the game to load the island from its asset bundles...");
-                        Structs.Structs.AssetLoadRequestOp assetLoadRequestOp;
-
-                        fixed (byte* assetType = Translator.ToUtf8Cstr("notNeeded?"))
-                        {
-                            fixed (byte* name = Translator.ToUtf8Cstr("949069116@Island"))
-                            {
-                                fixed (byte* context = Translator.ToUtf8Cstr("notNeeded?"))
-                                {
-                                    assetLoadRequestOp.AssetType = assetType;
-                                    assetLoadRequestOp.Name = name;
-                                    assetLoadRequestOp.Context = context;
-
-                                    int len = 0;
-
-                                    void* ptr = EnetLayer.PB_AssetLoadRequestOp_Serialize(&assetLoadRequestOp, &len);
-
-                                    if (ptr != null && len != 0)
-                                    {
-                                        Console.WriteLine("[info] successfully serialized AssetLoadRequestOp.");
-
-                                        EnetLayer.ENet_Send(keyValuePair.Key, (int)EnetLayer.ENetChannel.AssetLoadRequestOp, ptr, len, 1);
-                                        EnetLayer.ENet_Flush(server); // for now just send out without waiting for enet's internal sending in ENet_Poll()
-                                    }
-                                }
-                            }
-                        }
-
-                        PeerManager.Instance.playerState[keyValuePair.Key] = GameState.State.ISLAND_LOAD_PENDING;
-                    }
-                    else if(keyValuePair.Value == GameState.State.ISLAND_LOADED)
-                    {
-                        Console.WriteLine("[success] island asset loaded. requesting loading of island...");
-                        Structs.Structs.AddEntityOp addEntityOp;
-
-                        fixed(byte* prefabName = Translator.ToUtf8Cstr("949069116@Island"))
-                        {
-                            fixed(byte* prefabContext = Translator.ToUtf8Cstr("notNeeded?"))
-                            {
-                                addEntityOp.PrefabName = prefabName;
-                                addEntityOp.PrefabContext = prefabContext;
-
-                                int len = 0;
-
-                                void* ptr = EnetLayer.PB_AddEntityOp_Serialize(&addEntityOp, &len, 2);
-
-                                if(ptr != null && len != 0)
-                                {
-                                    Console.WriteLine("[info] successfully serialized AddEntityOp.");
-
-                                    EnetLayer.ENet_Send(keyValuePair.Key, (int)EnetLayer.ENetChannel.AddEntityOp, ptr, len, 1);
-                                    EnetLayer.ENet_Flush(server);
-                                }
-                            }
-                        }
-
-                        PeerManager.Instance.playerState[keyValuePair.Key] = GameState.State.ISLAND_SPAWN_PENDING;
-                    }
-                    else if(keyValuePair.Value == GameState.State.ISLAND_SPAWNED)
-                    {
-                        Console.WriteLine("[info] client ack'ed island spawning instruction (info by sdk, does not mean it truly spawned). requesting to spawn player...");
-                        Structs.Structs.AddEntityOp addEntityOp;
-
-                        fixed (byte* prefabName = Translator.ToUtf8Cstr("Traveller"))
-                        {
-                            fixed (byte* prefabContext = Translator.ToUtf8Cstr("Player"))
-                            {
-                                addEntityOp.PrefabName = prefabName;
-                                addEntityOp.PrefabContext = prefabContext;
-
-                                int len = 0;
-
-                                void* ptr = EnetLayer.PB_AddEntityOp_Serialize(&addEntityOp, &len, 1);
-
-                                if (ptr != null && len != 0)
-                                {
-                                    Console.WriteLine("[info] successfully serialized AddEntityOp.");
-
-                                    EnetLayer.ENet_Send(keyValuePair.Key, (int)EnetLayer.ENetChannel.AddEntityOp, ptr, len, 1);
-                                    EnetLayer.ENet_Flush(server);
-                                }
-                            }
-                        }
-
-                        PeerManager.Instance.playerState[keyValuePair.Key] = GameState.State.PLAYER_SPAWN_PENDING;
-                    }
-                    else if(keyValuePair.Value == GameState.State.PLAYER_SPAWNED)
-                    {
-                        Console.WriteLine("[info] client ack'ed player spawning instruction (info by sdk, does not mean it truly spawned).");
-                       
-                        PeerManager.Instance.playerState[keyValuePair.Key] = GameState.State.DONE;
+                        step.Step(keyValuePair.Key);
+                        pStatus.Performed = true;
                     }
                 }
             }

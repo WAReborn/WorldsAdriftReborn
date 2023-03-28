@@ -355,3 +355,7 @@ MigrationBackup/
 ## Worlds Adrift Reborn-specific files
 DevEnv.targets
 !LocalPackages/*.nupkg
+
+# protobuf compiled files
+*.pb.h
+*.pb.cc

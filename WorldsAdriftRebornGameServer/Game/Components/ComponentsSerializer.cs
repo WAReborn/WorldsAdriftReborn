@@ -29,17 +29,17 @@ using Improbable.Corelibrary.Math;
 using Improbable.Corelibrary.Transforms;
 using Improbable.Corelibrary.Transforms.Global;
 using Improbable.Math;
-using Improbable.Worker;
 using Improbable.Worker.Internal;
-using ProtoBuf;
-using Schema.Improbable;
+using WorldsAdriftRebornGameServer.DLLCommunication;
+using WorldsAdriftRebornGameServer.Game.Items;
 using WorldsAdriftRebornGameServer.Networking.Singleton;
+using WorldsAdriftRebornGameServer.Networking.Wrapper;
 
 namespace WorldsAdriftRebornGameServer.Game.Components
 {
     internal class ComponentsSerializer
     {
-        public unsafe static void InitAndSerialize(uint componentId, byte** buffer, uint* length)
+        public unsafe static void InitAndSerialize(ENetPeerHandle player, long entityId, uint componentId, byte** buffer, uint* length)
         {
             for(int i = 0; i < ComponentsManager.Instance.ClientComponentVtables.Length; i++)
             {
@@ -163,6 +163,12 @@ namespace WorldsAdriftRebornGameServer.Game.Components
                         InventoryModificationState.Data imData = new InventoryModificationState.Data();
 
                         obj = imData;
+                    }
+                    else if(componentId == 1087)
+                    {
+                        PlayerPermissionsState.Data ppData = new PlayerPermissionsState.Data(Role.NonAdmin);
+
+                        obj = ppData;
                     }
                     else if(componentId == 4444)
                     {
@@ -357,7 +363,7 @@ namespace WorldsAdriftRebornGameServer.Game.Components
                     }
                     else if(componentId == 1139)
                     {
-                        WeatherCellState.Data wcData = new WeatherCellState.Data(new WeatherCellStateData(200f, new Vector3f(10f, 10f, 10f)));
+                        WeatherCellState.Data wcData = new WeatherCellState.Data(new WeatherCellStateData(1f, new Vector3f(0f, 0f, 0f)));
 
                         obj = wcData;
                     }
@@ -461,6 +467,12 @@ namespace WorldsAdriftRebornGameServer.Game.Components
 
                         obj = susData;
                     }
+                    else if(componentId == 1109)
+                    {
+                        PilotState.Data pd = new PilotState.Data(new PilotStateData(new EntityId(10), new EntityId(10), ControlVehicleType.None));
+
+                        obj = pd;
+                    }
                     else
                     {
                         Console.WriteLine("[ToDo] unhandled component id needs investigation: " + componentId);
@@ -468,13 +480,46 @@ namespace WorldsAdriftRebornGameServer.Game.Components
 
                     if (obj != null)
                     {
-                        // optimize this later as this will grow in size for each serialized component
                         refId = ClientObjects.Instance.CreateReference(obj);
                         ComponentProtocol.ClientObject wrapper = new ComponentProtocol.ClientObject();
                         wrapper.Reference = refId;
 
                         ComponentProtocol.ClientSerialize serialize = Marshal.GetDelegateForFunctionPointer<ComponentProtocol.ClientSerialize>(ComponentsManager.Instance.ClientComponentVtables[i].Serialize);
                         serialize(componentId, 2, &wrapper, buffer, length);
+
+                        // store refId for player and component as we need this to access the component later
+                        // this needs to change in the future, we need to make use of the games structures.
+                        // noone wants to work with this triple dictionary >.>
+                        if (!GameState.Instance.ComponentMap.ContainsKey(player))
+                        {
+                            GameState.Instance.ComponentMap.Add(player, new Dictionary<long, Dictionary<uint, ulong>> {
+                                { entityId, new Dictionary<uint, ulong> {
+                                    {
+                                        componentId, refId
+                                    }
+                                } }
+                            });
+                        }
+                        else
+                        {
+                            if (GameState.Instance.ComponentMap[player].ContainsKey(entityId))
+                            {
+                                if (GameState.Instance.ComponentMap[player][entityId].ContainsKey(componentId))
+                                {
+                                    // here we need to decide if we want to update the existing refId with the new one or drop the creation above.
+                                    // this case should only happen if the same component is added multiple times to the same entityId and player
+                                    GameState.Instance.ComponentMap[player][entityId][componentId] = refId;
+                                }
+                                else
+                                {
+                                    GameState.Instance.ComponentMap[player][entityId].Add(componentId, refId);
+                                }
+                            }
+                            else
+                            {
+                                GameState.Instance.ComponentMap[player].Add(entityId, new Dictionary<uint, ulong> { { componentId, refId } });
+                            }
+                        }
                     }
                 }
             }

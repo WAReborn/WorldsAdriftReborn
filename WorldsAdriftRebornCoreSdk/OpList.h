@@ -8,6 +8,8 @@ public:
     AssetLoadRequestOp* assetLoadRequestOp;
     AddComponentOp* addComponentOp;
     AuthorityChangeOp* authorityChangeOp;
+    ComponentUpdateOp* componentUpdateOp;
     int addComponentLen;
     int authorityChangeOpLen;
+    int componentUpdateOpLen;
 };

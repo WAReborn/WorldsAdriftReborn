@@ -141,6 +141,9 @@
     <ClInclude Include="AuthorityChangeOp.pb.h">
       <Filter>protobuf\compiled\header</Filter>
     </ClInclude>
+    <ClInclude Include="ComponentUpdateOp.pb.h">
+      <Filter>protobuf\compiled\header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dispatcher.cpp">
@@ -209,6 +212,9 @@
     <ClCompile Include="AuthorityChangeOp.pb.cc">
       <Filter>protobuf\compiled\impl</Filter>
     </ClCompile>
+    <ClCompile Include="ComponentUpdateOp.pb.cc">
+      <Filter>protobuf\compiled\impl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WorldsAdriftRebornCoreSdk.rc">
@@ -233,6 +239,9 @@
       <Filter>protobuf\proto</Filter>
     </Proto>
     <Proto Include="AuthorityChangeOp.proto">
+      <Filter>protobuf\proto</Filter>
+    </Proto>
+    <Proto Include="ComponentUpdateOp.proto">
       <Filter>protobuf\proto</Filter>
     </Proto>
   </ItemGroup>

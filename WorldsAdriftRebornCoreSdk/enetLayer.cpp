@@ -42,6 +42,12 @@ void* __cdecl PB_EXP_AddComponentOp_Serialize(long entityId, PB_AddComponentOp* 
 void* __cdecl PB_EXP_AuthorityChangeOp_Serialize(long entityId, Stripped_AuthorityChangeOp* authorityChangeOp, unsigned int authorityChangeOp_count, int* len) {
     return PB_AuthorityChangeOp_Serialize(entityId, authorityChangeOp, authorityChangeOp_count, len);
 }
+void* __cdecl PB_EXP_ComponentUpdateOp_Serialize(long entityId, PB_ComponentUpdateOp* componentUpdateOp, unsigned int componentUpdateOp_count, int* len) {
+    return PB_ComponentUpdateOp_Serialize(entityId, componentUpdateOp, componentUpdateOp_count, len);
+}
+bool __cdecl PB_EXP_ComponentUpdateOp_Deserialize(const void* data, int len, long* entityId, PB_ComponentUpdateOp** componentUpdateOp, unsigned int* componentUpdateOp_count) {
+    return PB_ComponentUpdateOp_Deserialize(data, len, entityId, componentUpdateOp, componentUpdateOp_count);
+}
 
 int ENet_Initialize() {
     return enet_initialize();
@@ -180,7 +186,15 @@ void ENet_Send(ENetPeer* peer, int channel, const void* data, long len, int flag
         return;
     }
 
-    ENetPacket* packet = enet_packet_create(data, len, flag);
+    enet_uint32 pf = ENET_PACKET_FLAG_RELIABLE;
+    if (flag == 1) {
+        pf = ENET_PACKET_FLAG_UNRELIABLE_FRAGMENT;
+    }
+    else if (flag == 2) {
+        pf = ENET_PACKET_FLAG_UNSEQUENCED | ENET_PACKET_FLAG_UNRELIABLE_FRAGMENT;
+    }
+
+    ENetPacket* packet = enet_packet_create(data, len, pf);
     enet_peer_send(peer, channel, packet);
 }
 
@@ -532,6 +546,73 @@ bool PB_AuthorityChangeOp_Deserialize(const void* data, int len, long* entityId,
     for (int i = 0; i < *authorityChangeOp_count; i++) {
         (*authorityChangeOp)[i].ComponentId = pb_op->oplist(i).componentid();
         (*authorityChangeOp)[i].HasAuthority = pb_op->oplist(i).hasauthority();
+    }
+
+    delete pb_op;
+    delete str;
+
+    return true;
+}
+
+void* PB_ComponentUpdateOp_Serialize(long entityId, PB_ComponentUpdateOp* componentUpdateOp, unsigned int componentUpdateOp_count, int* len) {
+    if (componentUpdateOp == NULL || len == NULL) {
+        if (len != NULL) {
+            *len = 0;
+        }
+        return NULL;
+    }
+
+    WorldsAdriftRebornCoreSdk::ComponentUpdateOp* pb_op = new WorldsAdriftRebornCoreSdk::ComponentUpdateOp();
+
+    pb_op->set_entityid(entityId);
+    for (unsigned int i = 0; i < componentUpdateOp_count; i++) {
+        WorldsAdriftRebornCoreSdk::ComponentData_ComponentUpdate* data = pb_op->add_components();
+        data->set_componentid(componentUpdateOp[i].ComponentId);
+        data->set_data(componentUpdateOp[i].ComponentData, componentUpdateOp[i].DataLength);
+        data->set_datalength(componentUpdateOp[i].DataLength);
+    }
+
+    std::string* serialized = new std::string();
+
+    if (!pb_op->SerializeToString(serialized)) {
+        delete serialized;
+        delete pb_op;
+
+        *len = 0;
+        return NULL;
+    }
+
+    delete pb_op;
+    *len = serialized->size();
+
+    return (void*)serialized->data();
+}
+
+bool PB_ComponentUpdateOp_Deserialize(const void* data, int len, long* entityId, PB_ComponentUpdateOp** componentUpdateOp, unsigned int* componentUpdateOp_count) {
+    if (data == NULL || componentUpdateOp_count == NULL || entityId == NULL) {
+        return false;
+    }
+
+    WorldsAdriftRebornCoreSdk::ComponentUpdateOp* pb_op = new WorldsAdriftRebornCoreSdk::ComponentUpdateOp();
+    std::string* str = new std::string(reinterpret_cast<char const*>(data), len);
+
+    if (!pb_op->ParseFromString(*str)) {
+        delete pb_op;
+        *componentUpdateOp_count = 0;
+
+        return false;
+    }
+
+    if (pb_op->has_entityid()) {
+        *entityId = pb_op->entityid();
+    }
+    *componentUpdateOp_count = pb_op->components_size();
+    *componentUpdateOp = new PB_ComponentUpdateOp[*componentUpdateOp_count];
+    for (int i = 0; i < *componentUpdateOp_count; i++) {
+        (*componentUpdateOp)[i].ComponentId = pb_op->components(i).componentid();
+        (*componentUpdateOp)[i].DataLength = pb_op->components(i).datalength();
+        (*componentUpdateOp)[i].ComponentData = new char[(*componentUpdateOp)[i].DataLength];
+        memcpy((*componentUpdateOp)[i].ComponentData, pb_op->components(i).data().data(), (*componentUpdateOp)[i].DataLength);
     }
 
     delete pb_op;
