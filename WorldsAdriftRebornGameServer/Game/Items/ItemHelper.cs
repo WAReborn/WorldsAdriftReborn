@@ -163,7 +163,7 @@ namespace WorldsAdriftRebornGameServer.Game.Items
         {
             return new System.Collections.Generic.List<ScalaSlottedInventoryItem>
             {
-                MakeItem(9, "head_drissiancowl", stashItem: true)
+                MakeItem(9, "head_pioneer", stashItem: true)
             };
         }
 
@@ -186,14 +186,14 @@ namespace WorldsAdriftRebornGameServer.Game.Items
                 MakeItem(20, "head_bargu_mask", stashItem: true),
                 MakeItem(21, "head_intucki_mask", stashItem: true),
                 MakeItem(22, "head_tamoe_mask", stashItem: true),
-                MakeItem(23, "torso_tamoe", stashItem: true),
-                MakeItem(24, "legs_tamoe", stashItem: true),
+                MakeItem(23, "torso_tribal_tamoe", stashItem: true),
+                MakeItem(24, "legs_tribal_tamoe", stashItem: true),
                 MakeItem(25, "head_yharma_mask", stashItem: true),
-                MakeItem(26, "torso_vinicoti", stashItem: true),
-                MakeItem(27, "legs_vinicoti", stashItem: true),
-                MakeItem(28, "head_mask_natiq", stashItem: true),
-                MakeItem(29, "torso_kahi", stashItem: true),
-                MakeItem(30, "legs_kahi", stashItem: true),
+                MakeItem(26, "torso_summer_male", stashItem: true),
+                MakeItem(27, "legs_summer", stashItem: true),
+                MakeItem(28, "head_christmas_2018", stashItem: true),
+                MakeItem(29, "torso_christmas_2018", stashItem: true),
+                MakeItem(30, "legs_christmas_2018", stashItem: true),
             };
         }
     }
