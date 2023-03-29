@@ -24,7 +24,7 @@ namespace WorldsAdriftServer.Handlers
             {
                 if(request.Method == "POST" && request.Url == "/authenticate")
                 {
-                    SteamAuthenticationHandler.HandleAuthRequest(this, request, "Jim Hawkins");
+                    SteamAuthenticationHandler.HandleAuthRequest(this, request, "Jeffsey");
                 }
                 else if (request.Method == "GET" && request.Url.Contains("/characterList/") && request.Url.Contains("/steam/1234"))
                 {
@@ -45,6 +45,15 @@ namespace WorldsAdriftServer.Handlers
                 else if(request.Method == "POST" && request.Url.Contains("/character/") && request.Url.Contains("/steam/1234/"))
                 {
                     CharacterSaveHandler.HandleCharacterSave(this, request);
+                }
+                else if (request.Method == "POST" && request.Url == "/player/reserveName")
+                {
+                    ReserveNameHandler.HandleCharacterReserveName(this, request);
+                }
+                else if(request.Method == "DELETE" && request.Url.StartsWith("/character/"))
+                {
+                    string cId = request.Url.Split('/').Last();
+                    DeleteCharacterHandler.HandleCharacterDelete(this, request, cId);
                 }
             }
         }

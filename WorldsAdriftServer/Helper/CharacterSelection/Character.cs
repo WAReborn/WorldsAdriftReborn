@@ -1,10 +1,13 @@
-﻿using WorldsAdriftServer.Objects.CharacterSelection;
+﻿using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using WorldsAdriftServer.Helper.Data;
+using WorldsAdriftServer.Objects.CharacterSelection;
 
 namespace WorldsAdriftServer.Helper.CharacterSelection
 {
     internal static class Character
     {
-        internal static CharacterCreationData GenerateRandomCharacter(string serverIdentifier, string characterName)
+        internal static CharacterCreationData GenerateRandomCharacter(int id, string serverIdentifier, string characterName)
         {
             Dictionary<CharacterSlotType, ItemData> cosmetics = new Dictionary<CharacterSlotType, ItemData>();
             CharacterUniversalColors colors = new CharacterUniversalColors();
@@ -48,13 +51,13 @@ namespace WorldsAdriftServer.Helper.CharacterSelection
                                                                 default(ColorProperties),
                                                                 100f));
 
-            return new CharacterCreationData(1, "valid-UIDs-have-at-least-one-", characterName, "serverName?", serverIdentifier, cosmetics, colors, true, false, false);
+            return new CharacterCreationData(id, Guid.NewGuid().ToString(), characterName, "awesome community server", serverIdentifier, cosmetics, colors, true, false, false);
         }
         /*
          * generates a character without cosmetics which reflects as an empty slot in the character select screen.
          * characterName is not applied, instead the SteamAuthRequestToken.screenName is used.
          */
-        internal static CharacterCreationData GenerateNewCharacter(string serverIdentifier, string characterName)
+        internal static CharacterCreationData GenerateNewCharacter(int id, string serverIdentifier, string characterName)
         {
             Dictionary<CharacterSlotType, ItemData> cosmetics = new Dictionary<CharacterSlotType, ItemData>();
             CharacterUniversalColors colors = new CharacterUniversalColors();
@@ -66,7 +69,23 @@ namespace WorldsAdriftServer.Helper.CharacterSelection
             colors.LipColor = CustomisationSettings.lipColors[num];
             colors.HairColor = CustomisationSettings.hairColors[r.Next(0, CustomisationSettings.hairColors.Length)];
 
-            return new CharacterCreationData(1, "UID", characterName, "serverName?", serverIdentifier, null, colors, true, false, false);
+            return new CharacterCreationData(id, Guid.NewGuid().ToString(), characterName, "awesome community server", serverIdentifier, null, colors, true, false, false);
+        }
+
+        internal static List<CharacterCreationData> GetCharacterList( GameContext dbContext )
+        {
+            var charactersList = dbContext.Characters.ToListAsync().GetAwaiter().GetResult();
+
+            List<CharacterCreationData> characters = new List<CharacterCreationData>();
+            if (charactersList.Count > 0)
+            {
+                foreach (var character in charactersList.Select(( value, index ) => new { value, index }))
+                {
+                    characters.Add(new CharacterCreationData(character.index + 1, character.value.Id.ToString(), character.value.Name, character.value.Server, character.value.serverIdentifier, JsonConvert.DeserializeObject<Dictionary<CharacterSlotType, ItemData>>(character.value.Cosmetics), JsonConvert.DeserializeObject<CharacterUniversalColors>(character.value.UniversalColors), character.value.IsMale, character.value.SeenIntro, character.value.SkippedTutorial));
+                }
+            }
+            characters.Add(Character.GenerateNewCharacter(characters.Count + 1, "", "")); //Add GenerateNewCharacter() to end of list
+            return characters;
         }
     }
 }

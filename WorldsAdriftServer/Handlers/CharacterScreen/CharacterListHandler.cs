@@ -1,6 +1,9 @@
-﻿using NetCoreServer;
+﻿using Microsoft.EntityFrameworkCore;
+using NetCoreServer;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using WorldsAdriftServer.Helper.CharacterSelection;
+using WorldsAdriftServer.Helper.Data;
 using WorldsAdriftServer.Objects.CharacterSelection;
 
 namespace WorldsAdriftServer.Handlers.CharacterScreen
@@ -15,14 +18,11 @@ namespace WorldsAdriftServer.Handlers.CharacterScreen
          */
         internal static void HandleCharacterListRequest(HttpSession session, HttpRequest request, string serverIdentifier )
         {
-            List<CharacterCreationData> list = new List<CharacterCreationData>();
+            GameContext db = new GameContext();
 
-            list.Add(Character.GenerateRandomCharacter(serverIdentifier, "Billy Bones"));
-            list.Add(Character.GenerateRandomCharacter(serverIdentifier, "Long John Silver"));
-            list.Add(Character.GenerateNewCharacter(serverIdentifier, "Jim Hawkins"));
-
-            CharacterListResponse characterList = new CharacterListResponse(list);
-            characterList.unlockedSlots = list.Count; // let the player create a new character below the list of existing characters (last provided character above must be a GenerateNewCharacter())
+            List<CharacterCreationData> characters = Character.GetCharacterList(db);
+            CharacterListResponse characterList = new CharacterListResponse(characters);
+            characterList.unlockedSlots = characters.Count; // let the player create a new character below the list of existing characters (last provided character above must be a GenerateNewCharacter())
             characterList.hasMainCharacter = true;
             characterList.havenFinished = true;
 
