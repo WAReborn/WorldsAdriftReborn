@@ -80,7 +80,8 @@ namespace WorldsAdriftRebornGameServer.Networking.Wrapper
             {
                 uint len = 0;
                 byte* buffer;
-                ComponentsSerializer.InitAndSerialize(destination, entityId, interests[i].ComponentId, &buffer, &len);
+                // define transforms or send island / player list through args? -s3
+                ComponentsSerializer.InitAndSerialize(destination, entityId, interests[i].ComponentId, &buffer, &len, WorldsAdriftRebornGameServer.islandEntityIDs, WorldsAdriftRebornGameServer.playerEntityIDs);
 
                 if (len <= 0)
                 {

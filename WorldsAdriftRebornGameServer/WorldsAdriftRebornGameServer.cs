@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Improbable.Worker;
@@ -9,7 +10,9 @@ using WorldsAdriftRebornGameServer.Game.Components;
 using WorldsAdriftRebornGameServer.Game.Components.Update;
 using WorldsAdriftRebornGameServer.Networking.Singleton;
 using WorldsAdriftRebornGameServer.Networking.Wrapper;
+using WorldsAdriftRebornGameServer.Models;
 using static WorldsAdriftRebornGameServer.DLLCommunication.EnetLayer;
+using System.Net.NetworkInformation;
 
 namespace WorldsAdriftRebornGameServer
 {
@@ -39,7 +42,11 @@ namespace WorldsAdriftRebornGameServer
         private static readonly EnetLayer.ENet_Poll_Callback callbackC = new EnetLayer.ENet_Poll_Callback(OnNewClientConnected);
         private static readonly EnetLayer.ENet_Poll_Callback callbackD = new EnetLayer.ENet_Poll_Callback(OnClientDisconnected);
         private static readonly List<uint> authoritativeComponents = new List<uint>{ 8050, 8051, 6908, 1260, 1097, 1003, 1241, 1082};
-        private static List<long> playerEntityIDs = new List<long>();
+        public static List<PlayerEntity> playerEntityIDs = new List<PlayerEntity>();
+        public static List<IslandEntity> islandEntityIDs = new List<IslandEntity>();
+        private static List<string> islands = new List<string>();
+        private static int islandsToLoad = 2;
+        private static List<Vector3> locationList = new List<Vector3>();
 
         private static long nextEntityId = 0;
         public static long NextEntityId
@@ -52,6 +59,28 @@ namespace WorldsAdriftRebornGameServer
         
         static unsafe void Main( string[] args )
         {
+            locationList.Add(new Vector3(1000000, 1000000, 0));
+            locationList.Add(new Vector3(0, 0, 0));
+
+            var path = "C:\\Users\\s3v3r\\Desktop\\dd\\depots\\322783\\4112968\\Assets\\unity";
+
+
+            var files = Directory.GetFiles(path)
+                .Where(file => !file.EndsWith(".manifest"))
+                .Select(file =>
+                {
+                    var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file);
+                    var strippedFileName = fileNameWithoutExtension.EndsWith("@island_unityclient")
+                        ? fileNameWithoutExtension.Substring(0, fileNameWithoutExtension.Length - "@island_unityclient".Length)
+                        : fileNameWithoutExtension;
+                    return new { OriginalFile = file, StrippedFileName = strippedFileName };
+                });
+
+            foreach (var file in files)
+            {
+                islands.Add(file.StrippedFileName);
+            }
+
             Console.CancelKeyPress += delegate ( object? sender, ConsoleCancelEventArgs e )
             {
                 keepRunning = false;
@@ -86,51 +115,116 @@ namespace WorldsAdriftRebornGameServer
 
                     if (SendOPHelper.SendAssetLoadRequestOP((ENetPeerHandle)o, "notNeeded?", "Traveller", "Player"))
                     {
-                        Console.WriteLine("[info] successfully serialized and queued AssetLoadRequestOp.");
+                        Console.WriteLine("[info] successfully serialized and queued AssetLoadRequestOp for PLAYER.");
                     }
                     else
                     {
-                        Console.WriteLine("[error] failed to serialize and queue AssetLoadRequestOp.");
+                        Console.WriteLine("[error] failed to serialize and queue AssetLoadRequestOp for PLAYER.");
                     }
                 })),
                 new SyncStep(GameState.NextStateRequirement.ASSET_LOADED_RESPONSE, new Action<object>((object o) =>
                 {
                     Console.WriteLine("[info] requesting the game to load the island from its asset bundles...");
 
-                    if (SendOPHelper.SendAssetLoadRequestOP((ENetPeerHandle)o, "notNeeded?", "949069116@Island", "notNeeded?"))
-                    {
-                        Console.WriteLine("[info] successfully serialized and queued AssetLoadRequestOp.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("[error] failed to serialize and queue AssetLoadRequestOp.");
+                    var i = 0;
+                    foreach(var name in islands) {
+
+                        if (SendOPHelper.SendAssetLoadRequestOP((ENetPeerHandle)o, "notNeeded?", name + "@Island", "notNeeded?"))
+                        {
+                            Console.WriteLine("[info] successfully serialized and queued AssetLoadRequestOp for ISLAND.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("[error] failed to serialize and queue AssetLoadRequestOp for ISLAND.");
+                        }
+                        i++;
+                        if(i == islandsToLoad)
+                        {
+                            break;
+                        }
                     }
                 })),
+                //new SyncStep(GameState.NextStateRequirement.ASSET_LOADED_RESPONSE, new Action<object>((object o) =>
+                //{
+                //    Console.WriteLine("[info] requesting the game to load the respawner from its asset bundles...");
+
+                //    var i = 0;
+                //    foreach(var name in islands) {
+
+                //        if (SendOPHelper.SendAssetLoadRequestOP((ENetPeerHandle)o, "6905", "AncientRespawner", "6905"))
+                //        {
+                //            Console.WriteLine("[info] successfully serialized and queued AssetLoadRequestOp.");
+                //        }
+                //        else
+                //        {
+                //            Console.WriteLine("[error] failed to serialize and queue AssetLoadRequestOp.");
+                //        }
+                //        i++;
+                //        if(i == islandsToLoad)
+                //        {
+                //            break;
+                //        }
+                //    }
+                //})),
                 new SyncStep(GameState.NextStateRequirement.ADDED_ENTITY_RESPONSE, new Action<object>((object o) =>
                 {
                     Console.WriteLine("[success] island asset loaded. requesting loading of island...");
+                    var i = 0;
+                    foreach (var name in islands)
+                    {
+                        // Instantiate an IslandEntity object instead of adding a long to the list
+                        var islandEntity = new IslandEntity { EntityId = NextEntityId, Name = name, Position = locationList[i] };
 
-                    if (SendOPHelper.SendAddEntityOP((ENetPeerHandle)o, NextEntityId, "949069116@Island", "notNeeded?"))
-                    {
-                        Console.WriteLine("[info] successfully serialized and queued AddEntityOp.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("[error] failed to serialize and queue AddEntityOp.");
+                        if (SendOPHelper.SendAddEntityOP((ENetPeerHandle)o, islandEntity.EntityId, islandEntity.Name + "@Island", "notNeeded?"))
+                        {
+                            Console.WriteLine("[info] successfully serialized and queued AddEntityOp for ISLAND. [ID] " + islandEntity.EntityId);
+                            // Add the IslandEntity object to the list
+                            islandEntityIDs.Add(islandEntity);
+                        }
+                        else
+                        {
+                            Console.WriteLine("[error] failed to serialize and queue AddEntityOp for ISLAND.");
+                        }
+
+                        i++;
+                        if (i == islandsToLoad)
+                        {
+                            break;
+                        }
                     }
                 })),
+                //new SyncStep(GameState.NextStateRequirement.ADDED_ENTITY_RESPONSE, new Action<object>((object o) =>
+                //{
+                //    Console.WriteLine("[success] respawner asset loaded. requesting loading of respawner...");
+
+                //        if (SendOPHelper.SendAddEntityOP((ENetPeerHandle)o, nextEntityId, "AncientRespawner", "6905"))
+                //        {
+                //            Console.WriteLine("[info] successfully serialized respawner and queued AddEntityOp.");
+                //        }
+                //        else
+                //        {
+                //            Console.WriteLine("[error] failed to serialize respawner and queue AddEntityOp.");
+                //        }
+
+                //})),
                 new SyncStep(GameState.NextStateRequirement.ADDED_ENTITY_RESPONSE, new Action<object>((object o) =>
                 {
                     Console.WriteLine("[info] client ack'ed island spawning instruction (info by sdk, does not mean it truly spawned). requesting to spawn player...");
 
-                    playerEntityIDs.Add(NextEntityId);
-                    if(SendOPHelper.SendAddEntityOP((ENetPeerHandle)o, playerEntityIDs.Last<long>(), "Traveller", "Player"))
+                    // Instantiate a new PlayerEntity object
+                    var playerEntity = new PlayerEntity { EntityId = NextEntityId };
+
+                    // Add the PlayerEntity object to the list
+                    playerEntityIDs.Add(playerEntity);
+
+                    // Send the AddEntityOp using the EntityId from the PlayerEntity object
+                    if (SendOPHelper.SendAddEntityOP((ENetPeerHandle)o, playerEntity.EntityId, "Traveller", "Player"))
                     {
-                        Console.WriteLine("[info] successfully serialized and queued AddEntityOp.");
+                        Console.WriteLine("[info] successfully serialized and queued AddEntityOp for PLAYER. [ID] " + playerEntity.EntityId);
                     }
                     else
                     {
-                        Console.WriteLine("[error] failed to serialize and queue AddEntityOp.");
+                        Console.WriteLine("[error] failed to serialize and queue AddEntityOp for PLAYER.");
                     }
                 }))
             };
@@ -178,7 +272,12 @@ namespace WorldsAdriftRebornGameServer
                             {
                                 Console.WriteLine("[info] game requests components for entity id: " + entityId);
 
-                                if(playerEntityIDs.Contains(entityId) && !PeerManager.Instance.clientSetupState.Contains(keyValuePair.Key))
+                                long entityIdToCheck = entityId; // Assuming entityId is a long
+
+                                bool isEntityInPlayerList = playerEntityIDs.Any(playerEntity => playerEntity.EntityId == entityIdToCheck);
+                                bool isPeerNotInClientSetupState = !PeerManager.Instance.clientSetupState.Contains(keyValuePair.Key);
+
+                                if (isEntityInPlayerList && isPeerNotInClientSetupState)
                                 {
                                     // a player entity requests components for the first time, we need to setup a few things to make him work properly
                                     // some of this might not be needd anymore in the future once we sorted out a few things.

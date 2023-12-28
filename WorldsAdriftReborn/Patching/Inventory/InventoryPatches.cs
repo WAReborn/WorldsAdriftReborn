@@ -1,4 +1,4 @@
-using Bossa.Travellers.Visualisers;
+﻿using Bossa.Travellers.Visualisers;
 using Bossa.Travellers.Visualisers.Profile;
 using HarmonyLib;
 using Improbable.Collections;

@@ -12,12 +12,64 @@ using Improbable.Unity;
 using Improbable.Unity.Assets;
 using Improbable.Unity.Entity;
 using UnityEngine;
+using GameDBFSIM;
 
 namespace WorldsAdriftReborn.Patching.SpatialOS
 {
     [HarmonyPatch()]
     internal class WorkerSpecificAssetDatabaseTemplateProvider_Patch
     {
+        // will force the game to update the gameDB
+        public static class GameDBAccessorPatch
+        {
+            private static readonly string CustomGameDBServerUrl = "https://your-custom-url.com";
+            private static readonly string CustomS3DownloadUrl = "https://your-custom-s3-url.com";
+
+            [HarmonyPatch(typeof(ConfigKeys))]
+            public static class ConfigKeysPatch
+            {
+                // The game appears to attempt to use 2 URLs to download gameDB
+                // One has the name of S3 suggesting a possible Amazon URL?
+                // We will set one URL to the gameDB and make the other bounce to see what happens.
+                [HarmonyPostfix]
+                [HarmonyPatch("GameDBServerUrl")]
+                public static void Postfix( ref string __result )
+                {
+                    // Replace the original result with your custom URL
+                    __result = CustomGameDBServerUrl;
+                }
+
+                [HarmonyPostfix]
+                [HarmonyPatch("S3DownloadUrl")]
+                public static void PostfixS3( ref string __result )
+                {
+                    // Replace the original result with your custom S3 URL
+                    __result = CustomS3DownloadUrl;
+                }
+            }
+
+            // Add a method, constructor, or code block to execute the gameDBAccessor.TriggerGameDBUpdate
+            public static void ExecuteGameDBUpdate()
+            {
+                GameDBAccessor gameDBAccessor = new GameDBAccessor();
+                // Assuming gameDBAccessor is an instance of GameDBAccessor
+                gameDBAccessor.TriggerGameDBUpdate(GameDBAccessor.Identifier.FSIM);
+            }
+        }
+
+        // In your game's initialization code (e.g., in an Awake method)
+        public class GameInitializer : MonoBehaviour
+        {
+            private void Awake()
+            {
+                // Apply the Harmony patch
+                Harmony harmony = new Harmony("your.mod.id");
+                harmony.PatchAll();
+                GameDBAccessorPatch.ExecuteGameDBUpdate();
+            }
+        }
+
+
         [HarmonyTargetMethod]
         public static MethodBase GetTargetMethod()
         {
