@@ -72,19 +72,12 @@ namespace WorldsAdriftRebornGameServer.Game.Components
                                                                     0f);
                             TransformState.Data tData = new TransformState.Data(tInit);
 
-                            //Console.WriteLine("[Component " + componentId + "] accessed for Island [Entity] " + entityId);
-                            //GlobalTransformStateData tInit = new GlobalTransformStateData(new Coordinates(10.0, 10.0, 0.0),
-                            //                                        new Quaternion(1f, 0f, 0f, 0f),
-                            //                                        new Vector3d(0.0, 0.0, 0.0),
-                            //                                        0);
-                            //GlobalTransformState.Data tData = new GlobalTransformState.Data(tInit);
-
                             obj = tData;
                         }
                         else
                         {
                             Console.WriteLine("[Component " + componentId + "] accessed for [Entity] " + entityId);
-                            TransformStateData tInit = new TransformStateData(new FixedPointVector3(new Improbable.Collections.List<long> { 0, 100, 0 }),
+                            TransformStateData tInit = new TransformStateData(new FixedPointVector3(new Improbable.Collections.List<long> { 1000000, 1000000, 0 }),
                                                                     new Quaternion32(1),
                                                                     null,
                                                                     new Improbable.Math.Vector3d(0f, 0f, 0f),

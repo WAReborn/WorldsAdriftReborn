@@ -45,7 +45,7 @@ namespace WorldsAdriftRebornGameServer
         public static List<PlayerEntity> playerEntityIDs = new List<PlayerEntity>();
         public static List<IslandEntity> islandEntityIDs = new List<IslandEntity>();
         private static List<string> islands = new List<string>();
-        private static int islandsToLoad = 2;
+        private static int islandsToLoad = 3;
         private static List<Vector3> locationList = new List<Vector3>();
 
         private static long nextEntityId = 0;
@@ -61,6 +61,7 @@ namespace WorldsAdriftRebornGameServer
         {
             locationList.Add(new Vector3(1000000, 1000000, 0));
             locationList.Add(new Vector3(0, 0, 0));
+            locationList.Add(new Vector3(3000000, 10000, 0));
 
             var path = "C:\\Users\\s3v3r\\Desktop\\dd\\depots\\322783\\4112968\\Assets\\unity";
 
