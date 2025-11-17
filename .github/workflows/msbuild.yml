@@ -25,7 +25,7 @@ jobs:
         build-configuration: [Release, Debug]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         submodules: recursive
 
@@ -72,7 +72,7 @@ jobs:
         Copy-Item -Path "README.md" -Destination "publish\"
 
     - name: Upload WorldsAdriftReborn Collection Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: WorldsAdriftReborn-${{ matrix.build-configuration }}
         path: publish
@@ -88,10 +88,10 @@ jobs:
 
     steps:
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Download artifacts from build jobs
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         path: artifacts
 
