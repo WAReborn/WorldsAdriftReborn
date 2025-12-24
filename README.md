@@ -56,37 +56,140 @@ This will be fixed in future releases.
 Launch the game from the gameroot
 
 ## Build Instructions
-First you will need the correct version of the game. Get a copy of [DepotDownloader](https://github.com/SteamRE/DepotDownloader) and run `DepotDownloader.exe -app 322780 -depot 322783 -manifest 4624240741051053915 -username <yourusername> -password <yourpassword>`
-Which will download the correct game files. Copy the files over to the gameroot folder.  
-⚠ Note that the most up to date steam version of the game is **Not** supported! 
-This is due to the game having been stripped of most of its contents in and update just before the game's shutdown.
 
-Clone the repository including submodules using `git clone --recurse-submodules <repository>`
-or (if you already cloned the repository normally) cd to your repository and run `git submodule update --init --recursive`
+### 1. Obtain the correct game version
+You must use a supported version of the game.
 
-Next download the latest 5.x [BepInEx Release](https://github.com/BepInEx/BepInEx/releases) and unzip those files into gameroot (detailed installation instructions can be found [here](https://docs.bepinex.dev/articles/user_guide/installation/index.html)).
+- Download **DepotDownloader** from  
+  <https://github.com/SteamRE/DepotDownloader>
+- Run the following command (replace the placeholders with your Steam credentials):
 
-Also create a `steam_appid.txt` file in the gameroot which contains a single line `322780` (this is the appid and is required to start the game, else you get a steam required error).
+```bash
+DepotDownloader.exe -app 322780 -depot 322783 -manifest 4624240741051053915 -username <yourusername> -password <yourpassword>
+```
 
-Now open up the project sln with Visual Studio 2022 (⚠ Lower versions of Visual Studio are not supported due to this project requiring dotnet 6.0).  
-⚠ Also note that at this moment ony the `Any CPU` (default) and `x64` solution platforms are supported.
+* Once the download completes, copy the downloaded files into the **game root directory**.
 
-Rider (JetBrains C# IDE) can open and build the solution as well. You just need to create an empty `LocalPackages` subdirectory inside the solution folder.
+> ⚠ **Important**
+> The latest Steam version of the game is **not supported**.
+> A final update before shutdown removed most of the game content, making it incompatible.
 
-If your game installation is not at the default location (`C:\Program Files (x86)\Steam\steamapps\common\WorldsAdrift`) visual studio will report an error and a DevEnv.targets file should have been generated at the root of your copy of the WorldsAdriftReborn repo. 
-You can change the path to your game installation location, save and reopen the project sln with visual studio.
+---
 
-Building the [WorldsAdriftReborn](https://github.com/sp00ktober/WorldsAdriftReborn/tree/main/WorldsAdriftReborn) mod will automatically build the required [WorldsAdriftRebornCoreSdk](https://github.com/sp00ktober/WorldsAdriftReborn/tree/main/WorldsAdriftRebornCoreSdk) CoreSdkDll.dll and copies this and the built BepInEx WorldsAdriftReborn plugin to the BepInEx plugins directory of your game. 
-It will also give an error if you try to build WorldsAdriftReborn for an an incompatible version of the game.
+### 2. Clone the repository with submodules
 
-Running the game locally requires you to build all projects in the solution, and subsequently starting the required servers and game:
-- Start the [WorldsAdriftGameServer](https://github.com/sp00ktober/WorldsAdriftReborn/tree/main/WorldsAdriftGameServer) 
-- Start the [WorldsAdriftServer](https://github.com/sp00ktober/WorldsAdriftReborn/tree/main/WorldsAdriftServer).
-- And then start the game.
+Clone the repository including all submodules:
 
-The projects also includes launch configurations for the WorldsAdriftReborn, WorldsAdriftGameServer and WorldsAdriftServer the projects. 
-The launch configuration for WorldsAdriftReborn will launch the game itself (⚠ when launching worlds adrift through visual studio you have to make sure you launch the game without debugging).
-You can launch everything at once by configuring the solution for Multiple Startup projects.
+```bash
+git clone --recurse-submodules <repository>
+```
+
+If you already cloned the repository without submodules, run:
+
+```bash
+git submodule update --init --recursive
+```
+
+---
+
+### 3. Install BepInEx
+
+* Download the latest **BepInEx 5.x** release from
+  [https://github.com/BepInEx/BepInEx/releases](https://github.com/BepInEx/BepInEx/releases)
+* Extract all files into the **game root directory**.
+
+Detailed installation instructions are available here:
+[https://docs.bepinex.dev/articles/user_guide/installation/index.html](https://docs.bepinex.dev/articles/user_guide/installation/index.html)
+
+---
+
+### 4. Create `steam_appid.txt`
+
+* In the game root directory, create a file named `steam_appid.txt`
+* Add the following single line to the file:
+
+```text
+322780
+```
+
+This App ID is required to launch the game; without it, a Steam-related error will occur.
+
+---
+
+### 5. Open the solution
+
+* Open the project `.sln` file using **Visual Studio 2022**
+
+> ⚠ **Notes**
+>
+> * Visual Studio versions older than 2022 are **not supported** (the project requires .NET 6.0).
+> * Only the `Any CPU` (default) and `x64` solution platforms are currently supported.
+
+---
+
+### 6. Using Rider (optional)
+
+JetBrains Rider can also open and build the solution.
+
+* Create an empty directory named `LocalPackages` inside the solution root before opening the project.
+
+---
+
+### 7. Configure non-default game paths
+
+If your game is **not installed at**:
+
+```
+C:\Program Files (x86)\Steam\steamapps\common\WorldsAdrift
+```
+
+Visual Studio will show an error and generate a `DevEnv.targets` file at the root of the repository.
+
+* Edit this file to point to your actual game installation path
+* Save the file
+* Reopen the solution in Visual Studio
+
+---
+
+### 8. Building the mod
+
+Building the **WorldsAdriftReborn** project will automatically:
+
+* Build the required **WorldsAdriftRebornCoreSdk** (`CoreSdkDll.dll`)
+* Copy both the Core SDK DLL and the compiled BepInEx plugin into the game's `BepInEx/plugins` directory
+
+If the game version is incompatible, the build process will fail with an error.
+
+Relevant projects:
+
+* [https://github.com/sp00ktober/WorldsAdriftReborn/tree/main/WorldsAdriftReborn](https://github.com/sp00ktober/WorldsAdriftReborn/tree/main/WorldsAdriftReborn)
+* [https://github.com/sp00ktober/WorldsAdriftReborn/tree/main/WorldsAdriftRebornCoreSdk](https://github.com/sp00ktober/WorldsAdriftReborn/tree/main/WorldsAdriftRebornCoreSdk)
+
+---
+
+### 9. Running the game locally
+
+To run the game locally, you must first build **all projects** in the solution, then start the following components in order:
+
+1. Start **WorldsAdriftGameServer**
+   [https://github.com/sp00ktober/WorldsAdriftReborn/tree/main/WorldsAdriftGameServer](https://github.com/sp00ktober/WorldsAdriftReborn/tree/main/WorldsAdriftGameServer)
+2. Start **WorldsAdriftServer**
+   [https://github.com/sp00ktober/WorldsAdriftReborn/tree/main/WorldsAdriftServer](https://github.com/sp00ktober/WorldsAdriftReborn/tree/main/WorldsAdriftServer)
+3. Launch the game
+
+---
+
+### 10. Launch configurations
+
+The solution includes launch profiles for:
+
+* WorldsAdriftReborn
+* WorldsAdriftGameServer
+* WorldsAdriftServer
+
+> ⚠ When launching the game from Visual Studio, ensure it is started **without debugging**.
+
+You can start all components simultaneously by configuring the solution to use **Multiple Startup Projects**.
 
 ## Updating protobuf
 At the moment the WorldsAdriftRebornCoreSdk is dependant on protobuf, in order to keep the project portable and not require and external package managers (vcpkg) we opted to include a build and publish nuget package.
