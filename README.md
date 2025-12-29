@@ -1,40 +1,33 @@
-# WorldsAdriftReborn
+# Worlds Adrift Reborn
 
-# About
-Worlds Adrift Reborn is a community made mod in an attempt to revive the Worlds Adrift game with a Dedicated server option.
-This means anyone would be able to host his/her own server and let other people join in.
+## About
+This is a mod for Worlds Adrift that attempts to recreate the original MMO experience by replacing the official infrastructure with custom, self-hosted substitutes.
 
-# Current state
-As you might guessed this is a very ambitious project. The game heavily relies on proprietary code for its networking (SpatialOS) and we need to replace it with our own implementation.
-We can't say for sure if this project will succeed but we will do our best for it.
+## Technical Overview
+The project consists of four main components:
+- A client mod that patches the game at runtime using BepInEx and Harmony
+- A custom replacement for the SpatialOS SDK written in C++
+- A custom HTTP server written in C# that handles player login and character creation
+- A game server responsible for sending and receiving ENet packets
 
-## Technical Details
-We use [BepInEx](https://github.com/BepInEx/BepInEx) and [Harmony](https://github.com/pardeike/Harmony) to patch the game at runtime, you can find the mod project [here](https://github.com/sp00ktober/WorldsAdriftReborn/tree/main/WorldsAdriftReborn)
+## Current State
+This project currently demonstrates:
+- An outline for an API handling login and character creation
+- A functional replacement layer for SpatialOS
+- Spawning entities and loading a client into the game world
+- Basic handling of player state, such as clothing items and the glider
 
-## Main Menu
-The game communicates with a HTTP REST server when you perform actions in the main menu. This is the "WorldsAdriftServer" project that you can find [here](https://github.com/sp00ktober/WorldsAdriftReborn/tree/main/WorldsAdriftServer)
-So far you can get to the character creation screen and choose one of the hardcoded characters to enter the game.
-
-## In Game
-After the intro video the game usually bootstraps its SpatialOs networking. To replace it with our own implementation we made a C++ project that you can find [here](https://github.com/sp00ktober/WorldsAdriftReborn/tree/main/WorldsAdriftRebornCoreSdk).
-This will compile into a .dll which you use to replace the original one.
-
-Our implementation offers the same methods as SpatialOs does. This means the game still thinks its talking to the SpatialOs dll while it is in fact calling our own methods. This will allow us to implement our own networking.
-
-At the moment we can instruct the game to load and spawn entities this way, the next thing will be to add and update their components to get a similar result as the one you see in the last video found [here](https://www.youtube.com/watch?v=IWKu2Olw0rc)
-Got it. Here’s the **tight, numbered install list**, no extra headings, no fluff:
-
-# Install Steps
+## Install Instructions
 
 1. Obtain a supported version of the game using [DepotDownloader](https://github.com/SteamRE/DepotDownloader):
 
     ```bash
     DepotDownloader.exe -app 322780 -depot 322783 -manifest 4624240741051053915 -username <yourusername> -password <yourpassword>
     ```
-    
-    Copy the downloaded files into the game root directory.
-    
-    ⚠ The latest Steam version of the game is **not supported**, as a final update before shutdown removed most of the game content.****
+
+   Copy the downloaded files into the game root directory.
+
+   ⚠ The latest Steam version of the game is **not supported**, as a final update before shutdown removed most of the game content.****
 
 2. Download the latest **BepInEx 5.x** release from
    [https://github.com/BepInEx/BepInEx/releases](https://github.com/BepInEx/BepInEx/releases)
@@ -155,7 +148,7 @@ If your game is **not installed at**:
 C:\Program Files (x86)\Steam\steamapps\common\WorldsAdrift
 ```
 
-Visual Studio will show an error and generate a `DevEnv.targets` file at the root of the repository.
+Your IDE should show an error and generate a `DevEnv.targets` file at the root of the repository.
 
 * Edit this file to point to your actual game installation path
 * Save the file
@@ -203,26 +196,36 @@ The solution includes launch profiles for:
 
 You can start all components simultaneously by configuring the solution to use **Multiple Startup Projects**.
 
-## Updating protobuf
-At the moment the WorldsAdriftRebornCoreSdk is dependant on protobuf, in order to keep the project portable and not require and external package managers (vcpkg) we opted to include a build and publish nuget package.
+## Protobuf Information
+WorldsAdriftRebornCoreSdk is dependent on Protobuf. To avoid external package managers we opted to include a build and publish nuget package.
 
-This nuget package was exported by vcpkg using the `vcpkg export protobuf:x64-windows-static-md --nuget --nuget-id=WorldsAdriftReborn-protobuf-x64-windows-static-md` option of vcpkg ( see https://devblogs.microsoft.com/cppblog/vcpkg-introducing-export-command/ for more info).
-And released on nuget as https://www.nuget.org/packages/WorldsAdriftReborn-protobuf-x64-windows-static-md/ .
+To export the package via vcpkg: `vcpkg export protobuf:x64-windows-static-md --nuget --nuget-id=WorldsAdriftReborn-protobuf-x64-windows-static-md` [(More Info)](https://devblogs.microsoft.com/cppblog/vcpkg-introducing-export-command/)
 
-The package can be updated by going to your locally installed vcpkg installation folder, removing any installed version of protobuf using the `vcpkg remove protobuf:x64-windows protobuf:x64-windows-static protobuf:x64-windows-static-md` command,
-reinstall them using the `vcpkg install protobuf:x64-windows protobuf:x64-windows-static protobuf:x64-windows-static-md` and subsequently running the aforementioned the export command again.
-This will generate a new package for you, which you can then upload to nuget, and update through the nuget package manager.
+Nuget URL: https://www.nuget.org/packages/WorldsAdriftReborn-protobuf-x64-windows-static-md/
 
-For testing purposes, you can also (instead of uploading the package to nuget) locally load an exported nuget package by placing the exported .nupkg in the LocalPackages folder of the repo, 
-this will make it appear in the LocalPackages package source in the nuget package manager.
+To update the package, reinstall protobuf via vcpkg and re-run the export command. The generated `.nupkg` can be uploaded to NuGet or placed in the repo’s `LocalPackages` folder to use it locally via the NuGet Package Manager.
 
-Aside from https://www.nuget.org/packages/WorldsAdriftReborn-protobuf-x64-windows-static-md/ we also provide the https://www.nuget.org/packages/WorldsAdriftReborn-protobuf-x64-windows-static/ and https://www.nuget.org/packages/WorldsAdriftReborn-protobuf-x64-windows/ variants.  
-⚠ Do note that if you choose to switch a variant (or to a local package) that has a different package name you will need update the proto.targets with the changed package path in order for auto compiling of the .proto files to work and be mindful of the required compilation settings changes below.
+The following package variants are available:
 
-You can switch linking modes by going to the WorldsAdriftRebornCoreSdk project properties and switching various settings:
-- vcpkg > Use static libraries > No / C/C++ > Code Generation > Runtime Library: MDd (default): This will dynamic link everything, which will also result in separate protobuf DLLS in the output (works with all versions of the package, however you might want to switch to https://www.nuget.org/packages/WorldsAdriftReborn-protobuf-x64-windows/ for a leaner package)
-- vcpkg > Use static libraries > Yes / vcpkg > Use Use Dynamic CRT > No / C/C++ > Code Generation > Runtime Library: MTd: This will static link everything, resulting in a single output DLL. (requires https://www.nuget.org/packages/WorldsAdriftReborn-protobuf-x64-windows-static/ )
-- (Current default) vcpkg > Use static libraries > Yes / vcpkg > Use Use Dynamic CRT > Yes / C/C++ > Code Generation > Runtime Library: MDd (default): This will static link everything, resulting in a single output DLL. (requires https://www.nuget.org/packages/WorldsAdriftReborn-protobuf-x64-windows-static-md/ )
+* [https://www.nuget.org/packages/WorldsAdriftReborn-protobuf-x64-windows/](https://www.nuget.org/packages/WorldsAdriftReborn-protobuf-x64-windows/)
+* [https://www.nuget.org/packages/WorldsAdriftReborn-protobuf-x64-windows-static/](https://www.nuget.org/packages/WorldsAdriftReborn-protobuf-x64-windows-static/)
+* [https://www.nuget.org/packages/WorldsAdriftReborn-protobuf-x64-windows-static-md/](https://www.nuget.org/packages/WorldsAdriftReborn-protobuf-x64-windows-static-md/)
+
+⚠ Switching to a differently named variant (or a local package) requires updating `proto.targets` to reflect the new package path and adjusting the build configuration.
+
+Linking mode is configured in the **WorldsAdriftRebornCoreSdk** project properties:
+
+* **Dynamic linking (DLLs output)**
+  `Use static libraries: No`, `Runtime Library: MDd`
+  (works with all variants; prefer `https://www.nuget.org/packages/WorldsAdriftReborn-protobuf-x64-windows/`)
+* **Fully static (single DLL output)**
+  `Use static libraries: Yes`, `Use Dynamic CRT: No`, `Runtime Library: MTd`
+  (requires `https://www.nuget.org/packages/WorldsAdriftReborn-protobuf-x64-windows-static/`)
+* **Static libs + dynamic CRT (default, single DLL output)**
+  `Use static libraries: Yes`, `Use Dynamic CRT: Yes`, `Runtime Library: MDd`
+  (requires `https://www.nuget.org/packages/WorldsAdriftReborn-protobuf-x64-windows-static-md/`)
+
+---
 
 #### Contributing
 See [CONTRIBUTING.md](CONTRIBUTING.md) for further details.
