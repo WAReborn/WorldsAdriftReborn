@@ -1,73 +1,30 @@
-﻿using System.Reflection;
-using System.Text.Json;
+﻿using System.Text.Json;
 using Bossa.Travellers.Inventory;
 using Improbable.Collections;
 
-namespace WorldsAdriftRebornGameServer.Game.Items
+namespace WorldsAdriftRebornGameServer.Game.World
 {
     public static class ItemHelper
     {
-        private static Dictionary<string, ValidItem> _allItems = new Dictionary<string, ValidItem>();
-        private static readonly string itemPath = Path.Combine(
-                                                            Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-                                                            "Game/Items/Config/itemData.json"
-                                                            );
+        private static Dictionary<string, ItemDefinition> allItems = new Dictionary<string, ItemDefinition>();
+        // private static readonly string itemPath = Path.Combine(
+        //                                                     Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+        //                                                     "Game/Items/Config/itemData.json"
+        //                                                     );
 
-        public class ValidItem
-        {
-            public string itemTypeID { get; set; }
-            public string name { get; set; }
-            public int height { get; set; }
-            public int width { get; set; }
-            public int stacksize { get; set; } = -1;
-            public string iconName { get; set; }
-            public bool equippable { get; set; }
-            public string characterSlot { get; set; } = "None";
-            public string category { get; set; } = "";
-            public string description { get; set; } = "";
-            public int rarity { get; set; } = 0;
-            public Dictionary<string, string> metadata { get; set; }
-
-            public Option<int> GetRarity()
-            {
-                return new Option<int>(rarity);
-            }
-
-            public Map<string, string> Meta( Dictionary<string, string> overrides = null )
-            {
-                var m = new Map<string, string>(metadata);
-                if (overrides == null)
-                    return m;
-                foreach (var i in overrides)
-                    m[i.Key] = i.Value;
-                return m;
-            }
-        }
-
-        public static Dictionary<string, ValidItem> AllItems
+        public static Dictionary<string, ItemDefinition> AllItems
         {
             get
             {
-                if (_allItems.Count > 0)
-                    return _allItems;
+                if (allItems.Count > 0)
+                    return allItems;
 
-                _allItems = new Dictionary<string, ValidItem>();
-                var itemList = System.Text.Json.JsonSerializer.Deserialize<System.Collections.Generic.List<ValidItem>>(File.ReadAllText(itemPath));
-
-                foreach (ValidItem item in itemList)
-                {
-                    if (string.IsNullOrEmpty(item.itemTypeID))
-                        continue;
-                    _allItems[item.itemTypeID] = item;
-                    // if (!string.IsNullOrEmpty(item.description)) ItemDescriptions.Add(item.itemTypeID, item.description);
-                }
-
-                Console.WriteLine($"{_allItems.Count}/{itemList.Count} listed items are valid");
-                return _allItems;
+                allItems = ItemList.LoadItemList();
+                return allItems;
             }
         }
 
-        public static ValidItem GetItem( string itemTypeId ) => AllItems[itemTypeId];
+        public static ItemDefinition GetItem( string itemTypeId ) => AllItems[itemTypeId];
 
         public static ScalaSlottedInventoryItem MakeItem( int itemId, string itemTypeId, int x = 0, int y = 0,
             int amount = 1, int quality = 0, bool stashItem = false, int hotBarSlot = -1,
@@ -81,7 +38,7 @@ namespace WorldsAdriftRebornGameServer.Game.Items
                 public static string GetReferenceItems()
         {
             System.Collections.Generic.List<object> o = new();
-            foreach (ValidItem v in AllItems.Values)
+            foreach (ItemDefinition v in AllItems.Values)
                 o.Add(new
                 {
                     itemTypeId = v.itemTypeID,
@@ -100,7 +57,7 @@ namespace WorldsAdriftRebornGameServer.Game.Items
         public static Map<string, string> GetDescriptions(bool resources = false)
         {
             Map<string, string> map = new();
-            foreach (ValidItem item in AllItems.Values)
+            foreach (ItemDefinition item in AllItems.Values)
             {
                 bool isResource = item.category == "Fuel" || item.category == "Metal" || item.category == "Wood";
                 if ((resources && !isResource) || (!resources && isResource))

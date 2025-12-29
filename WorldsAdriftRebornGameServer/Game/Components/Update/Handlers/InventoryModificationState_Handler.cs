@@ -3,7 +3,7 @@ using Bossa.Travellers.Inventory;
 using Bossa.Travellers.Player;
 using Improbable.Worker.Internal;
 using WorldsAdriftRebornGameServer.DLLCommunication;
-using WorldsAdriftRebornGameServer.Game.Items;
+using WorldsAdriftRebornGameServer.Game.World;
 using WorldsAdriftRebornGameServer.Networking.Wrapper;
 
 namespace WorldsAdriftRebornGameServer.Game.Components.Update.Handlers
