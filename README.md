@@ -8,12 +8,7 @@ This means anyone would be able to host his/her own server and let other people 
 As you might guessed this is a very ambitious project. The game heavily relies on proprietary code for its networking (SpatialOS) and we need to replace it with our own implementation.
 We can't say for sure if this project will succeed but we will do our best for it.
 
-
-
-## Boot the game
-The Game cannot be purchased anymore so we patched out the need to have steam running (for now) as well as a few other checks made when the game starts.
-This way we can reach the main menu.
-
+## Technical Details
 We use [BepInEx](https://github.com/BepInEx/BepInEx) and [Harmony](https://github.com/pardeike/Harmony) to patch the game at runtime, you can find the mod project [here](https://github.com/sp00ktober/WorldsAdriftReborn/tree/main/WorldsAdriftReborn)
 
 ## Main Menu
@@ -27,33 +22,51 @@ This will compile into a .dll which you use to replace the original one.
 Our implementation offers the same methods as SpatialOs does. This means the game still thinks its talking to the SpatialOs dll while it is in fact calling our own methods. This will allow us to implement our own networking.
 
 At the moment we can instruct the game to load and spawn entities this way, the next thing will be to add and update their components to get a similar result as the one you see in the last video found [here](https://www.youtube.com/watch?v=IWKu2Olw0rc)
+Got it. Here’s the **tight, numbered install list**, no extra headings, no fluff:
 
-## Installation and launching the game using the precompiled binaries
-First you will need the correct version of the game. Get a copy of [DepotDownloader](https://github.com/SteamRE/DepotDownloader) and run `DepotDownloader.exe -app 322780 -depot 322783 -manifest 4624240741051053915 -username <yourusername> -password <yourpassword>`
-Which will download the correct game files. Copy the files over to the gameroot folder.  
-⚠ Note that the most up to date steam version of the game is **Not** supported! 
-This is due to the game having been stripped of most of its contents in and update just before the game's shutdown.
+# Install Steps
 
-Next download the latest 5.x [BepInEx Release](https://github.com/BepInEx/BepInEx/releases) and unzip those files into gameroot (detailed installation instructions can be found [here](https://docs.bepinex.dev/articles/user_guide/installation/index.html)).
+1. Obtain a supported version of the game using [DepotDownloader](https://github.com/SteamRE/DepotDownloader):
 
-Also create a `steam_appid.txt` file in the gameroot which contains a single line `322780` (this is the appid and is required to start the game, else you get a steam required error).
+    ```bash
+    DepotDownloader.exe -app 322780 -depot 322783 -manifest 4624240741051053915 -username <yourusername> -password <yourpassword>
+    ```
+    
+    Copy the downloaded files into the game root directory.
+    
+    ⚠ The latest Steam version of the game is **not supported**, as a final update before shutdown removed most of the game content.****
 
-Next download the latest bleeding-edge release, you can find this on the [releases](https://github.com/sp00ktober/WorldsAdriftReborn/releases) page of the repo.
-Download the WorldsAdriftReborn-Release.zip and extract its content to a folder of your choosing.
+2. Download the latest **BepInEx 5.x** release from
+   [https://github.com/BepInEx/BepInEx/releases](https://github.com/BepInEx/BepInEx/releases)
+   and extract it into the game root directory
+   (installation details: [https://docs.bepinex.dev/articles/user_guide/installation/index.html](https://docs.bepinex.dev/articles/user_guide/installation/index.html)).
 
-Inside the folder you extracted the zip into you will find 3 folders:
-- WorldsAdriftReborn
-- WorldsAdriftRebornGameServer
-- WorldsAdriftRebornServer
+3. Create a `steam_appid.txt` file in the game root directory and fill the contents with:
 
-Copy or move the WorldsAdriftReborn directory into you `<game root>\BepInEx\plugins` folder.
+   ```
+   322780
+   ```
 
-To launch the game follow the following steps:
-Go into the WorldsAdriftRebornGameServer folder and launch the `WorldsAdriftRebornGameServer.exe`
-Go into the WorldsAdriftRebornServer folder and launch the `WorldsAdriftRebornServer.exe`
-⚠ Temporarily you will also need to replace the `Improbable.WorkerSdkCsharp.dll`, `Improbable.WorkerSdkCsharp.Framework.dll`, `Generated.Code.dll` and `protobuf-net.dll` in the WorldsAdriftRebornGameServer folder with the ones found in the `<game root>\UnityClient@Windows_Data\Managed` folder!
-This will be fixed in future releases.
-Launch the game from the gameroot
+4. Download the latest bleeding-edge release from the repository’s
+   [Releases](https://github.com/sp00ktober/WorldsAdriftReborn/releases) page and extract it.
+
+5. Copy the `WorldsAdriftReborn` folder into:
+
+   ```
+   <game root>\BepInEx\plugins
+   ```
+
+6. Start `WorldsAdriftRebornGameServer.exe`, then `WorldsAdriftRebornServer.exe`.
+
+   ⚠ Temporarily replace the following DLLs in the `WorldsAdriftRebornGameServer` folder with the versions from
+   `<game root>\UnityClient@Windows_Data\Managed`:
+
+    * `Improbable.WorkerSdkCsharp.dll`
+    * `Improbable.WorkerSdkCsharp.Framework.dll`
+    * `Generated.Code.dll`
+    * `protobuf-net.dll`
+
+7. Launch the game from the game root directory.
 
 ## Build Instructions
 
@@ -98,8 +111,7 @@ git submodule update --init --recursive
   [https://github.com/BepInEx/BepInEx/releases](https://github.com/BepInEx/BepInEx/releases)
 * Extract all files into the **game root directory**.
 
-Detailed installation instructions are available here:
-[https://docs.bepinex.dev/articles/user_guide/installation/index.html](https://docs.bepinex.dev/articles/user_guide/installation/index.html)
+Detailed installation instructions are [available at docs.bepinex.dev](https://docs.bepinex.dev/articles/user_guide/installation/index.html).
 
 ---
 
@@ -212,5 +224,8 @@ You can switch linking modes by going to the WorldsAdriftRebornCoreSdk project p
 - vcpkg > Use static libraries > Yes / vcpkg > Use Use Dynamic CRT > No / C/C++ > Code Generation > Runtime Library: MTd: This will static link everything, resulting in a single output DLL. (requires https://www.nuget.org/packages/WorldsAdriftReborn-protobuf-x64-windows-static/ )
 - (Current default) vcpkg > Use static libraries > Yes / vcpkg > Use Use Dynamic CRT > Yes / C/C++ > Code Generation > Runtime Library: MDd (default): This will static link everything, resulting in a single output DLL. (requires https://www.nuget.org/packages/WorldsAdriftReborn-protobuf-x64-windows-static-md/ )
 
-# Contact us
+#### Contributing
+See [CONTRIBUTING.md](CONTRIBUTING.md) for further details.
+
+#### Contact us
 Any support is welcome! You can find us on [Discord](https://discord.gg/pSrfna7NDx)
