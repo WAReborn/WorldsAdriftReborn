@@ -1,0 +1,2 @@
+﻿SchematicType,uUID,schematicId,referenceData,category,title,iconId,description,timeToCraft,amountToCraft,itemType,craftingRequirements,baseHp,baseStats,rarity,cipherSlots,unlearnable,modules,hullData
+0,,glider,glider,Personal,cool glider,"crafted items/3x4_glider",wolo,10,1,hmm,"[]",100.0,"{}",1,"[]",false,"{}",hullData

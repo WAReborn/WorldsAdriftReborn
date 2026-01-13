@@ -31,7 +31,7 @@ using Improbable.Corelibrary.Transforms.Global;
 using Improbable.Math;
 using Improbable.Worker.Internal;
 using WorldsAdriftRebornGameServer.DLLCommunication;
-using WorldsAdriftRebornGameServer.Game.Items;
+using WorldsAdriftRebornGameServer.Game.World;
 using WorldsAdriftRebornGameServer.Networking.Singleton;
 using WorldsAdriftRebornGameServer.Networking.Wrapper;
 

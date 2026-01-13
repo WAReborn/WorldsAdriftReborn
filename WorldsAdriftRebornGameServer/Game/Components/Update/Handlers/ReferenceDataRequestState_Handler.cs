@@ -1,11 +1,12 @@
 ﻿using System.IO.Compression;
 using System.Text;
-using System.Text.Json;
 using Bossa.Travellers.Refdata;
 using Improbable.Worker.Internal;
+using Newtonsoft.Json;
 using WorldsAdriftRebornGameServer.DLLCommunication;
-using WorldsAdriftRebornGameServer.Game.Items;
+using WorldsAdriftRebornGameServer.Game.World;
 using WorldsAdriftRebornGameServer.Networking.Wrapper;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace WorldsAdriftRebornGameServer.Game.Components.Update.Handlers
 {
@@ -53,8 +54,9 @@ namespace WorldsAdriftRebornGameServer.Game.Components.Update.Handlers
                 newRefData.AddScrapItemDescriptionsSent(new SendScrapItemsDescriptions(scrapDesc, doComp ? Compress(JsonSerializer.Serialize(scrapDesc)) : null));
                 newRefData.AddSteamInvBundlesDescriptionsSent(
                     new SendSteamInventoryBundlesDescriptions(bundleDesc, doComp ? Compress(JsonSerializer.Serialize(bundleDesc)) : null));
-                var schematicData =
-                    "{\"glider\":{\"SchematicType\":0,\"uUID\":\"glider\",\"schematicId\":\"glider\",\"referenceData\":\"glider\",\"category\":\"Personal\",\"title\":\"cool glider\",\"iconId\":\"crafted items/3x4_glider\",\"description\":\"wolo\",\"timeToCraft\":10,\"amountToCraft\":1,\"itemType\":\"hmm\",\"craftingRequirements\":[],\"baseHp\":100.0,\"baseStats\":{},\"rarity\":1,\"cipherSlots\":[],\"unlearnable\":false,\"modules\":{},\"hullData\":\"hullData\",\"OrderedStats\":[],\"UniqueID\":\"glider\",\"CraftingCategoryEnum\":1,\"HumanReadableItemType\":\"Hmm\",\"rarityParsed\":1,\"HullDataBytes\":\"hullData\",\"IsProcedural\":false,\"IsShip\":false,\"cipherSlotParsed\":[]}}";
+                // var schematicData =
+                    // "{\"glider\":{\"SchematicType\":0,\"uUID\":\"glider\",\"schematicId\":\"glider\",\"referenceData\":\"glider\",\"category\":\"Personal\",\"title\":\"cool glider\",\"iconId\":\"crafted items/3x4_glider\",\"description\":\"wolo\",\"timeToCraft\":10,\"amountToCraft\":1,\"itemType\":\"hmm\",\"craftingRequirements\":[],\"baseHp\":100.0,\"baseStats\":{},\"rarity\":1,\"cipherSlots\":[],\"unlearnable\":false,\"modules\":{},\"hullData\":\"hullData\",\"OrderedStats\":[],\"UniqueID\":\"glider\",\"CraftingCategoryEnum\":1,\"HumanReadableItemType\":\"Hmm\",\"rarityParsed\":1,\"HullDataBytes\":\"hullData\",\"IsProcedural\":false,\"IsShip\":false,\"cipherSlotParsed\":[]}}";
+                var schematicData = JsonConvert.SerializeObject(SchematicList.SchematicsById);
                 newRefData.SetSchematicsData(schematicData);
                 newRefData.AddSchematicDataSent(new SendSchematicData(schematicData, doComp ? Compress(schematicData) : null));
 

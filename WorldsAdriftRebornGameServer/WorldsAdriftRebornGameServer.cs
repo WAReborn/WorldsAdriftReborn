@@ -7,6 +7,7 @@ using WorldsAdriftRebornGameServer.DLLCommunication;
 using WorldsAdriftRebornGameServer.Game;
 using WorldsAdriftRebornGameServer.Game.Components;
 using WorldsAdriftRebornGameServer.Game.Components.Update;
+using WorldsAdriftRebornGameServer.Game.World;
 using WorldsAdriftRebornGameServer.Networking.Singleton;
 using WorldsAdriftRebornGameServer.Networking.Wrapper;
 using static WorldsAdriftRebornGameServer.DLLCommunication.EnetLayer;

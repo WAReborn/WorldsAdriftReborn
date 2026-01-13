@@ -10,14 +10,6 @@ namespace WorldsAdriftServer.Handlers
     {
         public RequestRouterHandler( HttpServer server ) : base(server) { }
 
-        protected override void OnReceived( byte[] buffer, long offset, long size )
-        {
-            // OnReceived isn't guaranteed to get entire request. Report what was received.
-            if (buffer != null && size != 0)  { DataParser.ParseIncomingData(buffer, offset, size); }
-            base.OnReceived(buffer, offset, size);
-        }
-
-        // NOTE: OnReceivedRequest is only called once a complete request has been constructed inside HttpRequest's _cache.
         protected override void OnReceivedRequest( HttpRequest request )
         {
             if(request != null)
